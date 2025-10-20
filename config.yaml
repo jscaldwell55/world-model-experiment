@@ -1,0 +1,37 @@
+# config.yaml
+models:
+  observer: "gpt-4o"
+  actor: "gpt-4o"
+  model_based: "gpt-4o"
+  text_reader: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+environments:
+  hot_pot:
+    num_episodes: 50
+    seeds: [42, 43, 44, ...]  # Must match preregistration.yaml
+  switch_light:
+    num_episodes: 50
+    seeds: [100, 101, ...]
+  chem_tile:
+    num_episodes: 30
+    seeds: [200, 201, ...]
+  transfer:  # OOD test
+    num_episodes: 30
+    seeds: [300, 301, ...]
+
+ablations:
+  - name: "no_memory"
+    modify: {allow_belief_updates: false}
+  - name: "observation_only"
+    modify: {allow_interventions: false}
+  - name: "no_language_prior"
+    modify: {hide_labels: true}
+
+preregistration:
+  file: "preregistration.yaml"
+  verify_hash: true
+  enforce_hypotheses: true

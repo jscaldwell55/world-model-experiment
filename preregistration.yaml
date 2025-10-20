@@ -1,0 +1,114 @@
+# preregistration.yaml
+# Created: [DATE] BEFORE running any experiments
+# SHA: [git commit sha at creation]
+
+study_metadata:
+  title: "World Model Formation in Interactive vs Non-Interactive LLMs"
+  created: "2024-01-15"
+  researchers: ["Your Name"]
+  
+primary_hypotheses:
+  H1:
+    description: "Actor agents achieve higher interventional accuracy than Observer agents"
+    endpoint: "interventional_accuracy"
+    environment: "hot_pot"
+    minimum_effect_size: 0.15  # Cohen's d
+    direction: "Actor > Observer"
+    
+  H2:
+    description: "Actor agents show decreasing surprisal over time; Observers remain flat"
+    endpoint: "surprisal_trajectory_slope"
+    environment: "all"
+    minimum_effect_size: -0.20  # Negative slope
+    
+  H3:
+    description: "Model-based planning outperforms pure LLM reasoning"
+    endpoint: "planning_success_rate"
+    environment: "chem_tile"
+    minimum_effect_size: 0.10
+    direction: "ModelBased > Actor"
+
+secondary_hypotheses:
+  H4:
+    description: "Interventional accuracy improves after high-surprisal events"
+    endpoint: "delta_accuracy_post_surprise"
+    minimum_effect_size: 0.08
+    
+  H5:
+    description: "Actor agents show better OOD generalization than Observers"
+    endpoint: "transfer_accuracy"
+    environment: "transfer_env"
+    minimum_effect_size: 0.12
+
+sample_size:
+  episodes_per_condition: 50
+  environments: 3
+  agents: 3  # Observer, Actor, ModelBased
+  total_episodes: 450
+  
+  power_analysis:
+    alpha: 0.05
+    desired_power: 0.80
+    expected_effect_size: 0.15
+    estimated_power: 0.82  # Based on pilot
+
+exclusion_criteria:
+  - "Episodes where LLM API fails (timeout, rate limit)"
+  - "Episodes with tool call parsing errors"
+  - "Episodes where agent exceeds action budget by >10%"
+
+statistical_plan:
+  primary_test: "Independent samples t-test (two-tailed)"
+  correction: "Bonferroni for 3 primary hypotheses (α = 0.017)"
+  effect_size: "Cohen's d with 95% bootstrap CI"
+  secondary_tests: "Reported as exploratory (no correction)"
+
+baselines:
+  - name: "Observer"
+    description: "Language-only reasoning, no interaction"
+  - name: "TextReader" 
+    description: "Observer + access to 10 prior episode logs"
+  - name: "Actor"
+    description: "Interactive agent with belief updates"
+  - name: "ModelBased"
+    description: "Actor + explicit learned transition model (MLP)"
+
+environments:
+  hot_pot:
+    description: "Causal hazard with misleading labels"
+    seeds: [42, 43, 44, 45, 46, ...]  # 50 seeds
+    
+  switch_light:
+    description: "Intervention vs observation distinction"
+    seeds: [100, 101, 102, ...]
+    
+  chem_tile:
+    description: "Compositional rules with safety constraints"
+    seeds: [200, 201, 202, ...]
+    
+  transfer:
+    description: "Out-of-distribution: nonlinear heating dynamics"
+    seeds: [300, 301, 302, ...]
+
+metrics:
+  primary:
+    - interventional_accuracy
+    - surprisal_trajectory_slope
+    - planning_success_rate
+    
+  secondary:
+    - counterfactual_accuracy
+    - calibration_error
+    - sample_efficiency
+    - delta_accuracy_post_surprise
+    
+robustness_checks:
+  - "Prompt variation: test 3 different system prompts"
+  - "Model variation: GPT-4 vs Claude"
+  - "Temperature: 0.0, 0.3, 0.7"
+
+data_availability:
+  raw_logs: "results/raw/"
+  aggregated: "results/aggregated/"
+  code_repository: "[GitHub URL]"
+  preregistration_hash: "[SHA-256 of this file]"
