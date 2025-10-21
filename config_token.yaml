@@ -1,0 +1,124 @@
+# Configuration for token-level prediction experiments
+
+token_prediction:
+  enabled: true
+
+  # Predictor configurations for different agent types
+  # NOTE: Token prediction requires logprobs, which only OpenAI provides
+  # Agents use Anthropic (config.yaml), but token prediction uses OpenAI
+  predictors:
+    observer:
+      provider: "openai"
+      model: "gpt-4o-mini"  # Using mini for cost efficiency in token prediction
+      temperature: 0.0
+      max_tokens: 100
+
+    actor:
+      provider: "openai"
+      model: "gpt-4o-mini"  # Using mini for cost efficiency in token prediction
+      temperature: 0.0
+      max_tokens: 100
+
+  # Textualization settings
+  textualization:
+    version: "v1.0"
+
+    # Numerical precision for formatting
+    numerical_precision:
+      temperature: 1  # decimal places for temperature
+      time: 0         # decimal places for time
+      probability: 3  # decimal places for probabilities
+
+    # Validation settings
+    validation:
+      check_determinism: true
+      check_no_leakage: true
+      num_determinism_trials: 10
+
+  # API and resource budgets
+  budgets:
+    max_context_tokens: 4000
+    max_prediction_tokens: 100
+    max_api_calls_per_episode: 100
+    rate_limit_requests_per_minute: 60
+
+# Pilot experiment configuration
+pilot:
+  # Run 5 episodes per environment
+  num_episodes_per_env: 5
+
+  # Environments to test
+  environments:
+    - hot_pot
+    - switch_light
+    - chem_tile
+
+  # Agent types to test
+  agents:
+    - observer
+    - actor
+
+  # Random seeds for reproducibility
+  seeds: [42, 43, 44, 45, 46]
+
+  # Output directory
+  output_dir: "results/token_prediction_pilot"
+
+# Analysis configuration
+analysis:
+  # Metrics to compute
+  metrics:
+    - sequence_nll
+    - per_token_nll
+    - perplexity
+    - belief_surprisal
+    - coupling_correlation
+
+  # Correlation analysis
+  coupling_analysis:
+    min_samples: 5  # Minimum samples needed for correlation
+    correlation_types:
+      - pearson
+      - spearman
+
+  # Surprise detection
+  surprise_detection:
+    threshold_logprob: -5.0  # Tokens with logprob < threshold are "surprising"
+    threshold_percentile: 90  # Top 10% of NLL values
+
+  # Calibration analysis
+  calibration:
+    num_bins: 10
+    min_samples_per_bin: 3
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+  # Save token logs
+  save_token_logs: true
+  token_log_dir: "results/token_logs"
+
+  # Save analysis results
+  save_analysis: true
+  analysis_dir: "results/token_analysis"
+
+# Visualization configuration (for future analysis)
+visualization:
+  enabled: true
+
+  # Plot types to generate
+  plots:
+    - nll_vs_surprisal_scatter
+    - nll_over_time
+    - surprisal_over_time
+    - calibration_curve
+    - high_surprisal_tokens
+
+  # Plot settings
+  settings:
+    figure_size: [10, 6]
+    dpi: 300
+    format: "png"
+    save_dir: "results/token_plots"

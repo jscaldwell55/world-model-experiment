@@ -1,9 +1,9 @@
 # config.yaml
 models:
-  observer: "gpt-4o"
-  actor: "gpt-4o"
-  model_based: "gpt-4o"
-  text_reader: "gpt-4o-mini"
+  observer: "claude-sonnet-4-5-20250929"
+  actor: "claude-sonnet-4-5-20250929"
+  model_based: "claude-sonnet-4-5-20250929"
+  text_reader: "claude-sonnet-4-5-20250929"
 
 budgets:
   actions_per_episode: 10
