@@ -1,5 +1,6 @@
 # experiments/config.py
 import os
+import yaml
 from typing import Optional
 from pathlib import Path
 
@@ -43,18 +44,40 @@ def get_api_key(provider: str) -> str:
     )
 
 
-def load_config() -> dict:
+def load_config(config_path: Optional[str] = None) -> dict:
     """
-    Load experiment configuration.
+    Load experiment configuration from YAML file.
+
+    Args:
+        config_path: Path to config.yaml file (default: config.yaml in project root)
 
     Returns:
         Configuration dictionary
+
+    Raises:
+        FileNotFoundError: If config file not found
     """
-    return {
-        'default_model': 'gpt-4o-mini',
-        'max_tokens': 2000,
-        'temperature': 0.7,
-        'seed': 42,
-        'action_budget': 10,
-        'episode_timeout': 300,  # seconds
-    }
+    if config_path is None:
+        config_path = Path.cwd() / 'config.yaml'
+    else:
+        config_path = Path(config_path)
+
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f"Config file not found: {config_path}\n"
+            f"Please create a config.yaml file with model specifications."
+        )
+
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
+
+    # Validate required fields
+    if 'models' not in config:
+        raise ValueError("Config must contain 'models' section")
+
+    required_models = ['observer', 'actor', 'model_based', 'text_reader']
+    for model_type in required_models:
+        if model_type not in config['models']:
+            raise ValueError(f"Config must specify model for '{model_type}'")
+
+    return config

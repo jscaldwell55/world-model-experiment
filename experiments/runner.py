@@ -61,14 +61,28 @@ class ExperimentRunner:
 
         # Initialize agent with appropriate LLM
         agent_type = self.agent_cls.__name__.lower().replace('agent', '')
-        model_config = self.config.get('models', {}).get(agent_type,
-                                                          self.config.get('models', {}).get('actor',
-                                                                                             {'model': 'gpt-4o-mini'}))
+
+        # Get model config - no defaults, must be in config
+        if 'models' not in self.config:
+            raise ValueError("Config must contain 'models' section")
+        if agent_type not in self.config['models']:
+            raise ValueError(f"Config must specify model for agent type '{agent_type}'")
+
+        model_config = self.config['models'][agent_type]
+
+        # Ensure model is specified
+        if 'model' not in model_config:
+            raise ValueError(f"Model config for '{agent_type}' must contain 'model' field")
+
+        model_name = model_config['model']
+
+        # Log which model is being used
+        print(f"  Creating {agent_type} agent with model: {model_name}")
 
         # Create LLM - never use mocks in production
         # Mock LLM should only be used in unit tests via explicit mock=True
         use_mock = self.config.get('use_mock_llm', False)
-        llm = create_llm(model_config.get('model', 'gpt-4o-mini'), mock=use_mock)
+        llm = create_llm(model_name, mock=use_mock)
 
         # Create agent with environment name if applicable
         agent_kwargs = {
@@ -110,15 +124,12 @@ class ExperimentRunner:
                 assert 'actual_temp' not in observation, "Actual temp leaked!"
                 assert 'stove_power' not in observation, "Stove power leaked!"
 
-            # Agent acts
+            # Agent chooses action based on current observation
+            # Note: At this point, agent computes surprisal/updates belief based on OLD observation
+            # We'll recompute with the RESULT observation below
             agent_step = agent.act(observation)
 
-            # GUARD RAIL: Programmatically inject observation (override any LLM hallucination)
-            agent_step.observation = observation
-
-            steps.append(agent_step)
-
-            # Environment step
+            # Environment step - execute action and get RESULT observation
             if agent_step.action is not None:
                 try:
                     # Normalize action: remove empty parentheses for simple actions
@@ -128,15 +139,39 @@ class ExperimentRunner:
                     if normalized_action.endswith('()'):
                         normalized_action = normalized_action[:-2]
 
-                    observation, reward, done, info = env.step(normalized_action)
+                    new_observation, reward, done, info = env.step(normalized_action)
+                    new_observation = self._validate_observation(new_observation)
+
+                    # GUARD RAIL: Programmatically inject RESULT observation
+                    # This prevents LLM from hallucinating observations
+                    agent_step.observation = new_observation
+
+                    # Recompute surprisal on the RESULT observation (before belief update)
+                    # Surprisal measures how surprising the result was given prior belief
+                    if hasattr(agent, 'compute_surprisal'):
+                        agent_step.surprisal = agent.compute_surprisal(new_observation)
+
+                    # Update belief with RESULT observation (if actor agent)
+                    # This happens for ALL steps including step 0, since we're updating based on action results
+                    if hasattr(agent, 'update_belief_from_observation'):
+                        agent.update_belief_from_observation(new_observation)
+                        agent_step.belief_state = agent.get_belief_state()
+
+                    observation = new_observation
+
                 except Exception as e:
                     # Invalid action - log and continue
                     print(f"Warning: Invalid action '{agent_step.action}': {e}")
                     observation = {'error': str(e), 'time': env.get_time_elapsed()}
+                    agent_step.observation = observation
                     done = True
             else:
-                done = True  # Observer or budget exhausted
+                # Observer or budget exhausted
+                # No action taken, so observation doesn't change
+                agent_step.observation = observation
+                done = True
 
+            steps.append(agent_step)
             step_num += 1
 
         # Evaluation (ground truth used ONLY here)

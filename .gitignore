@@ -46,15 +46,16 @@ venv.bak/
 .env.local
 .env.*.local
 
-# Testing
+# Testing artifacts
 .pytest_cache/
 .coverage
 htmlcov/
 .tox/
 .nox/
-/tests/
+
+# Temporary test scripts in root (but keep tests/ directory)
+/test_*.py
 *[Tt]est*
-tests/
 
 # PyCharm
 .idea/
@@ -72,10 +73,10 @@ dmypy.json
 
 # Results and data
 results/
+logs/
 *.log
 *.csv
 *.json.bak
-/results/
 
 # Model checkpoints and weights
 *.pt

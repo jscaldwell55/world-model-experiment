@@ -108,6 +108,12 @@ class ChemTile(Environment):
         action = action.strip()
         self.time_elapsed += 1.0
 
+        # DEBUG: Log action execution
+        import os
+        if os.environ.get('DEBUG_CHEMTILE'):
+            print(f"[ChemTile.step] Action: {repr(action)}")
+            print(f"[ChemTile.step] Available BEFORE: {self.state.available_compounds}")
+
         if action.startswith("mix"):
             obs, mix_reward = self._mix_compounds(action)
             reward = mix_reward
@@ -127,6 +133,11 @@ class ChemTile(Environment):
 
         else:
             obs = {'time': self.time_elapsed, 'message': 'Unknown action'}
+
+        # DEBUG: Log results
+        if os.environ.get('DEBUG_CHEMTILE'):
+            print(f"[ChemTile.step] Available AFTER: {self.state.available_compounds}")
+            print(f"[ChemTile.step] Observation: {obs}")
 
         self._validate_observation(obs)
         return obs, reward, done, info
@@ -187,10 +198,10 @@ class ChemTile(Environment):
         Mix two compounds according to reaction table.
         Returns observation and reward.
         """
-        # Parse compounds from action string like "mix(A, B)"
+        # Parse compounds from action string like "mix(A, B)" or "mix('A', 'B')"
         try:
             compounds_str = action.replace("mix", "").strip("()")
-            parts = [p.strip() for p in compounds_str.split(",")]
+            parts = [p.strip().strip("'\"") for p in compounds_str.split(",")]
             compound_a, compound_b = parts[0], parts[1]
         except (ValueError, IndexError):
             return {
@@ -353,7 +364,7 @@ class ChemTile(Environment):
     def _inspect(self, action: str) -> dict:
         """Get information about a specific compound"""
         try:
-            compound = action.replace("inspect", "").strip("()")
+            compound = action.replace("inspect", "").strip("()").strip("'\"")
         except:
             compound = None
 

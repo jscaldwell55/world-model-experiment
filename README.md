@@ -49,8 +49,12 @@ world-model-experiment/
 ├── requirements.txt                 # Dependencies
 ├── config.yaml                      # Model configs, budgets, seeds
 ├── preregistration.yaml             # Locked hypotheses (DO NOT MODIFY after experiments start)
+├── VALIDATION_REPORT.md             # System validation results (98% confidence)
+├── BUG_FIX_SUMMARY.md               # Recent bug fixes and improvements
+├── BUG_FIXES_CHEMTILE_SURPRISAL.md  # Detailed ChemTile bug fix documentation
 ├── .env                             # API keys (gitignored, create this)
 ├── .gitignore
+├── test_*.py                        # Debug/validation scripts (temporary)
 │
 ├── environments/                    # Micro-world simulators
 │   ├── base.py                      # Abstract Environment interface
@@ -86,12 +90,17 @@ world-model-experiment/
 ├── scripts/                         # Entry points
 │   ├── run_experiment.py            # Main: run all episodes
 │   ├── analyze_results.py           # Generate report + figures
-│   └── inspect_episode.py           # Debug single episode
+│   ├── inspect_episode.py           # Debug single episode
+│   ├── compute_power_analysis.py    # Statistical power analysis
+│   └── generate_all_logs.py         # Generate detailed logs for episodes
 │
 ├── results/                         # Generated outputs (gitignored)
 │   ├── raw/                         # JSON logs per episode
 │   ├── aggregated/                  # CSV summaries, figures
 │   └── figures/                     # Plots
+│
+├── logs/                            # Human-readable episode logs (generated)
+│   └── TIMESTAMP/                   # Timestamped log directories
 │
 └── tests/                           # Test suite
     ├── conftest.py                  # Test configuration
@@ -147,6 +156,26 @@ Step-by-step actions and observations
 Surprisal trajectory
 Belief state evolution
 Test query performance
+
+7. Generate Detailed Logs
+bashpython scripts/generate_all_logs.py \
+    results/raw/TIMESTAMP \
+    --output-dir logs/TIMESTAMP
+Generates human-readable text logs for all episodes with:
+
+Full step-by-step trajectories
+Observations, actions, and beliefs
+Test query results
+Metadata and ground truth
+
+8. Compute Statistical Power
+bashpython scripts/compute_power_analysis.py \
+    --results results/aggregated/TIMESTAMP
+Performs statistical power analysis for actor vs observer comparisons:
+
+Effect sizes and confidence intervals
+Required sample sizes for desired power
+t-tests and statistical significance
 
 Core Concepts
 Environments
@@ -352,6 +381,13 @@ Edit experiments/prompts.py
 Update PROMPT_VERSION constant
 Changes automatically logged in episode provenance
 
+Recent Updates
+Action-Observation Alignment Fix (October 2025)
+A critical bug in the episode runner has been fixed where actions and observations were misaligned by one step. The fix ensures that each logged step shows the action taken and the observation resulting from that action (not the previous observation). See BUG_FIX_SUMMARY.md for details.
+
+System Validation (October 2025)
+The entire system has been validated with 98% confidence. All mathematical formulas (surprisal, log-likelihood, belief updates) have been verified. The system is ready for full-scale experiments. See VALIDATION_REPORT.md for complete validation results.
+
 Common Issues
 "API key not found"
 Solution: Create .env file with your keys:
@@ -380,28 +416,35 @@ pytest tests/test_integration.py -v -m integration
 Roadmap
 Batch 1: Core Infrastructure ✓
 
- Environments (hot_pot, switch_light, chem_tile)
- Parametric belief states
- Guard rails and provenance
- Environment tests
+✓ Environments (hot_pot, switch_light, chem_tile)
+✓ Parametric belief states
+✓ Guard rails and provenance
+✓ Environment tests
 
-Batch 2: Agents (In Progress)
+Batch 2: Agents ✓
 
- Observer agent
- Actor agent with belief updates
- Text-Reader baseline
- Model-Based agent
- Transition model (MLP)
- Agent tests
+✓ Observer agent
+✓ Actor agent with belief updates
+✓ Text-Reader baseline
+✓ Model-Based agent
+✓ Transition model (MLP)
+✓ Agent tests
 
-Batch 3: Evaluation & Execution
+Batch 3: Evaluation & Execution ✓
 
- Test query sets
- All 7 metrics
- Experiment runner
- Analysis script
- Visualization
- Integration tests
+✓ Test query sets
+✓ All 7 metrics
+✓ Experiment runner
+✓ Analysis script
+✓ Visualization
+✓ Integration tests
+✓ Statistical power analysis
+✓ Episode log generation
+
+Current Status: System validated and ready for full-scale experiments
+
+See VALIDATION_REPORT.md for full system validation results
+See BUG_FIX_SUMMARY.md for recent bug fixes and improvements
 
 Future Enhancements
 

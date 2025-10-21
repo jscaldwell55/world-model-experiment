@@ -61,27 +61,17 @@ class ActorAgent(Agent):
 
     def act(self, observation: dict) -> AgentStep:
         """
-        Process observation, update belief, and choose next action.
+        Choose next action based on current observation.
 
-        Steps:
-        1. Update belief based on observation
-        2. Compute surprisal
-        3. Choose next action (if budget allows)
+        Note: This method does NOT update belief or compute final surprisal.
+        The runner will do that after executing the action and getting the result.
 
         Args:
             observation: Environment observation
 
         Returns:
-            AgentStep with action and metadata
+            AgentStep with action (observation/belief/surprisal will be updated by runner)
         """
-        # Update belief if we have observations and prior steps
-        if self.belief_state and len(self.memory) > 0:
-            time_elapsed = observation.get('time', observation.get('time_elapsed', 0))
-            self._update_belief(observation, time_elapsed)
-
-        # Compute surprisal from observation
-        surprisal = self._compute_surprisal(observation)
-
         # Choose action if budget allows
         if self.action_count < self.action_budget:
             thought, action = self._choose_action(observation)
@@ -90,15 +80,16 @@ class ActorAgent(Agent):
             thought = "Action budget exhausted"
             action = None
 
-        # Create step record
+        # Create step record (observation, belief, and surprisal will be set by runner)
+        # We use dummy values here that will be overwritten
         step = AgentStep(
             timestamp=time.time(),
             step_num=len(self.memory),
             thought=thought,
             action=action,
-            observation=observation,
-            belief_state=self._serialize_belief(),
-            surprisal=surprisal,
+            observation=observation,  # Placeholder - will be overwritten with result
+            belief_state=self._serialize_belief(),  # Current belief before action
+            surprisal=0.0,  # Placeholder - will be computed on result
             token_usage=0  # TODO: track from API
         )
 
@@ -131,6 +122,37 @@ class ActorAgent(Agent):
         super().reset()
         # Note: belief_state is NOT reset - it persists across episodes
         # This allows learning across multiple runs
+
+    def get_belief_state(self) -> dict:
+        """
+        Get current belief state as dictionary.
+
+        Returns:
+            Belief state dictionary
+        """
+        return self._serialize_belief()
+
+    def compute_surprisal(self, observation: dict) -> float:
+        """
+        Public method to compute surprisal on an observation.
+
+        Args:
+            observation: Environment observation
+
+        Returns:
+            Surprisal value
+        """
+        return self._compute_surprisal(observation)
+
+    def update_belief_from_observation(self, observation: dict):
+        """
+        Public method to update belief based on observation.
+
+        Args:
+            observation: Environment observation
+        """
+        time_elapsed = observation.get('time', observation.get('time_elapsed', 0))
+        self._update_belief(observation, time_elapsed)
 
     # Private helper methods
 
@@ -209,7 +231,8 @@ class ActorAgent(Agent):
         """
         Update belief parameters based on observation.
 
-        Uses LLM to reason about how observation should update beliefs.
+        First tries programmatic update() method if available (for deterministic updates),
+        then optionally uses LLM for more sophisticated reasoning.
 
         Args:
             observation: New observation
@@ -218,6 +241,18 @@ class ActorAgent(Agent):
         if not self.belief_state:
             return
 
+        # First, try programmatic update if belief has an update() method
+        if hasattr(self.belief_state, 'update') and callable(self.belief_state.update):
+            try:
+                # Call the belief's update method
+                self.belief_state = self.belief_state.update(observation, time_elapsed)
+                # Programmatic update succeeded - no need for LLM update
+                return
+            except Exception as e:
+                print(f"Warning: Programmatic belief update failed: {e}")
+                # Fall through to LLM-based update
+
+        # Fallback to LLM-based update for beliefs without programmatic update
         prompt = BELIEF_UPDATE_TEMPLATE.format(
             current_belief=self._serialize_belief(),
             observation=str(observation),

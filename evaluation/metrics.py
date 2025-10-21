@@ -95,7 +95,8 @@ def surprisal_trajectory(steps: List[Dict]) -> Dict[str, Any]:
     # Filter out zero surprisals (from agents that don't compute it)
     non_zero_surprisals = [s for s in surprisals if s > 0]
 
-    if len(non_zero_surprisals) < 2:
+    # Handle case with no non-zero surprisals
+    if len(non_zero_surprisals) == 0:
         return {
             'surprisals': surprisals,
             'slope': 0.0,
@@ -103,6 +104,19 @@ def surprisal_trajectory(steps: List[Dict]) -> Dict[str, Any]:
             'final_surprisal': 0.0,
             'max_surprisal': 0.0,
             'max_surprisal_step': 0,
+            'learning_detected': False
+        }
+
+    # Handle case with single non-zero surprisal
+    if len(non_zero_surprisals) == 1:
+        return {
+            'surprisals': surprisals,
+            'slope': 0.0,  # Cannot compute slope with 1 point
+            'mean_surprisal': float(non_zero_surprisals[0]),
+            'final_surprisal': float(non_zero_surprisals[0]),
+            'max_surprisal': float(non_zero_surprisals[0]),
+            'max_surprisal_step': int(np.argmax(surprisals)),
+            'initial_surprisal': float(non_zero_surprisals[0]),
             'learning_detected': False
         }
 
