@@ -133,6 +133,96 @@ def main():
     else:
         print("⚠ No calibration data available")
 
+    # === ADVANCED STATISTICAL ANALYSES ===
+    print("\n" + "=" * 70)
+    print("ADVANCED STATISTICAL ANALYSES")
+    print("=" * 70)
+
+    # Mutual Information (detects nonlinear dependencies)
+    print("\n[1/5] Computing mutual information...")
+    mi_df = analysis.compute_mutual_information()
+    if len(mi_df) > 0:
+        mi_path = os.path.join(output_dir, 'mutual_information.csv')
+        mi_df.to_csv(mi_path, index=False)
+        print(f"✓ Saved mutual information to: {mi_path}")
+        print()
+        print(mi_df.to_string(index=False))
+    else:
+        print("⚠ No mutual information data available")
+
+    # Regression Diagnostics (polynomial fit tests)
+    print("\n[2/5] Computing regression diagnostics...")
+    reg_diag = analysis.compute_regression_diagnostics()
+    if reg_diag:
+        reg_diag_path = os.path.join(output_dir, 'regression_diagnostics.json')
+        with open(reg_diag_path, 'w') as f:
+            json.dump(reg_diag, f, indent=2)
+        print(f"✓ Saved regression diagnostics to: {reg_diag_path}")
+        print()
+        print(f"  R² (linear): {reg_diag.get('r_squared', 0):.4f}")
+        if 'polynomial_r2' in reg_diag:
+            print(f"  R² (degree 2): {reg_diag['polynomial_r2'].get(2, 0):.4f}")
+            print(f"  R² (degree 3): {reg_diag['polynomial_r2'].get(3, 0):.4f}")
+            print(f"  Improvement (deg 2): {reg_diag.get('improvement_deg2', 0):.4f}")
+            print(f"  Improvement (deg 3): {reg_diag.get('improvement_deg3', 0):.4f}")
+        if reg_diag.get('improvement_deg2', 0) > 0.1:
+            print("  ⚠ Strong nonlinearity detected (deg 2 improvement > 0.1)")
+    else:
+        print("⚠ No regression diagnostics available")
+
+    # Distance Correlation (comprehensive dependence measure)
+    print("\n[3/5] Computing distance correlation...")
+    dcor_df = analysis.compute_distance_correlation()
+    if len(dcor_df) > 0:
+        dcor_path = os.path.join(output_dir, 'distance_correlation.csv')
+        dcor_df.to_csv(dcor_path, index=False)
+        print(f"✓ Saved distance correlation to: {dcor_path}")
+        print()
+        print(dcor_df.to_string(index=False))
+    else:
+        print("⚠ No distance correlation data available (dcor library may not be installed)")
+
+    # Agent Hierarchy Comparison
+    print("\n[4/5] Comparing coupling across agent types...")
+    agent_comparison = analysis.compare_agent_coupling()
+    if len(agent_comparison) > 0:
+        agent_comp_path = os.path.join(output_dir, 'agent_coupling_comparison.csv')
+        agent_comparison.to_csv(agent_comp_path, index=False)
+        print(f"✓ Saved agent coupling comparison to: {agent_comp_path}")
+        print()
+        print(agent_comparison.to_string(index=False))
+    else:
+        print("⚠ No agent comparison data available")
+
+    # Control Experiment Comparison (if control directory provided)
+    print("\n[5/5] Checking for negative control experiments...")
+    control_dirs = [
+        os.path.join(os.path.dirname(log_dir), 'control'),
+        os.path.join(os.path.dirname(log_dir), 'negative_control'),
+        'results/control',
+        'results/negative_control'
+    ]
+    control_comparison = None
+    for control_dir in control_dirs:
+        if os.path.exists(control_dir) and os.path.isdir(control_dir):
+            try:
+                print(f"  Found control directory: {control_dir}")
+                control_comparison = analysis.compare_control_coupling(control_dir)
+                if len(control_comparison) > 0:
+                    control_comp_path = os.path.join(output_dir, 'control_coupling_comparison.csv')
+                    control_comparison.to_csv(control_comp_path, index=False)
+                    print(f"✓ Saved control comparison to: {control_comp_path}")
+                    print()
+                    print(control_comparison.to_string(index=False))
+                    break
+            except Exception as e:
+                print(f"  ⚠ Failed to load control from {control_dir}: {e}")
+
+    if control_comparison is None:
+        print("⚠ No negative control experiments found")
+        print("  Expected location: results/control/ or results/negative_control/")
+        print("  Run: python scripts/run_negative_control.py --output results/control")
+
     # === HYPOTHESIS TESTING ===
     print("\n" + "=" * 70)
     print("HYPOTHESIS TESTING")
@@ -207,6 +297,16 @@ def main():
         print("  - predictive_validity.csv")
     if calibration:
         print("  - calibration_metrics.json")
+    if len(mi_df) > 0:
+        print("  - mutual_information.csv")
+    if reg_diag:
+        print("  - regression_diagnostics.json")
+    if len(dcor_df) > 0:
+        print("  - distance_correlation.csv")
+    if len(agent_comparison) > 0:
+        print("  - agent_coupling_comparison.csv")
+    if control_comparison is not None and len(control_comparison) > 0:
+        print("  - control_coupling_comparison.csv")
     if hypothesis_results:
         print("  - hypothesis_tests.json")
     print("\nNext step:")

@@ -21,6 +21,71 @@
 
 ---
 
+## Theoretical Foundations
+
+### The Core Question: Do LLMs Implicitly Model World Dynamics?
+
+This experiment tests a fundamental question about large language models: **Does linguistic next-token prediction encode similar uncertainty signals as grounded world-model prediction?**
+
+### Two Types of Surprisal
+
+**1. Linguistic Surprisal (Token NLL)**
+- **Definition**: Negative log-likelihood of observed text given prior context
+- **Formula**: `Token NLL = -Σ log P(token_i | context)`
+- **Origin**: Psycholinguistics (Hale 2001, Levy 2008)
+- **Measured via**: LLM token probabilities (logprobs)
+- **Interpretation**: How "surprising" is this sentence to a language model?
+
+**2. Belief Surprisal (Grounded Prediction Error)**
+- **Definition**: Negative log-likelihood of observation given parametric belief state
+- **Formula**: `Belief Surprisal = -log P(observation | belief_state, θ)`
+- **Origin**: Predictive processing (Friston 2010), reinforcement learning (Sutton & Barto 2018)
+- **Measured via**: Explicit probabilistic world models (NOT language-based)
+- **Interpretation**: How "surprising" is this observation to an agent's internal dynamics model?
+
+### Critical Distinction: Linguistic vs Grounded Uncertainty
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    LINGUISTIC SURPRISAL                          │
+│  "The thermometer reads 85°C" is surprising given context        │
+│  → High token NLL (LLM didn't expect this sentence)             │
+│  → Based on statistical patterns in language                     │
+└─────────────────────────────────────────────────────────────────┘
+                              vs
+┌─────────────────────────────────────────────────────────────────┐
+│                    GROUNDED SURPRISAL                            │
+│  Observation: measured_temp = 85°C is surprising given physics   │
+│  → High belief surprisal (violates heating rate model)          │
+│  → Based on probabilistic dynamics model (heating_rate ~ N(μ,σ))│
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**The Research Question**: Do these two uncertainties correlate? If yes, it suggests LLMs implicitly learn world models from language. If no, language prediction remains orthogonal to grounded prediction.
+
+### Theoretical Positioning
+
+This work bridges three research traditions:
+
+1. **Psycholinguistics**: Linguistic surprisal as cognitive measure (Hale, Levy, Frank)
+2. **Predictive Processing**: Prediction error minimization in brains (Friston, Clark)
+3. **World Models in AI**: Explicit dynamics models for planning (Ha & Schmidhuber, Hafner)
+
+Our contribution: **Testing whether LLM linguistic surprisal approximates world-model prediction error.**
+
+### Key References
+
+- **Hale, J. (2001).** A probabilistic Earley parser as a psycholinguistic model. *NAACL*.
+- **Levy, R. (2008).** Expectation-based syntactic comprehension. *Cognition*.
+- **Friston, K. (2010).** The free-energy principle: a unified brain theory? *Nature Reviews Neuroscience*.
+- **Frank, S. L., et al. (2015).** The ERP response to the amount of information conveyed by words in sentences. *Brain and Language*.
+- **Ha, D., & Schmidhuber, J. (2018).** World models. *arXiv*.
+- **Lake, B. M., et al. (2017).** Building machines that learn and think like people. *Behavioral and Brain Sciences*.
+
+See `Documentation/THEORETICAL_FRAMEWORK.md` for comprehensive treatment.
+
+---
+
 ## Overview
 
 The **Token-Level Prediction Bridge** tests whether linguistic next-token prediction encodes similar uncertainty signals as grounded world-model prediction (belief surprisal). This system:
@@ -38,12 +103,18 @@ Traditional LLMs generate text autoregressively but don't explicitly model world
 
 ## Research Question
 
-**H-Token (Primary):** Token NLL from next-sentence prediction correlates positively with belief surprisal from parametric world models.
+**H-Token (Primary):** Token-level negative log-likelihood (linguistic surprisal) from next-sentence prediction correlates positively with belief surprisal (grounded prediction error) from parametric world models.
+
+**Theoretical Significance**: Positive correlation would suggest that LLMs trained on text learn implicit approximations of world dynamics, supporting Sutskever's view that "predicting the next token well means you understand the underlying reality." Absence of correlation would support Sutton's critique that LLMs lack true world models.
 
 **Sub-Hypotheses:**
-- **H-Token1:** HotPot shows coupling r > 0.5 (deterministic physics)
-- **H-Token2:** Actor agents show higher predictive validity than Observer agents
-- **H-Token3:** Coupling strength: HotPot > SwitchLight > ChemTile (decreasing predictability)
+- **H-Token1 (Environment):** HotPot shows coupling r > 0.5 (deterministic physics easier to encode linguistically)
+- **H-Token2 (Agent):** Actor agents show higher predictive validity than Observer agents (grounded beliefs improve language prediction)
+- **H-Token3 (Gradient):** Coupling strength: HotPot > SwitchLight > ChemTile (decreases with environment stochasticity)
+
+**Null Hypothesis (H0):** Token NLL and belief surprisal are uncorrelated (r ≈ 0), suggesting linguistic and grounded prediction are orthogonal processes.
+
+**Control Prediction:** Shuffled/random textualization shows significantly lower coupling (r < 0.2), ruling out spurious correlations from statistical artifacts
 
 ---
 
@@ -135,6 +206,31 @@ Statistical Analysis (A1-A5)
 ```
 
 ### Components
+
+#### Mathematical Formulation
+
+**Belief State Evolution (Actor Agent):**
+```
+Observation o_t → Update belief θ_t via Bayesian inference
+Belief Surprisal: S_belief(t) = -log P(o_t | s_t, θ_{t-1})
+where s_t is latent state, θ are belief parameters
+```
+
+**Token Prediction (LLM):**
+```
+Context c_t = textualize([o_1, a_1, o_2, a_2, ..., a_t])
+LLM predicts next observation: P_LLM(o_{t+1} | c_t)
+Token NLL: S_token(t) = -Σ_i log P(token_i | c_t, token_{<i})
+```
+
+**Coupling Analysis:**
+```
+Correlation: ρ(S_token, S_belief) across all time steps
+H-Token: ρ > 0 (positive coupling)
+H0: ρ ≈ 0 (no coupling)
+```
+
+**Critical Design Feature**: Belief surprisal is computed from explicit probability distributions over physical parameters (temperature, heating rate, wire state), NOT from language. This ensures the two signals are independent by construction—any observed correlation reflects genuine information sharing, not circularity.
 
 #### 1. Textualization Layer (`textualization/`)
 
@@ -308,6 +404,37 @@ export OPENAI_API_KEY='sk-...'  # Required for OpenAI API
 ---
 
 ## Expected Results
+
+### Interpretation Framework
+
+| Observed Pattern | Theoretical Implication | Citation Support |
+|-----------------|------------------------|------------------|
+| Strong coupling (r > 0.7) in HotPot | LLMs learn implicit physics from language descriptions | Supports Sutskever (2024): "Next-token prediction encodes reality" |
+| Weak coupling (r < 0.3) in all envs | LLMs limited to surface statistics, lack world models | Supports Sutton (2023): "LLMs learn what people say, not what happens" |
+| Gradient: HotPot > SwitchLight > ChemTile | Coupling strength inversely related to stochasticity | Novel finding: linguistic prediction works for deterministic domains |
+| Actor > Observer predictive validity | Grounded experience improves language prediction alignment | Suggests interaction enhances both world models and linguistic models |
+| Control coupling < 0.2 | Observed correlations are semantic, not artifactual | Validates experimental design |
+
+### Decision Tree for Interpretation
+
+```
+                    ┌─────────────────────┐
+                    │  Coupling in HotPot  │
+                    └──────────┬───────────┘
+                              │
+                 ┌────────────┴────────────┐
+                 │                         │
+            r > 0.6                   r < 0.3
+                 │                         │
+                 ▼                         ▼
+    ┌────────────────────────┐  ┌──────────────────────┐
+    │ LLMs encode implicit    │  │ LLMs lack world      │
+    │ world models           │  │ models (pure stats)  │
+    │                        │  │                      │
+    │ Next: Test transfer    │  │ Next: Test if multi- │
+    │ to novel environments  │  │ modal helps (vision) │
+    └────────────────────────┘  └──────────────────────┘
+```
 
 ### By Environment
 

@@ -1,9 +1,13 @@
 # config.yaml
 models:
-  observer: "claude-sonnet-4-5-20250929"
-  actor: "claude-sonnet-4-5-20250929"
-  model_based: "claude-sonnet-4-5-20250929"
-  text_reader: "claude-sonnet-4-5-20250929"
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  model_based:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
 
 budgets:
   actions_per_episode: 10

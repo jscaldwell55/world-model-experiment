@@ -3,7 +3,113 @@
 All prompts versioned in one place for reproducibility.
 """
 
-PROMPT_VERSION = "v1.0.0"
+PROMPT_VERSION = "v1.1.0"
+
+# ============================================================================
+# Prior Generation Prompts (Actor Agent)
+# ============================================================================
+
+HOTPOT_PRIOR_GENERATION_TEMPLATE = """You are initializing your beliefs about a laboratory environment based on the initial observation.
+
+Initial Observation:
+{initial_observation}
+
+Environment Type: Hot-Pot Lab
+
+Your task is to set initial beliefs (priors) about the environment's dynamics based on this observation.
+You need to specify parameters for:
+
+1. heating_rate_mean: Expected temperature change per second (°C/s)
+   - Range: [-5.0, 5.0]
+   - Positive = heating, Negative = cooling, Zero = stable
+   - Consider: What does the observation suggest about the heating state?
+
+2. heating_rate_std: Your uncertainty about the heating rate (°C/s)
+   - Range: [0.1, 10.0]
+   - Higher = more uncertain about the heating dynamics
+   - Consider: How confident are you? Could labels be misleading?
+
+3. measurement_noise: Expected noise in temperature measurements (°C)
+   - Range: [0.1, 5.0]
+   - Typical thermometers: 0.5-2.0°C
+   - Consider: How precise do you expect measurements to be?
+
+IMPORTANT GUIDELINES:
+- Express genuine uncertainty - labels may be misleading
+- Use temperature=0 for consistency
+- Base your priors on what you observe, but maintain skepticism
+- If the observation suggests heating but you're unsure, use a moderate mean with higher std
+
+Respond with ONLY a JSON object in this exact format (no markdown, no explanations):
+{{"heating_rate_mean": <float>, "heating_rate_std": <float>, "measurement_noise": <float>, "reasoning": "<1-2 sentence explanation>"}}
+
+Your prior belief (JSON only):"""
+
+SWITCHLIGHT_PRIOR_GENERATION_TEMPLATE = """You are initializing your beliefs about a switch-light environment based on the initial observation.
+
+Initial Observation:
+{initial_observation}
+
+Environment Type: Switch-Light
+
+Your task is to set initial beliefs (priors) about the wiring configuration.
+You need to specify parameters for:
+
+1. connection_probs: Probability matrix for switch → light connections
+   - Format: [[P(switch_0 → light_0), P(switch_0 → light_1)],
+              [P(switch_1 → light_0), P(switch_1 → light_1)]]
+   - Each probability in range [0.0, 1.0]
+   - Consider: What wiring patterns seem plausible?
+
+2. uncertainty: Overall uncertainty about the wiring
+   - Range: [0.0, 1.0]
+   - Higher = less confident about connections
+   - Consider: How much can you infer from this initial observation?
+
+IMPORTANT GUIDELINES:
+- If you can't determine connections yet, use uniform priors (0.5)
+- Express genuine uncertainty in the uncertainty parameter
+- Common patterns: direct (switch_i → light_i) or crossed (switch_0 → light_1, etc.)
+
+Respond with ONLY a JSON object in this exact format (no markdown, no explanations):
+{{"connection_probs": [[<float>, <float>], [<float>, <float>]], "uncertainty": <float>, "reasoning": "<1-2 sentence explanation>"}}
+
+Your prior belief (JSON only):"""
+
+CHEMTILE_PRIOR_GENERATION_TEMPLATE = """You are initializing your beliefs about a chemistry lab environment based on the initial observation.
+
+Initial Observation:
+{initial_observation}
+
+Environment Type: Chemical Tile Lab
+
+Your task is to set initial beliefs (priors) about reaction outcomes and safety.
+You need to specify parameters for:
+
+1. reaction_safety_priors: Prior beliefs about compound safety
+   - Format: {{"compound_A": <float>, "compound_B": <float>, ...}}
+   - Each value is P(safe) in range [0.0, 1.0]
+   - Consider: Do any compounds seem particularly dangerous or safe?
+
+2. reaction_outcome_uncertainty: How unpredictable reactions are
+   - Range: [0.0, 1.0]
+   - Higher = more chaotic/unpredictable chemistry
+   - Consider: Does the environment seem controlled or volatile?
+
+3. temperature_effect_prior: Expected influence of temperature on reactions
+   - Range: [0.0, 1.0]
+   - Higher = temperature has stronger effects
+   - Consider: Typical chemistry labs have moderate-to-strong temperature effects
+
+IMPORTANT GUIDELINES:
+- If no specific compounds are mentioned, use generic cautious priors (0.5)
+- Express genuine uncertainty - chemistry can be unpredictable
+- Safety-first: when uncertain, assume moderate danger
+
+Respond with ONLY a JSON object in this exact format (no markdown, no explanations):
+{{"reaction_safety_priors": {{"compound_A": <float>, "compound_B": <float>}}, "reaction_outcome_uncertainty": <float>, "temperature_effect_prior": <float>, "reasoning": "<1-2 sentence explanation>"}}
+
+Your prior belief (JSON only):"""
 
 # ============================================================================
 # Observer Agent Prompts

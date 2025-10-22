@@ -1,114 +1,238 @@
-# preregistration.yaml
-# Created: [DATE] BEFORE running any experiments
-# SHA: [git commit sha at creation]
-
 study_metadata:
   title: "World Model Formation in Interactive vs Non-Interactive LLMs"
-  created: "2024-01-15"
-  researchers: ["Your Name"]
-  
+  created: "2024-10-21"
+  researchers: ["Jay Caldwell"]
+  affiliation: "Scale AI"
+
 primary_hypotheses:
   H1:
     description: "Actor agents achieve higher interventional accuracy than Observer agents"
     endpoint: "interventional_accuracy"
-    environment: "hot_pot"
-    minimum_effect_size: 0.15  # Cohen's d
+    environment: "all"
+    minimum_effect_size: 0.15  # Cohen's d (≥15% improvement)
     direction: "Actor > Observer"
-    
   H2:
     description: "Actor agents show decreasing surprisal over time; Observers remain flat"
     endpoint: "surprisal_trajectory_slope"
     environment: "all"
-    minimum_effect_size: -0.20  # Negative slope
-    
+    minimum_effect_size: -0.20  # Negative slope (learning)
+    direction: "Actor slope < 0, Observer slope ≈ 0"
   H3:
-    description: "Model-based planning outperforms pure LLM reasoning"
-    endpoint: "planning_success_rate"
-    environment: "chem_tile"
-    minimum_effect_size: 0.10
+    description: "Model-based planning outperforms Actor reasoning"
+    endpoint: "interventional_accuracy"
+    environment: "all"
+    minimum_effect_size: 0.10  # ≥10% improvement
     direction: "ModelBased > Actor"
 
 secondary_hypotheses:
   H4:
     description: "Interventional accuracy improves after high-surprisal events"
     endpoint: "delta_accuracy_post_surprise"
+    environment: "all"
     minimum_effect_size: 0.08
-    
+    direction: "positive"
   H5:
     description: "Actor agents show better OOD generalization than Observers"
     endpoint: "transfer_accuracy"
     environment: "transfer_env"
     minimum_effect_size: 0.12
+    direction: "Actor > Observer"
+    note: "Transfer environment not yet implemented - test when available"
+
+# ============================================================================
+# Token Prediction Hypotheses (Updated: 2024-10-22)
+# ============================================================================
+
+token_hypotheses:
+  H-Token:
+    description: "Token NLL correlates positively with belief surprisal"
+    statistical_test: "Pearson correlation coefficient"
+    success_threshold: "r > 0.3 (p < 0.05) in at least 2 of 3 environments"
+    rationale: "Tests whether linguistic prediction encodes grounded prediction"
+
+  H-Token1:
+    description: "HotPot shows coupling r > 0.5"
+    statistical_test: "Pearson correlation in HotPot environment"
+    success_threshold: "r > 0.5, p < 0.01"
+    rationale: "Deterministic physics should be linguistically encodable"
+
+  H-Token2:
+    description: "Actor agents show higher predictive validity than Observer"
+    statistical_test: "Correlation between NLL(t) and Accuracy(t+1), compared across agents"
+    success_threshold: "Actor > Observer by ≥0.15 correlation points"
+    rationale: "Grounded beliefs should improve linguistic prediction alignment"
+
+  H-Token3:
+    description: "Coupling gradient: HotPot > SwitchLight > ChemTile"
+    statistical_test: "Rank correlation coefficients across environments"
+    success_threshold: "Observed ranking matches predicted ranking"
+    rationale: "Coupling should decrease with environment stochasticity"
+
+  H-Control:
+    description: "Negative control (shuffled text) shows significantly lower coupling"
+    statistical_test: "Independent t-test: coupling_normal vs coupling_shuffled"
+    success_threshold: "coupling_shuffled < 0.2 AND coupling_normal > coupling_shuffled (p < 0.01)"
+    rationale: "Rules out spurious correlations from statistical artifacts"
+
+  H-Baseline:
+    description: "Model-based agent shows higher coupling than Actor/Observer"
+    statistical_test: "Compare coupling: model_based vs actor vs observer"
+    success_threshold: "coupling_model_based > coupling_actor > coupling_observer"
+    rationale: "Establishes upper bound on achievable coupling with explicit dynamics model"
+
+# Analysis Plan
+token_analysis:
+  primary_metrics:
+    - "Pearson correlation (r)"
+    - "Spearman rank correlation (ρ)"
+    - "Mutual information (MI)"
+    - "Distance correlation (dCor)"
+
+  secondary_metrics:
+    - "Regression diagnostics (R², residuals)"
+    - "Precision-Recall AUC (surprise detection)"
+    - "Predictive validity (lagged correlation)"
+    - "Calibration (Brier score, ECE)"
+
+  robustness_tests:
+    - "Negative control (shuffled text)"
+    - "Gold standard baseline (model_based agent)"
+    - "Template ablation (different phrasings)"
+    - "Model family comparison (if resources permit)"
 
 sample_size:
-  episodes_per_condition: 50
-  environments: 3
-  agents: 3  # Observer, Actor, ModelBased
-  total_episodes: 450
-  
-  power_analysis:
-    alpha: 0.05
-    desired_power: 0.80
-    expected_effect_size: 0.15
-    estimated_power: 0.82  # Based on pilot
+  episodes_per_agent_per_env:
+    hot_pot: 50
+    switch_light: 50
+    chem_tile: 30
+  agents: 4  # Observer, Actor, TextReader, ModelBased
+  environments: 3  # hot_pot, switch_light, chem_tile
+  total_episodes: 520  # (50+50+30) × 4
+  pilot_episodes: 60  # 5 × 3 × 4 for validation
+
+power_analysis:
+  alpha: 0.05
+  desired_power: 0.80
+  expected_effect_size: 0.15
+  estimated_power: 0.82  # Based on pilot (if run)
 
 exclusion_criteria:
-  - "Episodes where LLM API fails (timeout, rate limit)"
+  - "Episodes where Anthropic API fails (timeout, rate limit, authentication error)"
   - "Episodes with tool call parsing errors"
-  - "Episodes where agent exceeds action budget by >10%"
+  - "Episodes where agent exceeds action budget"
+  - "Episodes with missing ground truth data"
+  - "Token prediction: episodes where OpenAI API fails"
 
 statistical_plan:
   primary_test: "Independent samples t-test (two-tailed)"
   correction: "Bonferroni for 3 primary hypotheses (α = 0.017)"
   effect_size: "Cohen's d with 95% bootstrap CI"
-  secondary_tests: "Reported as exploratory (no correction)"
+  secondary_tests: "Reported as exploratory (no multiple testing correction)"
+  token_prediction_tests:
+    - "Pearson and Spearman correlations"
+    - "Fisher r-to-z transformation for comparing correlations"
+    - "Bootstrap confidence intervals (1000 iterations)"
 
-baselines:
-  - name: "Observer"
+agents:
+  observer:
     description: "Language-only reasoning, no interaction"
-  - name: "TextReader" 
-    description: "Observer + access to 10 prior episode logs"
-  - name: "Actor"
-    description: "Interactive agent with belief updates"
-  - name: "ModelBased"
+    model: "claude-sonnet-4-5-20250929"
+    actions_per_episode: 0
+  actor:
+    description: "Interactive agent with Bayesian belief updates"
+    model: "claude-sonnet-4-5-20250929"
+    actions_per_episode: 10
+  text_reader:
+    description: "Observer + access to prior episode logs (vicarious learning)"
+    model: "claude-sonnet-4-5-20250929"
+    actions_per_episode: 0
+  model_based:
     description: "Actor + explicit learned transition model (MLP)"
+    model: "claude-sonnet-4-5-20250929"
+    actions_per_episode: 10
+    dynamics_model: "MLP (2 hidden layers, 64 units)"
 
 environments:
   hot_pot:
-    description: "Causal hazard with misleading labels"
-    seeds: [42, 43, 44, 45, 46, ...]  # 50 seeds
-    
+    description: "Causal reasoning with misleading labels (thermodynamics)"
+    num_episodes: 50
+    seeds: [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91]
   switch_light:
-    description: "Intervention vs observation distinction"
-    seeds: [100, 101, 102, ...]
-    
+    description: "Intervention vs observation distinction (do-calculus)"
+    num_episodes: 50
+    seeds: [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149]
   chem_tile:
-    description: "Compositional rules with safety constraints"
-    seeds: [200, 201, 202, ...]
-    
+    description: "Compositional reasoning with safety constraints"
+    num_episodes: 30
+    seeds: [200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229]
   transfer:
-    description: "Out-of-distribution: nonlinear heating dynamics"
-    seeds: [300, 301, 302, ...]
+    description: "Out-of-distribution: nonlinear dynamics (not yet implemented)"
+    num_episodes: 30
+    seeds: [300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329]
+    status: "planned"
 
 metrics:
   primary:
-    - interventional_accuracy
-    - surprisal_trajectory_slope
-    - planning_success_rate
-    
+    - interventional_accuracy  # "What if we DO X?" queries
+    - surprisal_trajectory_slope  # Learning rate indicator
+    - planning_success_rate  # Safe goal achievement
   secondary:
-    - counterfactual_accuracy
-    - calibration_error
-    - sample_efficiency
-    - delta_accuracy_post_surprise
-    
+    - counterfactual_accuracy  # "What if we HAD DONE X?" queries
+    - calibration_error  # Brier score, ECE
+    - sample_efficiency  # Actions needed for 80% accuracy
+    - delta_accuracy_post_surprise  # Learning from surprise
+  token_prediction:
+    - sequence_nll  # Negative log-likelihood of predicted observation
+    - per_token_nll  # Normalized by token count
+    - token_belief_correlation  # Pearson/Spearman ρ
+    - surprise_detection_auc  # PR-AUC for detecting high surprisal
+    - predictive_validity  # Does low NLL predict future accuracy?
+
 robustness_checks:
-  - "Prompt variation: test 3 different system prompts"
-  - "Model variation: GPT-4 vs Claude"
-  - "Temperature: 0.0, 0.3, 0.7"
+  planned:
+    - "Temperature variation: 0.0 vs 0.3 vs 0.7"
+    - "Model family comparison: Claude vs GPT-4 (if budget allows)"
+    - "Prompt variation: 3 different system prompt phrasings"
+    - "Context length: Full history vs last N steps"
+  token_prediction_robustness:
+    - "Paraphrase robustness: synonym substitution"
+    - "Stopword removal: effect on coupling"
+    - "Candidate ranking: true vs decoy observations"
 
 data_availability:
   raw_logs: "results/raw/"
   aggregated: "results/aggregated/"
-  code_repository: "[GitHub URL]"
-  preregistration_hash: "[SHA-256 of this file]"
+  figures: "results/figures/"
+  code_repository: "https://github.com/[username]/world-model-experiment"
+  preregistration_hash: "[SHA-256 of this file - compute after finalizing]"
+
+guard_rails:
+  - "No ground truth leakage to agents"
+  - "Deterministic environments (same seed → same trajectory)"
+  - "Counterfactual purity (no state modification)"
+  - "Programmatic observation injection (prevent hallucination)"
+  - "Full provenance tracking (git SHA, code hashes)"
+
+reproducibility:
+  random_seeds: "Explicit per-episode, pre-specified"
+  model_temperature: 0.0  # Deterministic (except where testing temperature effects)
+  api_versions:
+    anthropic: "claude-sonnet-4-5-20250929"
+    openai: "gpt-4o-mini (for token prediction only)"
+  dependencies: "requirements.txt (pinned versions)"
+  python_version: "3.10+"
+
+timeline:
+  preregistration_date: "2024-10-21"
+  pilot_run: "Week 1 (60 episodes)"
+  pilot_analysis: "Week 1 (validate methodology)"
+  full_experiment: "Week 2 (520 episodes)"
+  analysis: "Week 2-3"
+  writeup: "Week 3-4"
+
+notes:
+  - "This preregistration created BEFORE running any experiments"
+  - "Pilot may inform minor methodology adjustments (will be documented)"
+  - "Token prediction bridge is novel contribution - no prior work to compare"
+  - "Transfer environment (H5) deferred if implementation takes too long"
+  - "Primary focus: H1-H3 (core interactive learning questions)"

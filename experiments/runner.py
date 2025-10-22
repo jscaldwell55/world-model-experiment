@@ -1,5 +1,5 @@
 # experiments/runner.py
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from pathlib import Path
 import json
 import time
@@ -7,6 +7,9 @@ import time
 from experiments.provenance import ProvenanceLog
 from agents.base import create_llm
 from evaluation.tasks import get_test_queries
+
+if TYPE_CHECKING:
+    from experiments.rate_limiter import RateLimiter
 
 
 class ExperimentRunner:
@@ -39,7 +42,8 @@ class ExperimentRunner:
         self,
         episode_id: str,
         seed: int,
-        save_dir: Path
+        save_dir: Path,
+        rate_limiter: Optional['RateLimiter'] = None
     ) -> dict:
         """
         Run single episode with strict guard rails:
@@ -55,12 +59,18 @@ class ExperimentRunner:
         Returns:
             Episode log dictionary
         """
+        # Track episode start time
+        episode_start_time = time.time()
+
         # Initialize environment
         env = self.environment_cls(seed=seed)
         observation = env.reset(seed=seed)
 
         # Initialize agent with appropriate LLM
-        agent_type = self.agent_cls.__name__.lower().replace('agent', '')
+        # Convert PascalCase to snake_case: TextReaderAgent -> text_reader
+        import re
+        class_name = self.agent_cls.__name__.replace('Agent', '')
+        agent_type = re.sub(r'(?<!^)(?=[A-Z])', '_', class_name).lower()
 
         # Get model config - no defaults, must be in config
         if 'models' not in self.config:
@@ -84,6 +94,10 @@ class ExperimentRunner:
         use_mock = self.config.get('use_mock_llm', False)
         llm = create_llm(model_name, mock=use_mock)
 
+        # Set rate limiter if provided
+        if rate_limiter:
+            llm.set_rate_limiter(rate_limiter)
+
         # Create agent with environment name if applicable
         agent_kwargs = {
             'llm': llm,
@@ -97,6 +111,12 @@ class ExperimentRunner:
             if 'environment_name' in sig.parameters:
                 agent_kwargs['environment_name'] = env.__class__.__name__
 
+            # Add prior_logs for TextReaderAgent
+            if 'prior_logs' in sig.parameters:
+                # TODO: Load actual prior logs from previous episodes
+                # For now, provide empty list so agent can at least run
+                agent_kwargs['prior_logs'] = []
+
         agent = self.agent_cls(**agent_kwargs)
 
         # Set environment-specific belief if Actor
@@ -104,6 +124,19 @@ class ExperimentRunner:
             belief_cls = self._get_belief_class(env.__class__.__name__)
             if belief_cls:
                 agent.set_belief_state(belief_cls())
+
+        # Reset agent with prior generation (for Actor agents)
+        # Pass environment type and initial observation for LLM-based prior generation
+        if hasattr(agent, 'reset'):
+            if hasattr(agent, 'set_belief_state'):
+                # Actor agent - generate priors from initial observation
+                agent.reset(
+                    environment_type=env.__class__.__name__,
+                    initial_observation=observation
+                )
+            else:
+                # Other agent types - standard reset
+                agent.reset()
 
         # Episode loop
         steps = []
@@ -179,6 +212,12 @@ class ExperimentRunner:
         test_queries = get_test_queries(env.__class__.__name__)
         test_results = self._evaluate_agent(agent, env, test_queries, ground_truth)
 
+        # Get token usage from LLM
+        llm_usage = llm.get_total_usage()
+
+        # Calculate episode duration
+        episode_duration = time.time() - episode_start_time
+
         # Package episode log
         episode_log = {
             'episode_id': episode_id,
@@ -189,8 +228,21 @@ class ExperimentRunner:
             'steps': [step.to_dict() for step in steps],
             'test_results': test_results,
             'ground_truth': ground_truth,  # For evaluation only
-            'timestamp': time.time()
+            'timestamp': time.time(),
+            # Token usage tracking
+            'total_input_tokens': llm_usage['total_input_tokens'],
+            'total_output_tokens': llm_usage['total_output_tokens'],
+            'total_api_calls': llm_usage['total_api_calls'],
+            'duration_seconds': episode_duration
         }
+
+        # Add prior generation metadata if available (Actor agents)
+        if hasattr(agent, 'prior_generation_metadata') and agent.prior_generation_metadata:
+            episode_log['prior_generation'] = {
+                'initial_priors': agent.prior_generation_metadata['priors'],
+                'prior_reasoning': agent.prior_generation_metadata['reasoning'],
+                'prior_generation_tokens': agent.prior_generation_metadata['token_count']
+            }
 
         # Save
         save_path = save_dir / f"{episode_id}.json"

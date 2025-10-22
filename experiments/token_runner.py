@@ -20,7 +20,8 @@ def run_episode_with_tokens(
     predictor: NextSentencePredictor,
     seed: int,
     max_actions: int = 10,
-    save_dir: Optional[str] = None
+    save_dir: Optional[str] = None,
+    control_mode: Optional[str] = None
 ) -> Tuple[Dict, TokenLogger]:
     """
     Run episode with parallel token prediction logging.
@@ -41,18 +42,33 @@ def run_episode_with_tokens(
         seed: Random seed for episode
         max_actions: Maximum actions per episode
         save_dir: Directory to save token logs
+        control_mode: Optional negative control ('shuffled', 'random', or None)
+                     If set, wraps textualizer to break semantic coupling
 
     Returns:
         (test_results, token_logger): Test query results and token log
 
     Raises:
         ValueError: If environment and textualizer are incompatible
+        ValueError: If control_mode is invalid
     """
+
+    # Wrap textualizer with negative control if requested
+    if control_mode is not None:
+        from textualization.negative_controls import create_negative_control_textualizer
+        textualizer = create_negative_control_textualizer(
+            textualizer,
+            control_type=control_mode,
+            seed=seed
+        )
+        control_suffix = f"_ctrl_{control_mode}"
+    else:
+        control_suffix = ""
 
     # Initialize
     env_name = env.__class__.__name__
     agent_name = agent.__class__.__name__
-    episode_id = f"{env_name}_{agent_name}_ep{seed:03d}"
+    episode_id = f"{env_name}_{agent_name}_ep{seed:03d}{control_suffix}"
     token_logger = TokenLogger(episode_id)
 
     # Build initial context
@@ -61,6 +77,8 @@ def run_episode_with_tokens(
     context_history = [initial_obs_text]
 
     print(f"  Starting episode: {episode_id}")
+    if control_mode:
+        print(f"  ⚠️  NEGATIVE CONTROL MODE: {control_mode}")
     print(f"  Initial observation: {initial_obs_text[:60]}...")
 
     # Episode loop
@@ -72,6 +90,12 @@ def run_episode_with_tokens(
         if action is None or action == 'done':
             print(f"  Episode ended at step {step} (action={action})")
             break
+
+        # Strip empty parentheses from actions (for environments that don't parse them)
+        # e.g., "measure_temp()" → "measure_temp"
+        # but keep "wait(5)" → "wait(5)"
+        if action and action.endswith("()"):
+            action = action[:-2]
 
         # === TOKEN PREDICTION PARALLEL TRACK ===
 
@@ -102,16 +126,15 @@ def run_episode_with_tokens(
         # === EXTRACT BELIEF SURPRISAL (from existing pipeline) ===
         belief_surprisal = None
 
-        # For Actor agents, extract surprisal from belief state
-        if hasattr(agent, 'belief_state') and agent.belief_state is not None:
+        # For Actor agents, compute surprisal using the agent's method
+        if hasattr(agent, 'compute_surprisal'):
             try:
-                # Compute log likelihood of observation
-                time_elapsed = env.get_time_elapsed() if hasattr(env, 'get_time_elapsed') else 0.0
+                # Compute surprisal with CURRENT belief (before update)
+                belief_surprisal = agent.compute_surprisal(next_obs)
 
-                if hasattr(agent.belief_state, 'log_likelihood'):
-                    log_likelihood = agent.belief_state.log_likelihood(next_obs, time_elapsed)
-                    # Surprisal = -log P(obs | belief)
-                    belief_surprisal = -log_likelihood
+                # Update belief with new observation for next iteration
+                if hasattr(agent, 'update_belief_from_observation'):
+                    agent.update_belief_from_observation(next_obs)
             except Exception as e:
                 print(f"  Warning: Belief surprisal computation failed: {e}")
 

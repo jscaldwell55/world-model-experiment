@@ -8,6 +8,9 @@ from experiments.prompts import (
     ACTOR_ACTION_TEMPLATE,
     ACTOR_QUERY_TEMPLATE,
     BELIEF_UPDATE_TEMPLATE,
+    HOTPOT_PRIOR_GENERATION_TEMPLATE,
+    SWITCHLIGHT_PRIOR_GENERATION_TEMPLATE,
+    CHEMTILE_PRIOR_GENERATION_TEMPLATE,
     extract_answer_components,
     extract_action,
     extract_thought,
@@ -117,10 +120,75 @@ class ActorAgent(Agent):
 
         return answer, confidence
 
-    def reset(self):
-        """Reset agent state for new episode"""
+    def reset(
+        self,
+        environment_type: Optional[str] = None,
+        initial_observation: Optional[dict] = None
+    ):
+        """
+        Reset agent state for new episode.
+
+        Args:
+            environment_type: Type of environment (e.g., 'HotPotLab')
+            initial_observation: Initial observation to generate priors from
+
+        Note: If environment_type and initial_observation are provided,
+              generates new priors. Otherwise, belief_state persists.
+        """
         super().reset()
-        # Note: belief_state is NOT reset - it persists across episodes
+
+        # Store prior generation metadata for logging
+        self.prior_generation_metadata = None
+
+        # Generate new priors if environment type and observation are provided
+        if environment_type and initial_observation and self.belief_state:
+            try:
+                # Generate priors using LLM
+                priors, reasoning, token_count = self._generate_priors(
+                    initial_observation,
+                    environment_type
+                )
+
+                # Create new belief state with generated priors
+                from models.belief_state import HotPotBelief, SwitchLightBelief, ChemTileBelief
+
+                belief_mapping = {
+                    'HotPotLab': HotPotBelief,
+                    'SwitchLight': SwitchLightBelief,
+                    'ChemTile': ChemTileBelief
+                }
+
+                if environment_type in belief_mapping:
+                    belief_class = belief_mapping[environment_type]
+
+                    # Initialize belief with generated priors
+                    # For HotPotBelief, we need base_temp from observation or default
+                    if environment_type == 'HotPotLab':
+                        # Set base_temp to measured temp if available, else default
+                        base_temp = initial_observation.get('measured_temp', 20.0)
+                        self.belief_state = belief_class(
+                            **priors,
+                            base_temp=base_temp
+                        )
+                    else:
+                        self.belief_state = belief_class(**priors)
+
+                    # Store metadata for logging
+                    self.prior_generation_metadata = {
+                        'priors': priors,
+                        'reasoning': reasoning,
+                        'token_count': token_count,
+                        'environment_type': environment_type
+                    }
+
+                    print(f"Initialized {environment_type} belief with LLM-generated priors")
+
+            except Exception as e:
+                print(f"Warning: Failed to generate priors: {e}")
+                print(f"Keeping existing belief state")
+                # belief_state remains unchanged
+
+        # Note: If no environment_type provided, belief_state persists across episodes
         # This allows learning across multiple runs
 
     def get_belief_state(self) -> dict:
@@ -328,3 +396,203 @@ class ActorAgent(Agent):
         except AttributeError:
             # Fallback for non-pydantic beliefs
             return {'belief': str(self.belief_state)}
+
+    def _validate_priors(self, priors: dict, environment_type: str) -> bool:
+        """
+        Validate that generated priors are within reasonable ranges.
+
+        Args:
+            priors: Generated prior parameters
+            environment_type: Type of environment (HotPotLab, SwitchLight, ChemTile)
+
+        Returns:
+            True if valid, raises ValueError if invalid
+
+        Raises:
+            ValueError: If priors are invalid with clear error message
+        """
+        if environment_type == "HotPotLab":
+            # Validate heating_rate_mean
+            if 'heating_rate_mean' not in priors:
+                raise ValueError("Missing required parameter: heating_rate_mean")
+            if not (-5.0 <= priors['heating_rate_mean'] <= 5.0):
+                raise ValueError(
+                    f"heating_rate_mean={priors['heating_rate_mean']} "
+                    f"out of range [-5.0, 5.0]"
+                )
+
+            # Validate heating_rate_std
+            if 'heating_rate_std' not in priors:
+                raise ValueError("Missing required parameter: heating_rate_std")
+            if not (0.1 <= priors['heating_rate_std'] <= 10.0):
+                raise ValueError(
+                    f"heating_rate_std={priors['heating_rate_std']} "
+                    f"out of range [0.1, 10.0]"
+                )
+
+            # Validate measurement_noise
+            if 'measurement_noise' not in priors:
+                raise ValueError("Missing required parameter: measurement_noise")
+            if not (0.1 <= priors['measurement_noise'] <= 5.0):
+                raise ValueError(
+                    f"measurement_noise={priors['measurement_noise']} "
+                    f"out of range [0.1, 5.0]"
+                )
+
+        elif environment_type == "SwitchLight":
+            # Validate connection_probs
+            if 'connection_probs' not in priors:
+                raise ValueError("Missing required parameter: connection_probs")
+
+            conn_probs = priors['connection_probs']
+            if not isinstance(conn_probs, list) or len(conn_probs) != 2:
+                raise ValueError("connection_probs must be 2x2 matrix")
+
+            for i, row in enumerate(conn_probs):
+                if not isinstance(row, list) or len(row) != 2:
+                    raise ValueError(f"connection_probs row {i} must have 2 elements")
+                for j, prob in enumerate(row):
+                    if not (0.0 <= prob <= 1.0):
+                        raise ValueError(
+                            f"connection_probs[{i}][{j}]={prob} "
+                            f"out of range [0.0, 1.0]"
+                        )
+
+            # Validate uncertainty
+            if 'uncertainty' not in priors:
+                raise ValueError("Missing required parameter: uncertainty")
+            if not (0.0 <= priors['uncertainty'] <= 1.0):
+                raise ValueError(
+                    f"uncertainty={priors['uncertainty']} "
+                    f"out of range [0.0, 1.0]"
+                )
+
+        elif environment_type == "ChemTile":
+            # Validate reaction_safety_priors
+            if 'reaction_safety_priors' in priors:
+                for compound, safety in priors['reaction_safety_priors'].items():
+                    if not (0.0 <= safety <= 1.0):
+                        raise ValueError(
+                            f"reaction_safety_priors[{compound}]={safety} "
+                            f"out of range [0.0, 1.0]"
+                        )
+
+            # Validate reaction_outcome_uncertainty
+            if 'reaction_outcome_uncertainty' in priors:
+                if not (0.0 <= priors['reaction_outcome_uncertainty'] <= 1.0):
+                    raise ValueError(
+                        f"reaction_outcome_uncertainty={priors['reaction_outcome_uncertainty']} "
+                        f"out of range [0.0, 1.0]"
+                    )
+
+            # Validate temperature_effect_prior
+            if 'temperature_effect_prior' in priors:
+                if not (0.0 <= priors['temperature_effect_prior'] <= 1.0):
+                    raise ValueError(
+                        f"temperature_effect_prior={priors['temperature_effect_prior']} "
+                        f"out of range [0.0, 1.0]"
+                    )
+
+        return True
+
+    def _generate_priors(
+        self,
+        initial_observation: dict,
+        environment_type: str
+    ) -> Tuple[dict, str, int]:
+        """
+        Generate prior beliefs using LLM based on initial observation.
+
+        Args:
+            initial_observation: Initial observation from environment
+            environment_type: Type of environment (HotPotLab, SwitchLight, ChemTile)
+
+        Returns:
+            Tuple of (priors_dict, reasoning, token_count)
+
+        Raises:
+            ValueError: If LLM fails to generate valid priors after retry
+        """
+        # Select appropriate prompt template
+        prompt_templates = {
+            'HotPotLab': HOTPOT_PRIOR_GENERATION_TEMPLATE,
+            'SwitchLight': SWITCHLIGHT_PRIOR_GENERATION_TEMPLATE,
+            'ChemTile': CHEMTILE_PRIOR_GENERATION_TEMPLATE
+        }
+
+        if environment_type not in prompt_templates:
+            raise ValueError(f"Unknown environment type: {environment_type}")
+
+        template = prompt_templates[environment_type]
+
+        # Format prompt with initial observation
+        prompt = template.format(
+            initial_observation=json.dumps(initial_observation, indent=2)
+        )
+
+        # Try to generate priors (with one retry on failure)
+        max_attempts = 2
+        last_error = None
+
+        for attempt in range(max_attempts):
+            try:
+                # Generate with temperature=0 for consistency
+                response = self.llm.generate(prompt, temperature=0.0)
+
+                # Parse response (reuse robust parsing from belief updates)
+                parsed = self._parse_belief_update(response)
+
+                if parsed is None:
+                    raise ValueError(f"Failed to parse LLM response: {response}")
+
+                # Extract reasoning
+                reasoning = parsed.pop('reasoning', 'No reasoning provided')
+
+                # Validate priors
+                self._validate_priors(parsed, environment_type)
+
+                # Success! Return priors, reasoning, and token estimate
+                token_count = len(response.split())  # Rough estimate
+                print(f"Generated priors for {environment_type}: {parsed}")
+                print(f"Reasoning: {reasoning}")
+
+                return parsed, reasoning, token_count
+
+            except Exception as e:
+                last_error = e
+                print(f"Attempt {attempt + 1}/{max_attempts} failed: {e}")
+
+                if attempt < max_attempts - 1:
+                    # Modify prompt to emphasize constraints
+                    prompt = prompt + f"\n\nPREVIOUS ATTEMPT FAILED: {e}\nPlease ensure your response is valid JSON with values in the specified ranges."
+
+        # All attempts failed - fall back to uninformative priors
+        print(f"WARNING: Prior generation failed after {max_attempts} attempts: {last_error}")
+        print(f"Falling back to uninformative (high uncertainty) priors")
+
+        # Return uninformative priors based on environment type
+        if environment_type == "HotPotLab":
+            fallback_priors = {
+                'heating_rate_mean': 0.0,  # No prior knowledge
+                'heating_rate_std': 5.0,    # High uncertainty
+                'measurement_noise': 2.0    # Moderate noise assumption
+            }
+            reasoning = f"Failed to generate priors (error: {last_error}). Using uninformative defaults."
+        elif environment_type == "SwitchLight":
+            fallback_priors = {
+                'connection_probs': [[0.5, 0.5], [0.5, 0.5]],  # Uniform
+                'uncertainty': 0.9  # High uncertainty
+            }
+            reasoning = f"Failed to generate priors (error: {last_error}). Using uniform defaults."
+        elif environment_type == "ChemTile":
+            fallback_priors = {
+                'reaction_safety_priors': {},
+                'reaction_outcome_uncertainty': 0.8,
+                'temperature_effect_prior': 0.5
+            }
+            reasoning = f"Failed to generate priors (error: {last_error}). Using cautious defaults."
+        else:
+            fallback_priors = {}
+            reasoning = f"Failed to generate priors (error: {last_error}). No fallback available."
+
+        return fallback_priors, reasoning, 0

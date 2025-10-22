@@ -140,6 +140,18 @@ class TokenLogger:
         """
         return [entry.belief_surprisal for entry in self.entries]
 
+    def to_dict(self) -> dict:
+        """Convert logger to dictionary format.
+
+        Returns:
+            Dictionary with episode_id, num_steps, and entries
+        """
+        return {
+            'episode_id': self.episode_id,
+            'num_steps': len(self.entries),
+            'entries': [asdict(e) for e in self.entries]
+        }
+
     def compute_alignment_correlation(self) -> Optional[float]:
         """Compute correlation between token NLL and belief surprisal.
 

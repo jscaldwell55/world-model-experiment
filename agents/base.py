@@ -40,6 +40,11 @@ class Agent(ABC):
         self.action_count = 0
         self.memory: list[AgentStep] = []
 
+        # Token tracking
+        self.total_input_tokens = 0
+        self.total_output_tokens = 0
+        self.api_call_count = 0
+
     @abstractmethod
     def act(self, observation: dict) -> AgentStep:
         """
@@ -70,10 +75,31 @@ class Agent(ABC):
         """Reset agent state for new episode"""
         self.action_count = 0
         self.memory = []
+        self.total_input_tokens = 0
+        self.total_output_tokens = 0
+        self.api_call_count = 0
 
 
 class LLMInterface(ABC):
     """Abstract LLM interface for different providers"""
+
+    def __init__(self):
+        """Initialize token tracking."""
+        self.last_input_tokens = 0
+        self.last_output_tokens = 0
+        self.total_input_tokens = 0
+        self.total_output_tokens = 0
+        self.total_api_calls = 0
+        self.rate_limiter = None  # Optional rate limiter
+
+    def set_rate_limiter(self, rate_limiter):
+        """
+        Set rate limiter for API calls.
+
+        Args:
+            rate_limiter: RateLimiter instance
+        """
+        self.rate_limiter = rate_limiter
 
     @abstractmethod
     def generate(self, prompt: str, **kwargs) -> str:
@@ -102,6 +128,28 @@ class LLMInterface(ABC):
         """
         pass
 
+    def get_last_usage(self) -> Tuple[int, int]:
+        """
+        Get token usage from last API call.
+
+        Returns:
+            Tuple of (input_tokens, output_tokens)
+        """
+        return (self.last_input_tokens, self.last_output_tokens)
+
+    def get_total_usage(self) -> dict:
+        """
+        Get cumulative token usage stats.
+
+        Returns:
+            Dict with usage statistics
+        """
+        return {
+            'total_input_tokens': self.total_input_tokens,
+            'total_output_tokens': self.total_output_tokens,
+            'total_api_calls': self.total_api_calls
+        }
+
 
 class OpenAILLM(LLMInterface):
     """OpenAI API wrapper"""
@@ -114,6 +162,8 @@ class OpenAILLM(LLMInterface):
             model: Model name (e.g., 'gpt-4o-mini', 'gpt-4o')
             api_key: API key (if None, loads from config)
         """
+        super().__init__()
+
         try:
             from openai import OpenAI
         except ImportError:
@@ -127,6 +177,14 @@ class OpenAILLM(LLMInterface):
 
     def generate(self, prompt: str, **kwargs) -> str:
         """Generate text using OpenAI API"""
+        # Estimate token usage for rate limiting
+        estimated_input = self.count_tokens(prompt)
+        estimated_output = kwargs.get('max_tokens', 2000) // 2  # Conservative estimate
+
+        # Wait if rate limiter is set
+        if self.rate_limiter:
+            self.rate_limiter.wait_if_needed(estimated_input, estimated_output)
+
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
@@ -135,6 +193,35 @@ class OpenAILLM(LLMInterface):
                 max_tokens=kwargs.get('max_tokens', 2000),
                 **{k: v for k, v in kwargs.items() if k not in ['temperature', 'max_tokens']}
             )
+
+            # Track token usage
+            if hasattr(response, 'usage') and response.usage:
+                self.last_input_tokens = response.usage.prompt_tokens
+                self.last_output_tokens = response.usage.completion_tokens
+                self.total_input_tokens += self.last_input_tokens
+                self.total_output_tokens += self.last_output_tokens
+                self.total_api_calls += 1
+
+                # Update rate limiter with actual usage
+                if self.rate_limiter:
+                    self.rate_limiter.record_actual_usage(
+                        self.last_input_tokens,
+                        self.last_output_tokens
+                    )
+            else:
+                # Fallback: estimate tokens
+                self.last_input_tokens = self.count_tokens(prompt)
+                self.last_output_tokens = self.count_tokens(response.choices[0].message.content)
+                self.total_input_tokens += self.last_input_tokens
+                self.total_output_tokens += self.last_output_tokens
+                self.total_api_calls += 1
+
+                # Update rate limiter with estimates
+                if self.rate_limiter:
+                    self.rate_limiter.record_actual_usage(
+                        self.last_input_tokens,
+                        self.last_output_tokens
+                    )
 
             return response.choices[0].message.content
 
@@ -159,6 +246,8 @@ class AnthropicLLM(LLMInterface):
             model: Model name (e.g., 'claude-3-5-sonnet-20241022')
             api_key: API key (if None, loads from config)
         """
+        super().__init__()
+
         try:
             from anthropic import Anthropic
         except ImportError:
@@ -172,6 +261,14 @@ class AnthropicLLM(LLMInterface):
 
     def generate(self, prompt: str, **kwargs) -> str:
         """Generate text using Anthropic API"""
+        # Estimate token usage for rate limiting
+        estimated_input = self.count_tokens(prompt)
+        estimated_output = kwargs.get('max_tokens', 2000) // 2  # Conservative estimate
+
+        # Wait if rate limiter is set
+        if self.rate_limiter:
+            self.rate_limiter.wait_if_needed(estimated_input, estimated_output)
+
         try:
             response = self.client.messages.create(
                 model=self.model,
@@ -180,6 +277,35 @@ class AnthropicLLM(LLMInterface):
                 messages=[{"role": "user", "content": prompt}],
                 **kwargs
             )
+
+            # Track token usage
+            if hasattr(response, 'usage') and response.usage:
+                self.last_input_tokens = response.usage.input_tokens
+                self.last_output_tokens = response.usage.output_tokens
+                self.total_input_tokens += self.last_input_tokens
+                self.total_output_tokens += self.last_output_tokens
+                self.total_api_calls += 1
+
+                # Update rate limiter with actual usage
+                if self.rate_limiter:
+                    self.rate_limiter.record_actual_usage(
+                        self.last_input_tokens,
+                        self.last_output_tokens
+                    )
+            else:
+                # Fallback: estimate tokens
+                self.last_input_tokens = self.count_tokens(prompt)
+                self.last_output_tokens = self.count_tokens(response.content[0].text)
+                self.total_input_tokens += self.last_input_tokens
+                self.total_output_tokens += self.last_output_tokens
+                self.total_api_calls += 1
+
+                # Update rate limiter with estimates
+                if self.rate_limiter:
+                    self.rate_limiter.record_actual_usage(
+                        self.last_input_tokens,
+                        self.last_output_tokens
+                    )
 
             return response.content[0].text
 
@@ -203,6 +329,8 @@ class MockLLM(LLMInterface):
         Args:
             mock_responses: List of canned responses to cycle through
         """
+        super().__init__()
+
         self.mock_responses = mock_responses or [
             "ANSWER: Unknown\nCONFIDENCE: 0.5\nREASONING: Mock response",
             "THOUGHT: Testing\nACTION: measure_temp()"
@@ -213,6 +341,14 @@ class MockLLM(LLMInterface):
         """Return canned response"""
         response = self.mock_responses[self.call_count % len(self.mock_responses)]
         self.call_count += 1
+
+        # Track mock token usage
+        self.last_input_tokens = self.count_tokens(prompt)
+        self.last_output_tokens = self.count_tokens(response)
+        self.total_input_tokens += self.last_input_tokens
+        self.total_output_tokens += self.last_output_tokens
+        self.total_api_calls += 1
+
         return response
 
     def count_tokens(self, text: str) -> int:

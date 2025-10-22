@@ -246,7 +246,11 @@ class ModelBasedAgent(ActorAgent):
         # Simple one-hot encoding for common actions
         return 8  # Enough for most environments
 
-    def reset(self):
+    def reset(
+        self,
+        environment_type: Optional[str] = None,
+        initial_observation: Optional[dict] = None
+    ):
         """Reset agent state for new episode"""
-        super().reset()
+        super().reset(environment_type, initial_observation)
         # Note: transition_model is NOT reset - it persists for continual learning
