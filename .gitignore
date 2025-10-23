@@ -88,3 +88,5 @@ checkpoints/
 *.tmp
 *.temp
 .cache/
+
+RUN_PILOT.md
