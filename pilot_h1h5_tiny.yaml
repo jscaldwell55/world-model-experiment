@@ -1,0 +1,35 @@
+# Tiny Pilot Configuration for H1-H5 Agent Comparison Hypotheses
+# 4 episodes total: 3 agents × 2 environments × 2 episodes = 12 episodes
+
+experiment:
+  name: "h1h5_tiny_pilot"
+  description: "Tiny pilot test of H1-H5 agent comparison hypotheses"
+  preregistration_file: "preregistration.yaml"
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  model_based:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+environments:
+  hot_pot:
+    num_episodes: 2
+    seeds: [1001, 1002]
+
+  switch_light:
+    num_episodes: 2
+    seeds: [2001, 2002]
+
+preregistration:
+  file: "preregistration.yaml"
+  verify_hash: false
+  enforce_hypotheses: true

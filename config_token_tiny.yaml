@@ -1,0 +1,81 @@
+# Tiny pilot configuration - 3 episodes only
+# 1 seed × 3 environments × 1 agent = 3 episodes
+
+token_prediction:
+  enabled: true
+
+  predictors:
+    actor:
+      provider: "openai"
+      model: "gpt-4o-mini"
+      temperature: 0.0
+      max_tokens: 100
+
+  textualization:
+    version: "v1.0"
+    numerical_precision:
+      temperature: 1
+      time: 0
+      probability: 3
+    validation:
+      check_determinism: true
+      check_no_leakage: true
+      num_determinism_trials: 10
+
+  budgets:
+    max_context_tokens: 4000
+    max_prediction_tokens: 100
+    max_api_calls_per_episode: 100
+    rate_limit_requests_per_minute: 60
+
+pilot:
+  num_episodes_per_env: 1
+  environments:
+    - hot_pot
+    - switch_light
+    - chem_tile
+  agents:
+    - actor
+  seeds: [42]
+  output_dir: "results/pilot_tiny"
+
+analysis:
+  metrics:
+    - sequence_nll
+    - per_token_nll
+    - perplexity
+    - belief_surprisal
+    - coupling_correlation
+  coupling_analysis:
+    min_samples: 5
+    correlation_types:
+      - pearson
+      - spearman
+  surprise_detection:
+    threshold_logprob: -5.0
+    threshold_percentile: 90
+  calibration:
+    num_bins: 10
+    min_samples_per_bin: 3
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  save_token_logs: true
+  token_log_dir: "results/token_logs"
+  save_analysis: true
+  analysis_dir: "results/token_analysis"
+
+visualization:
+  enabled: true
+  plots:
+    - nll_vs_surprisal_scatter
+    - nll_over_time
+    - surprisal_over_time
+    - calibration_curve
+    - high_surprisal_tokens
+  settings:
+    figure_size: [10, 6]
+    dpi: 300
+    format: "png"
+    save_dir: "results/token_plots"

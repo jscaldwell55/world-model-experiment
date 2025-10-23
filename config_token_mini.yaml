@@ -1,4 +1,5 @@
-# Configuration for token-level prediction experiments
+# Mini pilot configuration for sanity check (12 episodes total)
+# Use this for quick validation before running full 30-episode pilot
 
 token_prediction:
   enabled: true
@@ -14,12 +15,6 @@ token_prediction:
       max_tokens: 100
 
     actor:
-      provider: "openai"
-      model: "gpt-4o-mini"  # Using mini for cost efficiency in token prediction
-      temperature: 0.0
-      max_tokens: 100
-
-    model_based:
       provider: "openai"
       model: "gpt-4o-mini"  # Using mini for cost efficiency in token prediction
       temperature: 0.0
@@ -48,10 +43,11 @@ token_prediction:
     max_api_calls_per_episode: 100
     rate_limit_requests_per_minute: 60
 
-# Pilot experiment configuration
+# Mini pilot experiment configuration
+# Total episodes: 2 seeds × 3 environments × 1 agent = 6 episodes
 pilot:
-  # Run 5 episodes per environment
-  num_episodes_per_env: 5
+  # Run only 2 episodes per environment (reduced from 5)
+  num_episodes_per_env: 2
 
   # Environments to test
   environments:
@@ -59,16 +55,15 @@ pilot:
     - switch_light
     - chem_tile
 
-  # Agent types to test (observer excluded - no actions to predict)
+  # Agent types to test (only actor - observer excluded due to no-action limitation)
   agents:
     - actor
-    - model_based
 
-  # Random seeds for reproducibility
-  seeds: [42, 43, 44, 45, 46]
+  # Random seeds for reproducibility (reduced from 5 to 2)
+  seeds: [42, 43]
 
   # Output directory
-  output_dir: "results/token_prediction_pilot"
+  output_dir: "results/pilot_mini_sanity_check"
 
 # Analysis configuration
 analysis:

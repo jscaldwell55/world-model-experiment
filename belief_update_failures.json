@@ -1,0 +1,2144 @@
+{
+  "total_failures": 91,
+  "statistics": {
+    "total_updates": 180,
+    "no_change": 90,
+    "wrong_direction": 0,
+    "uncertainty_increased": 0,
+    "successful": 89
+  },
+  "failures": [
+    {
+      "episode": "hot_pot_actor_ep001",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 17.827107253717177,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep001",
+      "step": 2,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep001",
+      "step": 4,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 23.2078697473631,
+        "time": 5.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 0.6711049505710417,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 0.6711049505710417,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep001",
+      "step": 5,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 5.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 0.6711049505710417,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 0.6711049505710417,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep001",
+      "step": 7,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 36.887401253196224,
+        "time": 10.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.344539992684073,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.344539992684073,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep001",
+      "step": 9,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 47.320132679605614,
+        "time": 15.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.582061376832046,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.582061376832046,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep002",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 19.77457393821232,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep002",
+      "step": 2,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep002",
+      "step": 4,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 22.846872038428213,
+        "time": 5.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 0.6004749640403025,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 0.6004749640403025,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep002",
+      "step": 6,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 33.57005386284995,
+        "time": 10.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.1011200964081138,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.1011200964081138,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep002",
+      "step": 8,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 32.086033383283116,
+        "time": 15.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 0.9539728175684559,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 0.9539728175684559,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep002",
+      "step": 9,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 15.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 0.9539728175684559,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 0.9539728175684559,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep003",
+      "step": 1,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 17.357912955380787,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep003",
+      "step": 2,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 24.033505765733782,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep003",
+      "step": 3,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep003",
+      "step": 5,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 25.095128933882517,
+        "time": 5.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.0403513131509274,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.0403513131509274,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep003",
+      "step": 6,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 5.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.0403513131509274,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.0403513131509274,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep003",
+      "step": 8,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 37.02465766323781,
+        "time": 10.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.478515289515316,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.478515289515316,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep004",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 21.18880613468855,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep004",
+      "step": 2,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep004",
+      "step": 4,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 25.805217417354616,
+        "time": 5.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.1792816686128598,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.1792816686128598,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep004",
+      "step": 5,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 5.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.1792816686128598,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.1792816686128598,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep004",
+      "step": 7,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 35.88967553282093,
+        "time": 10.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.4503973275851465,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.4503973275851465,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep004",
+      "step": 9,
+      "type": "zero_time_delta",
+      "action": "measure_temp()",
+      "prev_time": 15.0,
+      "curr_time": 15.0,
+      "message": "Cannot update belief: time_delta = 0"
+    },
+    {
+      "episode": "hot_pot_actor_ep005",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 18.886075162665364,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep005",
+      "step": 2,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep005",
+      "step": 4,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 25.41321867164909,
+        "time": 5.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.1025862618443873,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.1025862618443873,
+        "heating_rate_std": 0.4423258684646914,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep005",
+      "step": 6,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 32.43470187056259,
+        "time": 10.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.195818271175773,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.195818271175773,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep005",
+      "step": 7,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 10.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.195818271175773,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.195818271175773,
+        "heating_rate_std": 0.2572478777137633,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_actor_ep005",
+      "step": 9,
+      "type": "no_change",
+      "action": "touch_pot()",
+      "prev_obs": {
+        "measured_temp": 42.29044402512285,
+        "time": 15.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.3403884911660915,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.3403884911660915,
+        "heating_rate_std": 0.18223702176923612,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 17.827107253717177,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 2,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 3,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 18.2078697473631,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 4,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 5,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 19.38740125319622,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 6,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 17.320132679605617,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 7,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "off",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 8,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 17.58682883100063,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep001",
+      "step": 9,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 19.77457393821232,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 2,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 3,
+      "type": "no_change",
+      "action": "touch_pot()",
+      "prev_obs": {
+        "measured_temp": 17.846872038428213,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 4,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "sensation": "cool",
+        "time": 0.0,
+        "action": "touch_pot"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 5,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 23.570053862849957,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 6,
+      "type": "no_change",
+      "action": "touch_pot()",
+      "prev_obs": {
+        "measured_temp": 17.086033383283112,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 7,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "sensation": "cool",
+        "time": 0.0,
+        "action": "touch_pot"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 8,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 19.347358428928036,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep002",
+      "step": 9,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 17.48020703094148,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 17.357912955380787,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 2,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 3,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 24.033505765733782,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 4,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "bright",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 5,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 20.095128933882517,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 6,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "off",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 7,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 19.524657663237814,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 8,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep003",
+      "step": 9,
+      "type": "no_change",
+      "action": "wait(5)",
+      "prev_obs": {
+        "measured_temp": 20.168245334263183,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 21.18880613468855,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 2,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 3,
+      "type": "no_change",
+      "action": "touch_pot()",
+      "prev_obs": {
+        "measured_temp": 20.805217417354616,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 4,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "sensation": "cool",
+        "time": 0.0,
+        "action": "touch_pot"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 5,
+      "type": "no_change",
+      "action": "wait()",
+      "prev_obs": {
+        "measured_temp": 18.38967553282093,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 7,
+      "type": "no_change",
+      "action": "touch_pot()",
+      "prev_obs": {
+        "measured_temp": 21.23025139152689,
+        "time": 1.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 1.3072262523741995,
+        "heating_rate_std": 0.9486832980505138,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 1.3072262523741995,
+        "heating_rate_std": 0.9486832980505138,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep004",
+      "step": 9,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 19.49386956093458,
+        "time": 1.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 0.44826781958701173,
+        "heating_rate_std": 0.6882472016116853,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 0.44826781958701173,
+        "heating_rate_std": 0.6882472016116853,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 1,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 18.886075162665364,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 2,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "stove_light": "dim",
+        "time": 0.0,
+        "action": "toggle_stove"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 3,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 20.41321867164909,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 4,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 22.434701870562588,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 5,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 19.790444025122852,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 6,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 19.00236299742089,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 7,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 18.87351088946119,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 8,
+      "type": "no_change",
+      "action": "measure_temp()",
+      "prev_obs": {
+        "measured_temp": 19.130541696213058,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "hot_pot_model_based_ep005",
+      "step": 9,
+      "type": "no_change",
+      "action": "toggle_stove()",
+      "prev_obs": {
+        "measured_temp": 23.444302731614332,
+        "time": 0.0,
+        "action": "measure_temp"
+      },
+      "belief_before": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      },
+      "belief_after": {
+        "heating_rate_mean": 2.0,
+        "heating_rate_std": 3.0,
+        "measurement_noise": 1.0,
+        "base_temp": 20.0
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep001",
+      "step": 2,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": false,
+        "time": 2.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.5,
+          "layout_B": 0.5
+        },
+        "failure_prob": 0.3
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.5,
+          "layout_B": 0.5
+        },
+        "failure_prob": 0.3
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep001",
+      "step": 4,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 4.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.25,
+          "layout_B": 0.75
+        },
+        "failure_prob": 0.5
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.25,
+          "layout_B": 0.75
+        },
+        "failure_prob": 0.5
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep001",
+      "step": 7,
+      "type": "no_change",
+      "action": "inspect_wires()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 7.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.15,
+          "layout_B": 0.85
+        },
+        "failure_prob": 0.85
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.15,
+          "layout_B": 0.85
+        },
+        "failure_prob": 0.85
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep001",
+      "step": 8,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "inspect_wires",
+        "hint": "Wiring looks complex. Multiple configurations possible.",
+        "inspection_count": 1,
+        "time": 8.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.15,
+          "layout_B": 0.85
+        },
+        "failure_prob": 0.85
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.15,
+          "layout_B": 0.85
+        },
+        "failure_prob": 0.85
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep002",
+      "step": 9,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": true,
+        "time": 9.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "failure_prob": 0.999
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "failure_prob": 0.999
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep003",
+      "step": 1,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": true,
+        "time": 1.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.9,
+          "layout_B": 0.1
+        },
+        "failure_prob": 0.1
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.9,
+          "layout_B": 0.1
+        },
+        "failure_prob": 0.1
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep003",
+      "step": 4,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "inspect_wires",
+        "hint": "Wiring looks complex. Multiple configurations possible.",
+        "inspection_count": 1,
+        "time": 4.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.7,
+          "layout_B": 0.3
+        },
+        "failure_prob": 0.05
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.7,
+          "layout_B": 0.3
+        },
+        "failure_prob": 0.05
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep004",
+      "step": 7,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": true,
+        "time": 7.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep004",
+      "step": 8,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "jiggle_relay",
+        "message": "Jiggled the relay. No obvious change.",
+        "time": 8.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep005",
+      "step": 4,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": true,
+        "time": 4.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.02,
+          "layout_B": 0.98
+        },
+        "failure_prob": 0.01
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.02,
+          "layout_B": 0.98
+        },
+        "failure_prob": 0.01
+      }
+    },
+    {
+      "episode": "switch_light_actor_ep005",
+      "step": 6,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 6.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.01,
+          "layout_B": 0.99
+        },
+        "failure_prob": 0.01
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.01,
+          "layout_B": 0.99
+        },
+        "failure_prob": 0.01
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep002",
+      "step": 1,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 1.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.33,
+          "layout_B": 0.67
+        },
+        "failure_prob": 0.1
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.33,
+          "layout_B": 0.67
+        },
+        "failure_prob": 0.1
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep002",
+      "step": 9,
+      "type": "no_change",
+      "action": "inspect_wires()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": true,
+        "time": 9.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "failure_prob": 0.012
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "failure_prob": 0.012
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep003",
+      "step": 1,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": true,
+        "time": 1.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.692,
+          "layout_B": 0.308
+        },
+        "failure_prob": 0.1
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.692,
+          "layout_B": 0.308
+        },
+        "failure_prob": 0.1
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep004",
+      "step": 6,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": true,
+        "time": 6.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "failure_prob": 0.01
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "failure_prob": 0.01
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep004",
+      "step": 8,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": true,
+        "time": 8.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep004",
+      "step": 9,
+      "type": "no_change",
+      "action": "flip_switch()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": false,
+        "time": 9.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.0001,
+          "layout_B": 0.9999
+        },
+        "failure_prob": 0.001
+      }
+    },
+    {
+      "episode": "switch_light_model_based_ep005",
+      "step": 1,
+      "type": "no_change",
+      "action": "jiggle_relay()",
+      "prev_obs": {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 1.0
+      },
+      "belief_before": {
+        "wiring_probs": {
+          "layout_A": 0.33,
+          "layout_B": 0.67
+        },
+        "failure_prob": 0.1
+      },
+      "belief_after": {
+        "wiring_probs": {
+          "layout_A": 0.33,
+          "layout_B": 0.67
+        },
+        "failure_prob": 0.1
+      }
+    }
+  ]
+}

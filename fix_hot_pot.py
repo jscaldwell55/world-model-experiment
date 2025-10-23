@@ -1,4 +1,6 @@
-# environments/hot_pot.py
+# fix_hot_pot.py
+
+fix_content = '''# environments/hot_pot.py (FIXED)
 from typing import Literal, Optional
 from dataclasses import dataclass
 import numpy as np
@@ -74,14 +76,9 @@ class HotPotLab(Environment):
         info = {}
         action = action.strip()
 
-        # Advance time BEFORE creating observations for instant actions
-        instant_actions = ["measure_temp", "touch_pot", "toggle_stove"]
-        if action in instant_actions:
-            self._advance_time(self.INSTANT_ACTION_TIME)
-
-        # Now create observations (they will have the updated time)
         if action == "measure_temp":
             obs = self._measure_temp()
+            self._advance_time(self.INSTANT_ACTION_TIME)  # FIX
 
         elif action.startswith("wait"):
             try:
@@ -94,9 +91,11 @@ class HotPotLab(Environment):
         elif action == "touch_pot":
             obs, touch_reward = self._touch_pot()
             reward = touch_reward
+            self._advance_time(self.INSTANT_ACTION_TIME)  # FIX
 
         elif action == "toggle_stove":
             obs = self._toggle_stove()
+            self._advance_time(self.INSTANT_ACTION_TIME)  # FIX
 
         else:
             obs = {'time': self.state.time_elapsed, 'message': 'Unknown action'}
@@ -191,3 +190,20 @@ class HotPotLab(Environment):
                          'stove_power', 'heating_rate', 'true_temp']
         for key in forbidden_keys:
             assert key not in obs, f"Ground truth leaked: {key} in observation"
+'''
+
+# Backup original
+import shutil
+shutil.copy('environments/hot_pot.py', 'environments/hot_pot.py.backup')
+print("✅ Backed up original to hot_pot.py.backup")
+
+# Write fixed version
+with open('environments/hot_pot.py', 'w') as f:
+    f.write(fix_content)
+
+print("✅ Applied fix to environments/hot_pot.py")
+print("\nChanges:")
+print("  1. Added INSTANT_ACTION_TIME = 1.0")
+print("  2. Added _advance_time() method")
+print("  3. measure_temp(), touch_pot(), toggle_stove() now advance time")
+print("  4. All actions now properly update time_elapsed")

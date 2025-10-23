@@ -14,6 +14,10 @@ import yaml
 import argparse
 from pathlib import Path
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
@@ -73,7 +77,8 @@ def create_agent_for_env(agent_name: str, env, llm):
         agent = ObserverAgent(llm, action_budget=10)
 
     elif agent_name == 'actor':
-        agent = ActorAgent(llm, action_budget=10, environment_name=env_name.lower().replace('lab', ''))
+        # Use the actual environment class name for tool lookup
+        agent = ActorAgent(llm, action_budget=10, environment_name=env_name)
 
         # Initialize belief state for Actor agents
         if 'HotPot' in env_name:
@@ -125,8 +130,11 @@ def run_pilot(config: dict, output_dir: str):
     agents_to_run = pilot_config.get('agents', ['observer', 'actor'])
     seeds = pilot_config.get('seeds', [42, 43, 44, 45, 46])
 
-    # Create predictor (using observer model for pilot)
-    predictor_config = config['token_prediction']['predictors']['observer']
+    # Create predictor (use first available predictor from config)
+    predictors = config['token_prediction']['predictors']
+    predictor_name = next(iter(predictors.keys()))
+    predictor_config = predictors[predictor_name]
+    print(f"Using '{predictor_name}' predictor for token prediction")
     predictor = OpenAINextSentencePredictor(
         model=predictor_config['model']
     )
