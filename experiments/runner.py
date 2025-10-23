@@ -212,6 +212,13 @@ class ExperimentRunner:
         test_queries = get_test_queries(env.__class__.__name__)
         test_results = self._evaluate_agent(agent, env, test_queries, ground_truth)
 
+        # Update playbook for ACE agents (after test queries)
+        if hasattr(agent, 'update_playbook'):
+            agent.update_playbook({
+                'test_results': test_results,
+                'episode_steps': steps
+            })
+
         # Get token usage from LLM
         llm_usage = llm.get_total_usage()
 
@@ -243,6 +250,24 @@ class ExperimentRunner:
                 'prior_reasoning': agent.prior_generation_metadata['reasoning'],
                 'prior_generation_tokens': agent.prior_generation_metadata['token_count']
             }
+
+        # Add playbook metadata if available (ACE agents)
+        if hasattr(agent, 'playbook') and hasattr(agent, '_get_playbook_size'):
+            episode_log['playbook'] = {
+                'final_playbook': agent.playbook,
+                'total_bullets': agent._get_playbook_size(),
+                'sections': {
+                    section: len(bullets)
+                    for section, bullets in agent.playbook.items()
+                }
+            }
+            # Add growth trajectory if episode_history available
+            if hasattr(agent, 'episode_history') and agent.episode_history:
+                last_episode = agent.episode_history[-1]
+                if 'delta_items' in last_episode:
+                    episode_log['playbook']['delta_items_added'] = len(last_episode['delta_items'])
+                if 'insights' in last_episode:
+                    episode_log['playbook']['insights'] = last_episode['insights']
 
         # Save
         save_path = save_dir / f"{episode_id}.json"

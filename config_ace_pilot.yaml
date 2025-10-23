@@ -1,0 +1,38 @@
+# config_ace_pilot.yaml
+# Pilot experiment configuration for ACE agent comparison
+#
+# Tests ACE (Agentic Context Engineering) against baselines:
+# - Observer: No interaction, just reasoning
+# - Actor: Interactive with belief updates
+# - Model-Based: Actor + explicit transition model
+# - ACE: Interactive with context evolution (playbook)
+#
+# Hypothesis: ACE can match Actor performance at lower token cost
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  model_based:
+    model: "claude-sonnet-4-5-20250929"
+  ace:
+    model: "claude-sonnet-4-5-20250929"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+environments:
+  # Start with just 2 environments for pilot
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+
+# Total: 40 episodes
+# 2 environments × 4 agents × 5 seeds = 40 episodes
+# Estimated cost: $15-25
+# Estimated time: ~15 minutes with 6 workers

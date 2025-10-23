@@ -235,6 +235,125 @@ REASONING: <explain using prior episodes as evidence>
 """
 
 # ============================================================================
+# ACE Agent Prompts (Agentic Context Engineering)
+# ============================================================================
+
+ACE_GENERATOR_TEMPLATE = """You are an agent using a learned playbook to experiment with an environment.
+
+**YOUR PLAYBOOK** (strategies learned from prior episodes):
+{playbook}
+
+**Current Observation:**
+{observation}
+
+**Recent History:**
+{memory_summary}
+
+**Available Tools:**
+{available_tools}
+
+**Actions Remaining:** {actions_remaining}
+
+Based on your playbook and observations, decide what to do next.
+- Use strategies from your playbook when relevant
+- Focus on experiments that reduce uncertainty
+- If playbook is empty, use general scientific reasoning
+
+Provide your response in this format:
+THOUGHT: <what does your playbook suggest? what's uncertain?>
+ACTION: <tool_name(params)>
+"""
+
+ACE_REFLECTOR_TEMPLATE = """You are reflecting on an episode to extract insights for your playbook.
+
+**Environment:** {environment_name}
+
+**Your Current Playbook:**
+{playbook}
+
+**Episode Trajectory:**
+{episode_steps}
+
+**Test Results:**
+{test_results}
+
+Analyze what happened in this episode:
+1. What strategies worked well?
+2. What strategies failed or were misleading?
+3. What new insights did you gain?
+4. Which playbook items (if any) were helpful or harmful?
+
+Respond with ONLY a JSON object in this format:
+{{
+  "what_worked": ["strategy 1", "strategy 2", ...],
+  "what_failed": ["mistake 1", "mistake 2", ...],
+  "new_insights": ["insight 1", "insight 2", ...],
+  "helpful_bullets": ["bullet_id_1", "bullet_id_2", ...],
+  "harmful_bullets": ["bullet_id_3", ...]
+}}
+
+Your reflection (JSON only):"""
+
+ACE_CURATOR_TEMPLATE = """You are curating insights into structured playbook updates.
+
+**Environment:** {environment_name}
+
+**Current Playbook:**
+{playbook}
+
+**Insights from Reflector:**
+{insights}
+
+Your task: Convert insights into concise, actionable playbook items.
+
+Guidelines:
+- Each item should be specific and actionable
+- Avoid redundancy with existing playbook
+- Categorize into appropriate sections:
+  - strategies_and_hard_rules: General approaches and rules
+  - useful_code_snippets: Specific action patterns
+  - troubleshooting_and_pitfalls: Common mistakes to avoid
+  - apis_to_use: Recommended tools/functions
+  - verification_checklist: Things to check
+
+Respond with ONLY a JSON object in this format:
+{{
+  "delta_items": [
+    {{
+      "section": "strategies_and_hard_rules",
+      "content": "Always verify temperature before trusting labels",
+      "operation": "add"
+    }},
+    {{
+      "section": "troubleshooting_and_pitfalls",
+      "content": "Labels can be deceptive - measure directly",
+      "operation": "add"
+    }}
+  ]
+}}
+
+Your curation (JSON only):"""
+
+ACE_QUERY_TEMPLATE = """You have experimented with an environment and built a playbook of strategies.
+
+**Your Playbook:**
+{playbook}
+
+**Your Experience:**
+{memory_summary}
+
+**Question:** {question}
+
+Use your playbook and experience to answer the question.
+Reference specific playbook items that inform your answer.
+
+Format:
+ANSWER: <your prediction>
+CONFIDENCE: <0.0 to 1.0>
+REASONING: <explain using playbook items>
+"""
+
+# ============================================================================
 # Model-Based Agent Prompts
 # ============================================================================
 

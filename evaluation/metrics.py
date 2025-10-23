@@ -380,3 +380,198 @@ def aggregate_metrics(episode_logs: List[Dict]) -> Dict[str, Any]:
         aggregated['learning_rate'] = float(np.mean(slopes))  # Negative = learning
 
     return aggregated
+
+
+# ============================================================================
+# ACE Agent Specific Metrics
+# ============================================================================
+
+def playbook_growth_rate(episode_logs: List[Dict]) -> Dict[str, Any]:
+    """
+    Measure how quickly playbook grows over episodes.
+
+    Args:
+        episode_logs: List of episode logs (must be ordered by episode)
+
+    Returns:
+        Dictionary with growth metrics
+    """
+    if not episode_logs:
+        return {'growth_rate': 0.0, 'total_bullets': 0, 'episodes': 0}
+
+    # Extract playbook sizes over time
+    playbook_sizes = []
+    delta_items_per_episode = []
+
+    for log in episode_logs:
+        if 'playbook' in log:
+            playbook_sizes.append(log['playbook']['total_bullets'])
+            delta_items_per_episode.append(log['playbook'].get('delta_items_added', 0))
+
+    if not playbook_sizes:
+        return {'growth_rate': 0.0, 'total_bullets': 0, 'episodes': 0}
+
+    # Compute growth rate (bullets per episode)
+    if len(playbook_sizes) > 1:
+        growth_rate = (playbook_sizes[-1] - playbook_sizes[0]) / len(playbook_sizes)
+    else:
+        growth_rate = 0.0
+
+    return {
+        'growth_rate': float(growth_rate),
+        'total_bullets': int(playbook_sizes[-1]),
+        'initial_bullets': int(playbook_sizes[0]),
+        'final_bullets': int(playbook_sizes[-1]),
+        'episodes': len(playbook_sizes),
+        'mean_delta_per_episode': float(np.mean(delta_items_per_episode)) if delta_items_per_episode else 0.0,
+        'playbook_trajectory': playbook_sizes
+    }
+
+
+def playbook_utilization(episode_logs: List[Dict]) -> Dict[str, Any]:
+    """
+    Measure how well playbook items are utilized.
+
+    Args:
+        episode_logs: List of episode logs
+
+    Returns:
+        Dictionary with utilization metrics
+    """
+    if not episode_logs:
+        return {'utilization_rate': 0.0}
+
+    # Get final playbook from last episode
+    final_playbook = None
+    for log in reversed(episode_logs):
+        if 'playbook' in log and 'final_playbook' in log['playbook']:
+            final_playbook = log['playbook']['final_playbook']
+            break
+
+    if not final_playbook:
+        return {'utilization_rate': 0.0}
+
+    # Count helpful vs total bullets
+    total_bullets = 0
+    helpful_bullets = 0
+    harmful_bullets = 0
+
+    for section, bullets in final_playbook.items():
+        for bullet in bullets:
+            total_bullets += 1
+            if bullet.get('helpful_count', 0) > 0:
+                helpful_bullets += 1
+            if bullet.get('harmful_count', 0) > 0:
+                harmful_bullets += 1
+
+    if total_bullets == 0:
+        return {'utilization_rate': 0.0}
+
+    return {
+        'utilization_rate': float(helpful_bullets / total_bullets),
+        'total_bullets': total_bullets,
+        'helpful_bullets': helpful_bullets,
+        'harmful_bullets': harmful_bullets,
+        'section_breakdown': {
+            section: len(bullets)
+            for section, bullets in final_playbook.items()
+        }
+    }
+
+
+def context_efficiency(episode_logs: List[Dict]) -> Dict[str, Any]:
+    """
+    Measure accuracy per playbook item (efficiency of context).
+
+    Args:
+        episode_logs: List of episode logs
+
+    Returns:
+        Dictionary with efficiency metrics
+    """
+    if not episode_logs:
+        return {'accuracy_per_bullet': 0.0}
+
+    # Get average accuracy and final playbook size
+    accuracies = []
+    final_playbook_size = 0
+
+    for log in episode_logs:
+        if 'test_results' in log:
+            test_results = log['test_results']
+            if test_results:
+                accuracy = overall_accuracy(test_results)
+                accuracies.append(accuracy)
+
+        if 'playbook' in log:
+            final_playbook_size = log['playbook']['total_bullets']
+
+    if not accuracies or final_playbook_size == 0:
+        return {'accuracy_per_bullet': 0.0}
+
+    mean_accuracy = float(np.mean(accuracies))
+
+    return {
+        'accuracy_per_bullet': mean_accuracy / final_playbook_size,
+        'mean_accuracy': mean_accuracy,
+        'final_playbook_size': final_playbook_size
+    }
+
+
+def playbook_convergence(episode_logs: List[Dict], threshold: float = 0.1) -> Dict[str, Any]:
+    """
+    Measure when playbook stabilizes (growth slows below threshold).
+
+    Args:
+        episode_logs: List of episode logs (ordered)
+        threshold: Growth rate threshold for convergence
+
+    Returns:
+        Dictionary with convergence metrics
+    """
+    if not episode_logs:
+        return {'converged': False, 'convergence_episode': None}
+
+    # Get playbook sizes over time
+    playbook_sizes = []
+    for log in episode_logs:
+        if 'playbook' in log:
+            playbook_sizes.append(log['playbook']['total_bullets'])
+
+    if len(playbook_sizes) < 3:
+        return {'converged': False, 'convergence_episode': None}
+
+    # Look for convergence: 3 consecutive episodes with growth < threshold
+    convergence_episode = None
+    for i in range(len(playbook_sizes) - 2):
+        growth_1 = playbook_sizes[i+1] - playbook_sizes[i]
+        growth_2 = playbook_sizes[i+2] - playbook_sizes[i+1]
+
+        if growth_1 <= threshold and growth_2 <= threshold:
+            convergence_episode = i + 1
+            break
+
+    return {
+        'converged': convergence_episode is not None,
+        'convergence_episode': convergence_episode,
+        'total_episodes': len(playbook_sizes),
+        'final_growth_rate': float(playbook_sizes[-1] - playbook_sizes[-2]) if len(playbook_sizes) > 1 else 0.0
+    }
+
+
+def ace_metrics(episode_logs: List[Dict]) -> Dict[str, Any]:
+    """
+    Compute all ACE-specific metrics.
+
+    Args:
+        episode_logs: List of episode logs
+
+    Returns:
+        Dictionary with ACE metrics
+    """
+    return {
+        'playbook_growth': playbook_growth_rate(episode_logs),
+        'playbook_utilization': playbook_utilization(episode_logs),
+        'context_efficiency': context_efficiency(episode_logs),
+        'playbook_convergence': playbook_convergence(episode_logs)
+    }
