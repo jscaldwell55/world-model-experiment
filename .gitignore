@@ -90,3 +90,17 @@ checkpoints/
 .cache/
 
 RUN_PILOT.md
+
+
+# API Keys and Secrets
+*.key
+*.env
+.env
+.env.local
+*_API_KEY*
+secrets.yaml
+
+# Instruction files (contain examples with keys)
+ACE_RUN_INSTRUCTIONS.md
+IMPLEMENTATION_COMPLETE.md
+SYSTEM_CHECK_COMPLETE.md
