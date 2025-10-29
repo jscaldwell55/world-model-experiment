@@ -386,11 +386,18 @@ python scripts/run_experiment_parallel.py \
 
 ### Preregistration
 
-All hypotheses locked in `preregistration.yaml` before experiments:
-- H-ACE: ACE achieves ≥70% accuracy at ≤10K tokens/episode
-- H1: Interactive agents outperform Observer
-- H2: Counterfactual reasoning requires interaction
-- H5: Belief convergence improves accuracy
+**This study was preregistered on 2025-10-29 prior to data collection.**
+
+- **Preregistration**: [preregistration.md](preregistration.md)
+- **Git commit**: 0353080d7a675c6cebfec2fb2ad2ca20a3257113
+- **Git tag**: prereg-v1.0
+- **Experiments begin**: 2025-10-29 or later
+
+**Primary Hypotheses**:
+- H-ACE-vs-Belief: ACE achieves Actor-level accuracy at ≤50% token cost
+- H-Budget: Diminishing returns for larger playbook caps
+- H-Curation: Curated playbook outperforms append-only by ≥5 pts
+- H-Shift: ACE recovers from distribution shifts within 10 episodes
 
 ### Provenance
 
