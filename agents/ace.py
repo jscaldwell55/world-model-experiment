@@ -47,7 +47,9 @@ class ACEAgent(Agent):
         self,
         llm: LLMInterface,
         action_budget: int,
-        environment_name: Optional[str] = None
+        environment_name: Optional[str] = None,
+        curation_mode: str = "curated",
+        token_cap: Optional[int] = None
     ):
         """
         Initialize ACE agent.
@@ -56,9 +58,13 @@ class ACEAgent(Agent):
             llm: LLM interface
             action_budget: Maximum number of actions per episode
             environment_name: Name of environment (for tool selection)
+            curation_mode: Curation strategy - "curated" (default), "no_curate", "random", "greedy"
+            token_cap: Maximum playbook tokens (None = unlimited, 512/1k/2k for budget tests)
         """
         super().__init__(llm, action_budget)
         self.environment_name = environment_name
+        self.curation_mode = curation_mode
+        self.token_cap = token_cap
         self.playbook = self._init_playbook()
         self.episode_history = []
         self.tools_class = None
@@ -304,21 +310,38 @@ class ACEAgent(Agent):
         """
         Curator: Synthesize insights into compact delta items.
 
-        Inputs:
-        - Reflector output (insights, reasoning)
-        - Current playbook (for context)
-
-        Outputs:
-        - List of delta items with:
-          - section: Which playbook section
-          - content: New bullet text
-          - operation: 'add' or 'update'
+        Dispatches to different curation strategies based on self.curation_mode.
 
         Args:
             insights: Insights from Reflector
 
         Returns:
             List of delta items to add to playbook
+        """
+        # Dispatch to appropriate curation method
+        if self.curation_mode == "curated":
+            return self._curate_default(insights)
+        elif self.curation_mode == "no_curate":
+            return self._curate_append_only(insights)
+        elif self.curation_mode == "random":
+            return self._curate_random_subset(insights)
+        elif self.curation_mode == "greedy":
+            return self._curate_greedy_top_k(insights)
+        else:
+            print(f"Warning: Unknown curation mode '{self.curation_mode}', using default")
+            return self._curate_default(insights)
+
+    def _curate_default(self, insights: Dict) -> List[Dict]:
+        """
+        Default curated mode: LLM-based curation with deduplication.
+
+        This is the standard ACE approach from the paper.
+
+        Args:
+            insights: Insights from Reflector
+
+        Returns:
+            List of delta items
         """
         # Build curation prompt
         prompt = ACE_CURATOR_TEMPLATE.format(
@@ -334,10 +357,151 @@ class ACEAgent(Agent):
         try:
             parsed = self._parse_json_response(response)
             delta_items = parsed.get('delta_items', [])
+
+            # Enforce token cap if specified
+            if self.token_cap:
+                delta_items = self._enforce_token_cap(delta_items)
+
             return delta_items
         except Exception as e:
             print(f"Warning: Failed to parse curator output: {e}")
             return []
+
+    def _curate_append_only(self, insights: Dict) -> List[Dict]:
+        """
+        No-curate mode: Append all insights without deduplication.
+
+        Tests value of curation (H-Curation hypothesis).
+
+        Args:
+            insights: Insights from Reflector
+
+        Returns:
+            List of delta items (all insights appended)
+        """
+        delta_items = []
+
+        # Extract all insights and convert to delta items
+        for insight in insights.get('key_insights', []):
+            delta_items.append({
+                'section': 'strategies_and_hard_rules',
+                'content': insight,
+                'operation': 'add'
+            })
+
+        # Enforce token cap if specified
+        if self.token_cap:
+            delta_items = self._enforce_token_cap(delta_items)
+
+        return delta_items
+
+    def _curate_random_subset(self, insights: Dict) -> List[Dict]:
+        """
+        Random mode: Randomly select insights at same token budget.
+
+        Tests whether selection matters or just having items matters.
+
+        Args:
+            insights: Insights from Reflector
+
+        Returns:
+            List of delta items (random subset)
+        """
+        import random
+
+        # Extract all insights
+        all_insights = insights.get('key_insights', [])
+
+        # Randomly shuffle
+        random.shuffle(all_insights)
+
+        # Convert to delta items
+        delta_items = [
+            {
+                'section': 'strategies_and_hard_rules',
+                'content': insight,
+                'operation': 'add'
+            }
+            for insight in all_insights
+        ]
+
+        # Enforce token cap
+        if self.token_cap:
+            delta_items = self._enforce_token_cap(delta_items)
+
+        return delta_items
+
+    def _curate_greedy_top_k(self, insights: Dict) -> List[Dict]:
+        """
+        Greedy mode: Select top K by helpfulness score only.
+
+        Tests utility scoring without full curation.
+
+        Args:
+            insights: Insights from Reflector
+
+        Returns:
+            List of delta items (top K by helpfulness)
+        """
+        # Score insights by simple heuristic (length = detail)
+        all_insights = insights.get('key_insights', [])
+
+        # Score by length (longer = more detailed = potentially more helpful)
+        scored = [(insight, len(insight)) for insight in all_insights]
+        scored.sort(key=lambda x: x[1], reverse=True)
+
+        # Take top insights
+        delta_items = [
+            {
+                'section': 'strategies_and_hard_rules',
+                'content': insight,
+                'operation': 'add'
+            }
+            for insight, score in scored
+        ]
+
+        # Enforce token cap
+        if self.token_cap:
+            delta_items = self._enforce_token_cap(delta_items)
+
+        return delta_items
+
+    def _enforce_token_cap(self, delta_items: List[Dict]) -> List[Dict]:
+        """
+        Enforce token cap by truncating playbook to fit budget.
+
+        Args:
+            delta_items: New items to add
+
+        Returns:
+            Truncated list of delta items
+        """
+        # Estimate current playbook tokens
+        current_tokens = self._estimate_playbook_tokens()
+
+        # Add items until we hit the cap
+        capped_items = []
+        for item in delta_items:
+            item_tokens = len(item['content'].split())  # Rough estimate
+            if current_tokens + item_tokens <= self.token_cap:
+                capped_items.append(item)
+                current_tokens += item_tokens
+            else:
+                break
+
+        return capped_items
+
+    def _estimate_playbook_tokens(self) -> int:
+        """
+        Estimate current playbook token count.
+
+        Returns:
+            Estimated token count (rough)
+        """
+        playbook_text = self._format_playbook()
+        # Rough estimate: 1 token ≈ 0.75 words
+        word_count = len(playbook_text.split())
+        return int(word_count / 0.75)
 
     def _merge_delta_items(self, delta_items: List[Dict]):
         """
