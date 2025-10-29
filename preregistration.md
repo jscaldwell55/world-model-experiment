@@ -326,8 +326,8 @@ All changes will be logged in `CHANGELOG.md` with timestamps and justification.
 
 This preregistration was:
 - **Written on**: 2025-10-29
-- **Committed**: [WILL_FILL_AFTER_COMMIT]
-- **Git SHA**: [WILL_FILL_AFTER_COMMIT]
+- **Committed**: 2025-10-29
+- **Git SHA**: 0353080d7a675c6cebfec2fb2ad2ca20a3257113
 - **Git Tag**: prereg-v1.0
 - **Experiments begin**: 2025-10-29 or later
 
