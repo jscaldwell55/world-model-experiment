@@ -186,6 +186,78 @@ class HotPotLab(Environment):
     def _restore_state(self, state: HotPotState):
         self.state = state
 
+    def apply_shift(self, shift_type: str, **kwargs) -> dict:
+        """
+        Apply distribution shift to environment.
+
+        Supported shifts:
+        - "heating_change": Change heating rates (different stove model)
+        - "sensor_noise": Increase measurement noise
+        - "calibration_error": Change temperature sensor calibration
+
+        Args:
+            shift_type: Type of shift
+            **kwargs: Shift parameters
+
+        Returns:
+            Dict with shift info
+        """
+        if self.state is None:
+            return {"supported": False, "message": "Must reset environment first"}
+
+        if shift_type == "heating_change":
+            # Change heating rates (simulates different stove model)
+            old_rates = self.HEATING_RATES.copy()
+            multiplier = kwargs.get("multiplier", 1.5)
+
+            # Modify class-level heating rates
+            HotPotLab.HEATING_RATES = {
+                "off": 0.0,
+                "low": 1.0 * multiplier,
+                "high": 2.5 * multiplier
+            }
+
+            return {
+                "supported": True,
+                "shift_type": "heating_change",
+                "old_rates": old_rates,
+                "new_rates": self.HEATING_RATES,
+                "message": f"Heating rates changed by {multiplier}x"
+            }
+
+        elif shift_type == "sensor_noise":
+            # Increase measurement noise
+            old_noise = self.MEASUREMENT_NOISE_STD
+            new_noise = kwargs.get("noise_level", 5.0)
+            HotPotLab.MEASUREMENT_NOISE_STD = new_noise
+
+            return {
+                "supported": True,
+                "shift_type": "sensor_noise",
+                "old_noise": old_noise,
+                "new_noise": new_noise,
+                "message": f"Sensor noise increased from {old_noise} to {new_noise}"
+            }
+
+        elif shift_type == "calibration_error":
+            # Shift temperature readings by offset
+            offset = kwargs.get("offset", 10.0)
+            self.state.base_temp += offset
+
+            return {
+                "supported": True,
+                "shift_type": "calibration_error",
+                "offset": offset,
+                "new_base_temp": self.state.base_temp,
+                "message": f"Temperature calibration shifted by {offset}C"
+            }
+
+        else:
+            return {
+                "supported": False,
+                "message": f"Unknown shift type: {shift_type}"
+            }
+
     def _validate_observation(self, obs: dict):
         forbidden_keys = ['ground_truth', 'hidden_state', 'actual_temp',
                          'stove_power', 'heating_rate', 'true_temp']

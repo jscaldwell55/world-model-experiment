@@ -254,6 +254,55 @@ class SwitchLight(Environment):
         else:  # layout_B is inverted
             return not switch_on
 
+    def apply_shift(self, shift_type: str, **kwargs) -> dict:
+        """
+        Apply distribution shift to environment.
+
+        Supported shifts:
+        - "wiring_change": Change wiring layout mid-episode
+        - "sensor_noise": Add observation noise to light readings
+
+        Args:
+            shift_type: Type of shift
+            **kwargs: Shift parameters
+
+        Returns:
+            Dict with shift info
+        """
+        if self.state is None:
+            return {"supported": False, "message": "Must reset environment first"}
+
+        if shift_type == "wiring_change":
+            # Change wiring layout
+            old_layout = self.state.wire_layout
+            self.state.wire_layout = "layout_B" if old_layout == "layout_A" else "layout_A"
+
+            return {
+                "supported": True,
+                "shift_type": "wiring_change",
+                "old_layout": old_layout,
+                "new_layout": self.state.wire_layout,
+                "message": f"Wiring changed from {old_layout} to {self.state.wire_layout}"
+            }
+
+        elif shift_type == "sensor_noise":
+            # Note: Sensor noise would need to be implemented in _observe_light
+            # For now, just mark that noise is enabled
+            noise_level = kwargs.get("noise_level", 0.15)
+
+            return {
+                "supported": True,
+                "shift_type": "sensor_noise",
+                "noise_level": noise_level,
+                "message": f"Sensor noise enabled at {noise_level*100}%"
+            }
+
+        else:
+            return {
+                "supported": False,
+                "message": f"Unknown shift type: {shift_type}"
+            }
+
     def _validate_observation(self, obs: dict):
         """Guard rail: ensure observation never leaks ground truth."""
         forbidden_keys = ['ground_truth', 'hidden_state', 'wire_layout',

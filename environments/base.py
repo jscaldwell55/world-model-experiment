@@ -61,12 +61,31 @@ class Environment(ABC):
     def get_time_elapsed(self) -> float:
         """Return simulation time for belief likelihood calculations"""
         pass
-    
+
+    def apply_shift(self, shift_type: str, **kwargs) -> dict:
+        """
+        Apply distribution shift to environment (optional).
+
+        Common shift types:
+        - "wiring_change": Change wiring/dynamics
+        - "sensor_noise": Add observation noise
+        - "parameter_change": Change physical parameters
+
+        Args:
+            shift_type: Type of shift to apply
+            **kwargs: Shift-specific parameters
+
+        Returns:
+            Dict with shift info (what changed)
+        """
+        # Default: no shift support
+        return {"supported": False, "message": "This environment does not support distribution shifts"}
+
     def _compute_version_hash(self) -> str:
         """Hash environment source code for versioning"""
         source = inspect.getsource(self.__class__)
         return hashlib.sha256(source.encode()).hexdigest()[:16]
-    
+
     def get_version(self) -> str:
         """Return version hash for provenance logging"""
         return self._version_hash
