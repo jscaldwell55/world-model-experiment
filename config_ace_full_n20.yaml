@@ -1,0 +1,46 @@
+# config_ace_full_n20.yaml
+# Full ACE study with n=20 per condition (POST-VERIFICATION)
+# Only run this AFTER verification passes (Observer <40%, ACE >60%)
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  model_based:
+    model: "claude-sonnet-4-5-20250929"
+  a_c_e:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4-0125-preview"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+agents:
+  - observer
+  - actor
+  - model_based
+  - ace
+
+environments:
+  hot_pot:
+    num_episodes: 20  # Increased from 5 to 20
+    seeds: [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61]
+
+  switch_light:
+    num_episodes: 20  # Increased from 5 to 20
+    seeds: [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119]
+
+# Total: 160 episodes (4 agents × 2 environments × 20 seeds)
+# Estimated cost: ~$60-80
+# Estimated time: ~4-6 hours with 6 workers
+# Statistical power: n=20 provides 80% power to detect d=0.65 effect size
+
+# IMPORTANT: Only run after verification shows:
+#   ✅ Observer <40% accuracy
+#   ✅ ACE >60% accuracy
+#   ✅ ACE surprisal > 0 (belief updating works)

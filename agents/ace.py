@@ -27,6 +27,7 @@ from experiments.prompts import (
     format_observation_history
 )
 from models.tools import get_tools_for_environment
+from utils.token_accounting import TokenAccountant
 
 
 class ACEAgent(Agent):
@@ -68,6 +69,7 @@ class ACEAgent(Agent):
         self.playbook = self._init_playbook()
         self.episode_history = []
         self.tools_class = None
+        self.token_accountant = TokenAccountant()  # Track token breakdown
 
         if environment_name:
             try:
@@ -98,6 +100,9 @@ class ACEAgent(Agent):
         This allows the agent to accumulate knowledge over time.
         """
         super().reset()
+
+        # Reset token accounting for new episode
+        self.token_accountant.reset()
 
         # Start new episode history
         self.episode_history.append({
@@ -170,6 +175,15 @@ class ACEAgent(Agent):
 
         # Query LLM
         response = self.llm.generate(prompt, temperature=0.0)
+
+        # Record token usage for evaluation
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'evaluation',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'question': question[:50]}  # Truncate question
+        )
 
         # Parse answer
         answer, confidence, reasoning = extract_answer_components(response)
@@ -247,6 +261,15 @@ class ACEAgent(Agent):
         # Generate action
         response = self.llm.generate(prompt, temperature=0.8)
 
+        # Record token usage for exploration
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'exploration',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'action_count': self.action_count}
+        )
+
         # Extract thought and action
         thought = extract_thought(response)
         action = extract_action(response)
@@ -287,6 +310,15 @@ class ACEAgent(Agent):
 
         # Query LLM for insights
         response = self.llm.generate(prompt, temperature=0.0)
+
+        # Record token usage for planning (reflection)
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'planning',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'phase': 'reflection'}
+        )
 
         # Parse insights
         try:
@@ -352,6 +384,15 @@ class ACEAgent(Agent):
 
         # Query LLM for delta items
         response = self.llm.generate(prompt, temperature=0.0)
+
+        # Record token usage for curation
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'curation',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'phase': 'curation', 'mode': 'curated'}
+        )
 
         # Parse delta items
         try:
@@ -649,6 +690,35 @@ class ACEAgent(Agent):
             UUID string
         """
         return str(uuid.uuid4())[:8]
+
+    # ========================================================================
+    # Token Accounting
+    # ========================================================================
+
+    def get_token_breakdown(self) -> dict:
+        """
+        Get token breakdown by category.
+
+        Returns:
+            Dictionary with token breakdown and validation status
+        """
+        return self.token_accountant.to_dict()
+
+    def validate_token_accounting(self, total_input: int, total_output: int) -> bool:
+        """
+        Validate that token breakdown matches totals.
+
+        Args:
+            total_input: Expected total input tokens
+            total_output: Expected total output tokens
+
+        Returns:
+            True if validation passes
+
+        Raises:
+            ValueError: If validation fails
+        """
+        return self.token_accountant.validate(total_input, total_output)
 
     # ========================================================================
     # JSON Parsing Helpers

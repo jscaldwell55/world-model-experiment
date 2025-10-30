@@ -199,8 +199,7 @@ def run_parallel_experiment(
         num_episodes = env_config.get('num_episodes', 0)
         seeds = env_config.get('seeds', list(range(42, 42 + num_episodes)))
 
-        for agent_name in config.get('agents', agent_mapping.keys()):
-            agent_cls = agent_mapping[agent_name]
+        for agent_name, agent_cls in agent_mapping.items():
             for i, seed in enumerate(seeds):
                 episode_id = f"{env_name}_{agent_name}_ep{str(i+1).zfill(3)}"
                 episodes.append({

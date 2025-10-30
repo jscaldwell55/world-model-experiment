@@ -3,6 +3,7 @@ import time
 from typing import Tuple, Optional
 from agents.base import Agent, AgentStep, LLMInterface
 from experiments.prompts import OBSERVER_QUERY_TEMPLATE, extract_answer_components
+from utils.token_accounting import TokenAccountant
 
 
 class ObserverAgent(Agent):
@@ -24,6 +25,7 @@ class ObserverAgent(Agent):
         """
         super().__init__(llm, action_budget)
         self.initial_description = None
+        self.token_accountant = TokenAccountant()  # Track token breakdown
 
     def act(self, observation: dict) -> AgentStep:
         """
@@ -76,6 +78,15 @@ class ObserverAgent(Agent):
         # Generate answer
         response = self.llm.generate(prompt)
 
+        # Record token usage for evaluation
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'evaluation',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'question': question[:50]}
+        )
+
         # Parse answer and confidence
         answer, confidence, reasoning = extract_answer_components(response)
 
@@ -85,3 +96,33 @@ class ObserverAgent(Agent):
         """Reset agent state for new episode"""
         super().reset()
         self.initial_description = None
+        self.token_accountant.reset()
+
+    # ========================================================================
+    # Token Accounting
+    # ========================================================================
+
+    def get_token_breakdown(self) -> dict:
+        """
+        Get token breakdown by category.
+
+        Returns:
+            Dictionary with token breakdown and validation status
+        """
+        return self.token_accountant.to_dict()
+
+    def validate_token_accounting(self, total_input: int, total_output: int) -> bool:
+        """
+        Validate that token breakdown matches totals.
+
+        Args:
+            total_input: Expected total input tokens
+            total_output: Expected total output tokens
+
+        Returns:
+            True if validation passes
+
+        Raises:
+            ValueError: If validation fails
+        """
+        return self.token_accountant.validate(total_input, total_output)

@@ -7,6 +7,7 @@ import time
 from experiments.provenance import ProvenanceLog
 from agents.base import create_llm
 from evaluation.tasks import get_test_queries
+from utils.cost_tracker import CostTracker
 
 if TYPE_CHECKING:
     from experiments.rate_limiter import RateLimiter
@@ -225,6 +226,32 @@ class ExperimentRunner:
         # Calculate episode duration
         episode_duration = time.time() - episode_start_time
 
+        # Calculate cost (preregistration requirement)
+        cost_tracker = CostTracker()
+        cost_info = cost_tracker.compute_cost(
+            input_tokens=llm_usage['total_input_tokens'],
+            output_tokens=llm_usage['total_output_tokens'],
+            model_name=model_name
+        )
+
+        # Get token breakdown from agent (preregistration requirement)
+        token_breakdown = None
+        if hasattr(agent, 'get_token_breakdown'):
+            token_breakdown = agent.get_token_breakdown()
+
+            # Validate token breakdown matches totals
+            if hasattr(agent, 'validate_token_accounting'):
+                try:
+                    agent.validate_token_accounting(
+                        llm_usage['total_input_tokens'],
+                        llm_usage['total_output_tokens']
+                    )
+                    token_breakdown['validation_passed'] = True
+                except ValueError as e:
+                    print(f"Warning: Token accounting validation failed: {e}")
+                    token_breakdown['validation_passed'] = False
+                    token_breakdown['validation_error'] = str(e)
+
         # Package episode log
         episode_log = {
             'episode_id': episode_id,
@@ -240,7 +267,11 @@ class ExperimentRunner:
             'total_input_tokens': llm_usage['total_input_tokens'],
             'total_output_tokens': llm_usage['total_output_tokens'],
             'total_api_calls': llm_usage['total_api_calls'],
-            'duration_seconds': episode_duration
+            'duration_seconds': episode_duration,
+            # Cost tracking (preregistration requirement)
+            'cost': cost_info,
+            # Token breakdown by category (preregistration requirement)
+            'token_breakdown': token_breakdown
         }
 
         # Add prior generation metadata if available (Actor agents)

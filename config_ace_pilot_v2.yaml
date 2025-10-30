@@ -1,0 +1,34 @@
+# config_ace_pilot_v2.yaml
+# FIXED: Added agents list
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  model_based:
+    model: "claude-sonnet-4-5-20250929"
+  a_c_e:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4-0125-preview"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+agents:
+  - observer
+  - actor
+  - model_based
+  - ace
+
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]

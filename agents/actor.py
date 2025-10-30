@@ -17,6 +17,7 @@ from experiments.prompts import (
     format_observation_history
 )
 from models.tools import get_tools_for_environment
+from utils.token_accounting import TokenAccountant
 
 
 class ActorAgent(Agent):
@@ -46,6 +47,7 @@ class ActorAgent(Agent):
         self.belief_state = None
         self.environment_name = environment_name
         self.tools_class = None
+        self.token_accountant = TokenAccountant()  # Track token breakdown
 
         if environment_name:
             try:
@@ -116,6 +118,16 @@ class ActorAgent(Agent):
         )
 
         response = self.llm.generate(prompt)
+
+        # Record token usage for evaluation
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'evaluation',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'question': question[:50]}
+        )
+
         answer, confidence, reasoning = extract_answer_components(response)
 
         return answer, confidence
@@ -136,6 +148,9 @@ class ActorAgent(Agent):
               generates new priors. Otherwise, belief_state persists.
         """
         super().reset()
+
+        # Reset token accounting for new episode
+        self.token_accountant.reset()
 
         # Store prior generation metadata for logging
         self.prior_generation_metadata = None
@@ -331,6 +346,15 @@ class ActorAgent(Agent):
         try:
             response = self.llm.generate(prompt, temperature=0.7)
 
+            # Record token usage for curation (belief update)
+            usage = self.llm.get_last_usage()
+            self.token_accountant.record(
+                'curation',
+                input_tokens=usage['input_tokens'],
+                output_tokens=usage['output_tokens'],
+                metadata={'phase': 'belief_update'}
+            )
+
             # Parse with robust error handling
             parsed_belief = self._parse_belief_update(response)
 
@@ -374,6 +398,15 @@ class ActorAgent(Agent):
         )
 
         response = self.llm.generate(prompt, temperature=0.8)
+
+        # Record token usage for exploration
+        usage = self.llm.get_last_usage()
+        self.token_accountant.record(
+            'exploration',
+            input_tokens=usage['input_tokens'],
+            output_tokens=usage['output_tokens'],
+            metadata={'action_count': self.action_count}
+        )
 
         # Extract thought and action from response
         thought = extract_thought(response)
@@ -539,6 +572,15 @@ class ActorAgent(Agent):
                 # Generate with temperature=0 for consistency
                 response = self.llm.generate(prompt, temperature=0.0)
 
+                # Record token usage for planning (prior generation)
+                usage = self.llm.get_last_usage()
+                self.token_accountant.record(
+                    'planning',
+                    input_tokens=usage['input_tokens'],
+                    output_tokens=usage['output_tokens'],
+                    metadata={'phase': 'prior_generation', 'environment': environment_type}
+                )
+
                 # Parse response (reuse robust parsing from belief updates)
                 parsed = self._parse_belief_update(response)
 
@@ -596,3 +638,32 @@ class ActorAgent(Agent):
             reasoning = f"Failed to generate priors (error: {last_error}). No fallback available."
 
         return fallback_priors, reasoning, 0
+
+    # ========================================================================
+    # Token Accounting
+    # ========================================================================
+
+    def get_token_breakdown(self) -> dict:
+        """
+        Get token breakdown by category.
+
+        Returns:
+            Dictionary with token breakdown and validation status
+        """
+        return self.token_accountant.to_dict()
+
+    def validate_token_accounting(self, total_input: int, total_output: int) -> bool:
+        """
+        Validate that token breakdown matches totals.
+
+        Args:
+            total_input: Expected total input tokens
+            total_output: Expected total output tokens
+
+        Returns:
+            True if validation passes
+
+        Raises:
+            ValueError: If validation fails
+        """
+        return self.token_accountant.validate(total_input, total_output)

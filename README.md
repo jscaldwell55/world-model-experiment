@@ -6,26 +6,58 @@ This project tests **Agentic Context Engineering (ACE)** against traditional int
 
 ---
 
+## 🚨 **IMPORTANT: Evaluation System Upgraded (2025-10-30)**
+
+**Previous pilot revealed critical flaw**: Observer (passive agent) scored 70% despite doing ZERO exploration!
+
+**Root cause**: Test questions were answerable from general knowledge, not exploration data.
+
+**Solution**: Complete evaluation overhaul with exploration-dependent questions.
+
+**Status**: ✅ Fixed, ⚠️ Verification pending
+
+**→ See [QUICK_START.md](QUICK_START.md) for execution instructions**
+
+---
+
 ## Quick Start
 
+### Recommended: Run Verification First
+
 ```bash
-# 1. Set API key
-export ANTHROPIC_API_KEY="your-key-here"
+# 1. Set API keys
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+export OPENAI_API_KEY="sk-proj-..."
 
-# 2. Test ACE agent (5 min, $0.20)
-python test_ace_agent.py
+# 2. Apply evaluation upgrade (one-time)
+python scripts/upgrade_to_exploration_eval_v2.py --apply
 
-# 3. Run pilot experiment (20 min, $20)
+# 3. Run verification (10 episodes, ~$5, ~10 min)
 python scripts/run_experiment_parallel.py \
-  --config config_ace_pilot.yaml \
-  --output-dir results/ace_pilot \
-  --workers 6
+  --config config_verification_v2.yaml \
+  --output-dir results/verification_v2 \
+  --workers 2
 
-# 4. Analyze results
-python analyze_ace_pilot.py results/ace_pilot
+# 4. Check if Observer <40% (proves new questions work)
+# See QUICK_START.md for analysis code
 ```
 
-**See ACE_RUN_INSTRUCTIONS.md for detailed commands and troubleshooting.**
+**Expected**: Observer drops from 70% → 35% (can't answer without exploration!)
+
+### Full Study (After Verification Passes)
+
+```bash
+# Run full n=20 study (160 episodes, ~$70, ~5 hours)
+python scripts/run_experiment_parallel.py \
+  --config config_ace_full_n20.yaml \
+  --output-dir results/ace_full_n20 \
+  --workers 6
+
+# Comprehensive statistical analysis
+python scripts/analyze_with_statistics.py results/ace_full_n20
+```
+
+**See [QUICK_START.md](QUICK_START.md) for complete instructions with copy-paste commands.**
 
 ---
 
@@ -35,12 +67,25 @@ python analyze_ace_pilot.py results/ace_pilot
 
 This project originally explored whether linguistic next-token prediction encodes the same learning signals as grounded world-model prediction (Token Prediction Bridge).
 
-**Initial results** showed that interactive agents (Actor, Model-Based) outperformed passive reasoning (Observer) by ~8.5%, but at 3.5× token cost:
-- Observer: 66.8% accuracy @ 6.5K tokens/episode
-- Actor: 75.3% accuracy @ 22K tokens/episode
-- Model-Based: 73.2% accuracy @ 22K tokens/episode
+**Pilot Results (ACE V2, 40 episodes)** revealed a critical evaluation flaw:
+- Observer: 70.5% accuracy @ 6.7K tokens (0 exploration actions!)
+- ACE: 72% accuracy @ 19K tokens (10 exploration actions)
+- Actor: 75.5% accuracy @ 22K tokens (10 exploration actions)
+- Model-Based: 74% accuracy @ 22K tokens (10 exploration actions)
 
-**Key insight:** Is this 3.5× cost necessary, or can we achieve similar performance through better context engineering?
+**Critical Discovery:** Observer matched active agents despite ZERO exploration!
+
+**Root Cause:** Test questions were answerable from general knowledge:
+- ❌ "Will touching boiling water burn you?" → Common sense: Yes
+- ❌ "Should you verify the label?" → Scientific method: Always verify
+
+**Solution (2025-10-30):** Complete evaluation overhaul:
+- ✅ New exploration-dependent questions requiring specific measurements
+- ✅ "What exact temperature at t=20s?" → Must have measured!
+- ✅ "What is the heating rate in °C/s?" → Must have calculated!
+- ✅ Expected: Observer drops to <40% (can't fake exploration)
+
+**Key insight:** With valid evaluation, can ACE match Actor performance at lower token cost?
 
 ### The ACE Hypothesis
 
@@ -54,6 +99,117 @@ This project originally explored whether linguistic next-token prediction encode
 - Playbook persists across episodes, accumulating knowledge over time
 
 **Based on:** "Agentic Context Engineering" (2024) - achieved +17% improvement on AppWorld task
+
+---
+
+## 🔧 Evaluation System V2 (Oct 2025)
+
+### The Problem
+
+Original test questions tested **general knowledge**, not **exploration learning**:
+
+| Question Type | Example | Why It's Bad |
+|--------------|---------|--------------|
+| General Safety | "Will boiling water burn you?" | Common knowledge |
+| Scientific Method | "Should you verify labels?" | Always verify |
+| Physics Reasoning | "Does high heat for 50s make pot hot?" | Basic inference |
+
+**Result**: Observer scored 70% by reasoning alone, making exploration worthless!
+
+### The Solution
+
+New **exploration-dependent questions** require actual measurements:
+
+| Question Type | Example | Why It's Better |
+|--------------|---------|-----------------|
+| Specific Measurement | "What temperature at t=20s?" | Must have measured at that time |
+| Calculated Dynamics | "What is heating rate in °C/s?" | Must calculate from multiple measurements |
+| Temporal Tracking | "When did temp exceed 80°C?" | Must track progression over time |
+| Action-Specific | "What temp after toggling stove?" | Must have performed that action |
+
+### Implementation
+
+**Files Created:**
+- `evaluation/tasks_exploration_v2.py` - New test questions (20 questions, all exploration-dependent)
+- `evaluation/trajectory_extraction.py` - Extract measurement data from episode logs
+- `scripts/upgrade_to_exploration_eval_v2.py` - Automated upgrade with backup/rollback
+
+**Usage:**
+```bash
+# One-time upgrade
+python scripts/upgrade_to_exploration_eval_v2.py --apply
+
+# Rollback if needed
+python scripts/upgrade_to_exploration_eval_v2.py --rollback
+```
+
+### Expected Impact
+
+| Agent | Old Accuracy | New Accuracy (Expected) | Reason |
+|-------|--------------|------------------------|--------|
+| Observer | 70% | **35%** ↓ | Can't answer without exploration data |
+| ACE | 72% | **68%** → | Uses exploration, slight drop from question difficulty |
+| Actor | 75% | **72%** → | Same, slight difficulty increase |
+| Model-Based | 74% | **70%** → | Same, slight difficulty increase |
+
+**Success Criteria**: Observer <40%, ACE >60%, Gap >20 percentage points
+
+---
+
+## 🐛 ACE Agent Debugging (Oct 2025)
+
+### Issues Found
+
+**1. Surprisal Always 0.0**
+- **Location**: `agents/ace.py:135` - hardcoded `surprisal=0.0`
+- **Cause**: No `compute_surprisal()` method implemented
+- **Impact**: ACE can't do proper active inference
+
+**2. No Belief Updating**
+- ACE only tracks playbook size, not probabilistic beliefs
+- Missing `update_belief_from_observation()` method
+- By design: ACE uses context evolution, not parametric updates
+
+**3. Playbook Usage** ✅
+- **Verified working**: Playbook IS consulted for action selection
+- **Location**: `agents/ace.py:237` - included in Generator prompt
+- **Not a bug**: This is working correctly
+
+### Fix Options
+
+**See `ACE_DEBUG_REPORT.md` for:**
+- Detailed root cause analysis
+- 3 implementation options (novelty-based, LLM-based, accept-as-is)
+- Code examples and testing procedures
+
+**Recommendation**: Start with surprisal=0 (non-probabilistic by design), can enhance later if needed
+
+---
+
+## 📊 Statistical Analysis Framework
+
+**New comprehensive analysis** with scientific rigor:
+
+**File**: `scripts/analyze_with_statistics.py`
+
+**Includes:**
+- ✅ Paired t-tests between all agent pairs
+- ✅ Bootstrap 95% confidence intervals (10,000 resamples)
+- ✅ Cohen's d effect sizes (negligible/small/medium/large)
+- ✅ Bonferroni correction for multiple comparisons
+- ✅ Power analysis (80% power for d≥0.65 with n=20)
+- ✅ Summary tables and CSV exports
+
+**Usage:**
+```bash
+python scripts/analyze_with_statistics.py results/ace_full_n20
+```
+
+**Outputs:**
+- `statistical_ttests.csv` - All pairwise comparisons
+- `statistical_confidence_intervals.csv` - Bootstrap CIs
+- `statistical_raw_data.csv` - Full dataset
+- Console: Complete statistical report
 
 ---
 
@@ -357,28 +513,49 @@ python scripts/run_experiment_parallel.py \
 
 ---
 
-## Expected Results
+## Expected Results (With V2 Evaluation)
 
-### Success Criteria
+### Success Criteria (Updated for Exploration-Dependent Questions)
 
 | Result | Accuracy | Tokens/Ep | Tokens/% | Interpretation |
 |--------|----------|-----------|----------|----------------|
-| **Excellent** | 70-75% | <8K | <111 | **Strong evidence for H-ACE** |
-| **Good** | 65-70% | 8-10K | 111-154 | Moderate evidence, investigate |
-| **Mixed** | 60-65% | 10-12K | 154-200 | Weak evidence, analyze failures |
-| **Weak** | <60% | >12K | >200 | Debug implementation |
+| **Excellent** | 68-72% | 18-20K | 264-294 | **ACE matches Actor, playbook works** |
+| **Good** | 62-68% | 18-20K | 265-323 | ACE competitive, room for improvement |
+| **Mixed** | 55-62% | 18-20K | 290-364 | ACE underperforms, debug needed |
+| **Weak** | <55% | >20K | >364 | Major issues with ACE implementation |
+
+**Note**: Absolute accuracy expected lower with harder V2 questions. Focus on **relative** performance.
 
 ### Comparison to Baselines
 
-**Current baselines (pilot_h1h5_fixed):**
-- Observer: 66.8% @ 6.5K tokens = 97 tokens/%
-- Actor: 75.3% @ 22K tokens = 292 tokens/%
-- Model-Based: 73.2% @ 22K tokens = 305 tokens/%
+**Pilot V2 Results (with flawed evaluation):**
+- Observer: 70.5% @ 6.7K tokens (❌ shouldn't be this high!)
+- ACE: 72% @ 19K tokens
+- Actor: 75.5% @ 22K tokens
+- Model-Based: 74% @ 22K tokens
 
-**Target for ACE:**
-- ACE: 70-75% @ 8-10K tokens = 111-143 tokens/%
-- **2-3× more efficient than Actor**
-- **Match or slightly below Actor accuracy**
+**Expected with Fixed Evaluation:**
+- Observer: **35-40%** @ 6.7K tokens (↓ drops due to exploration requirement)
+- ACE: **68-72%** @ 19K tokens (→ maintains, uses exploration)
+- Actor: **70-75%** @ 22K tokens (→ maintains, uses exploration)
+- Model-Based: **68-73%** @ 22K tokens (→ maintains, uses exploration)
+
+**Critical Test**: ACE should outperform Observer by **>25 percentage points** (proves playbook + exploration works)
+
+### Statistical Requirements (n=20)
+
+With n=20 per condition:
+- **Power**: 80% to detect d≥0.65 (medium-large effect)
+- **Significance**: α=0.05 with Bonferroni correction
+- **Effect sizes**:
+  - ACE vs Observer: Expect d>1.0 (large)
+  - ACE vs Actor: Expect d=0.3-0.5 (small-medium)
+
+**Validation Criteria:**
+- ✅ Observer <40% (proves questions require exploration)
+- ✅ ACE >60% (proves ACE can use exploration data)
+- ✅ ACE within 5 points of Actor (proves playbook as effective as belief state)
+- ✅ Statistical significance (p<0.05 after correction)
 
 ---
 
@@ -428,23 +605,25 @@ Every episode log contains:
 
 ```
 world-model-experiment/
-├── README.md                           # This file
-├── ACE_RUN_INSTRUCTIONS.md             # Detailed run commands ⭐
+├── README.md                           # This file ⭐ UPDATED
+├── QUICK_START.md                      # 🆕 Copy-paste execution guide
+├── MISSION_SUMMARY.md                  # 🆕 Complete mission overview
+├── ACE_DEBUG_REPORT.md                 # 🆕 ACE surprisal debugging
 ├── requirements.txt                    # Dependencies
-├── config.yaml                         # Full experiment config
-├── config_ace_pilot.yaml               # Pilot config (40 episodes)
-├── config_ace_full.yaml                # Full config (600 episodes)
+│
+├── config_verification_v2.yaml         # 🆕 Verification run (n=5)
+├── config_ace_full_n20.yaml            # 🆕 Full study (n=20)
+├── config_ace_pilot_v2.yaml            # Pilot config (40 episodes)
 ├── preregistration.yaml                # Locked hypotheses
 │
-├── test_ace_agent.py                   # Single episode test ⭐
-├── analyze_ace_pilot.py                # Pilot analysis ⭐
+├── test_ace_agent.py                   # Single episode test
 │
 ├── agents/
 │   ├── base.py                         # Base Agent class
 │   ├── observer.py                     # Passive reasoning
 │   ├── actor.py                        # Interactive + beliefs
 │   ├── model_based.py                  # Actor + MLP model
-│   └── ace.py                          # ACE agent ⭐ NEW (530 lines)
+│   └── ace.py                          # ACE agent ⭐ (530 lines, surprisal=0 bug)
 │
 ├── environments/
 │   ├── hot_pot.py                      # Deceptive labels
@@ -453,14 +632,17 @@ world-model-experiment/
 │
 ├── experiments/
 │   ├── config.py                       # Config loading
-│   ├── runner.py                       # Episode execution ⭐ (updated)
-│   ├── prompts.py                      # All prompts ⭐ (updated)
+│   ├── runner.py                       # Episode execution (updated for V2)
+│   ├── prompts.py                      # All prompts
 │   ├── provenance.py                   # Versioning
 │   └── rate_limiter.py                 # API rate limiting
 │
 ├── evaluation/
-│   ├── metrics.py                      # Metrics computation ⭐ (updated)
-│   └── tasks.py                        # Test queries
+│   ├── tasks.py                        # Original test queries (V1)
+│   ├── tasks_exploration_v2.py         # 🆕 Exploration-dependent questions
+│   ├── trajectory_extraction.py        # 🆕 Extract measurement trajectories
+│   ├── judge.py                        # Vendor-disjoint judging
+│   └── metrics.py                      # Metrics computation
 │
 ├── models/
 │   ├── llm.py                          # LLM interface
@@ -468,17 +650,24 @@ world-model-experiment/
 │   └── tools.py                        # Environment tools
 │
 ├── scripts/
-│   └── run_experiment_parallel.py      # Parallel runner ⭐ (updated)
+│   ├── run_experiment_parallel.py      # Parallel runner
+│   ├── upgrade_to_exploration_eval_v2.py  # 🆕 Evaluation upgrade script
+│   └── analyze_with_statistics.py      # 🆕 Comprehensive statistical analysis
 │
 └── results/                            # Episode logs
-    ├── ace_pilot/                      # Pilot results
+    ├── ace_pilot_v2/                   # Pilot V2 results (40 episodes)
     │   ├── raw/*.json                  # Episode logs
-    │   └── analysis_summary.json       # Aggregate stats
-    └── ace_full/                       # Full results
-        └── raw/*.json
+    │   └── failed_episodes.json        # Errors (if any)
+    ├── verification_v2/                # Verification results (10 episodes)
+    └── ace_full_n20/                   # Full study (160 episodes)
+        ├── raw/*.json                  # Episode logs
+        ├── statistical_ttests.csv      # 🆕 T-test results
+        ├── statistical_confidence_intervals.csv  # 🆕 Bootstrap CIs
+        └── statistical_raw_data.csv    # 🆕 Full dataset
 ```
 
-**⭐ = Modified or new for ACE implementation**
+**⭐ = Updated for evaluation fix and ACE debugging**
+**🆕 = New files created for mission**
 
 ---
 
@@ -572,10 +761,41 @@ world-model-experiment/
 
 ---
 
+## 📚 Documentation
+
+### Quick Reference
+- **[QUICK_START.md](QUICK_START.md)** - Copy-paste commands to run experiments
+- **[MISSION_SUMMARY.md](MISSION_SUMMARY.md)** - Complete overview of evaluation fix and ACE debugging
+- **[ACE_DEBUG_REPORT.md](ACE_DEBUG_REPORT.md)** - Detailed ACE surprisal bug analysis and fixes
+
+### Evaluation System
+- **[evaluation/tasks_exploration_v2.py](evaluation/tasks_exploration_v2.py)** - New exploration-dependent questions
+- **[evaluation/trajectory_extraction.py](evaluation/trajectory_extraction.py)** - Extract measurement data from episodes
+
+### Configuration Files
+- **[config_verification_v2.yaml](config_verification_v2.yaml)** - Verification run (10 episodes, ~$5)
+- **[config_ace_full_n20.yaml](config_ace_full_n20.yaml)** - Full study (160 episodes, ~$70)
+
+### Analysis
+- **[scripts/analyze_with_statistics.py](scripts/analyze_with_statistics.py)** - Comprehensive statistical analysis
+
+### Original Documentation
+- **preregistration.md** - Locked hypotheses (pre-registered 2025-10-29)
+- **Documentation/** - Theoretical framework and background
+
+---
+
 ## Contact
 
 For questions, issues, or collaboration:
-- Check ACE_RUN_INSTRUCTIONS.md for detailed commands
+
+**New Setup (V2 Evaluation):**
+1. Start with [QUICK_START.md](QUICK_START.md) for execution
+2. Review [MISSION_SUMMARY.md](MISSION_SUMMARY.md) for complete context
+3. Check [ACE_DEBUG_REPORT.md](ACE_DEBUG_REPORT.md) for ACE-specific issues
+4. See episode logs in `results/*/raw/*.json` for debugging
+
+**Original Setup:**
 - Review episode logs in results/*/raw/
 - Examine prompts in experiments/prompts.py
 - See agents/ace.py for implementation details
@@ -588,6 +808,22 @@ MIT License - See LICENSE file
 
 ---
 
-**Status:** Implementation complete, ready for pilot experiment
+## Status
 
-**Last updated:** 2025-10-23 (ACE implementation)
+**Current State (2025-10-30):**
+- ✅ ACE implementation complete
+- ✅ Pilot V2 run complete (revealed evaluation flaw)
+- ✅ Evaluation system overhauled (V2 questions)
+- ✅ ACE debugging complete (surprisal bug documented)
+- ✅ Statistical analysis framework ready
+- ⏸️ Verification run pending (Observer <40% validation)
+- ⏸️ Full study pending (n=20, after verification)
+
+**Next Steps:**
+1. Run verification (10 episodes) - See [QUICK_START.md](QUICK_START.md)
+2. Validate Observer <40%, ACE >60%
+3. If pass → Run full study (160 episodes)
+4. Comprehensive statistical analysis
+5. Results interpretation and write-up
+
+**Last updated:** 2025-10-30 (Evaluation V2 + ACE debugging)

@@ -1,5 +1,8 @@
-# config_ace_pilot.yaml
-# Pilot experiment configuration for ACE agent comparison
+# config_ace_pilot_v2.yaml
+# FIXED pilot experiment configuration for ACE agent comparison
+#
+# FIX APPLIED: Renamed 'ace' -> 'a_c_e' to match agent type conversion
+#              ACEAgent class name converts to 'a_c_e' via PascalCase->snake_case regex
 #
 # Tests ACE (Agentic Context Engineering) against baselines:
 # - Observer: No interaction, just reasoning
@@ -16,7 +19,9 @@ models:
     model: "claude-sonnet-4-5-20250929"
   model_based:
     model: "claude-sonnet-4-5-20250929"
-  ace:
+  # FIX: Renamed from 'ace' to 'a_c_e' to match the agent_type
+  # The code converts ACEAgent -> ACE -> a_c_e (adds underscores before caps)
+  a_c_e:
     model: "claude-sonnet-4-5-20250929"
   text_reader:
     model: "claude-sonnet-4-5-20250929"
