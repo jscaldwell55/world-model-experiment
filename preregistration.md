@@ -5,6 +5,30 @@
 **Principal Investigator**: Jay Caldwell
 **Affiliation**: Scale AI
 
+---
+
+## REVISION HISTORY
+
+### Version 1.1 (2025-10-30)
+**Status**: ✅ Amended BEFORE any data collection
+
+**Changes from v1.0**:
+1. **Fixed episode count inconsistency**: Line 306 changed from "600 full" to "603 full" (matches 3 envs × 3 agents × 67 seeds)
+2. **Fixed cost threshold inconsistency**: GREEN LIGHT threshold changed from 70% to 50% to match H1b hypothesis
+3. **Removed undefined term**: "H-ACE-vs-Belief" replaced with "H1a and H1b"
+4. **Clarified H-Budget test**: Changed from vague "linear regression, slope comparison" to explicit planned contrast formula
+5. **Added H-Shift censoring rules**: Specified recovery definition (3-episode rolling mean) and censoring at episode 10
+6. **Clarified multiple comparisons**: Bonferroni applied only to H1a/H1b (primary); others labeled exploratory
+
+**Reason**: Technical review identified internal inconsistencies and ambiguous statistical specifications before any experiments were run.
+
+**Data Collection Status**: NO data has been collected under v1.0. All experiments will run under v1.1.
+
+### Version 1.0 (2025-10-29)
+Original preregistration (see git tag `prereg-v1.0` for original version)
+
+---
+
 ## Study Overview
 
 Evaluation of ACE (Agentic Context Engineering) framework against traditional interactive learning approaches, with focus on cost-efficiency and boundary conditions.
@@ -57,7 +81,11 @@ Increasing playbook cap from 1k→2k tokens yields <50% of the gain from 512→1
 - gain(1k→2k) < 0.5 × gain(512→1k)
 - where gain = Δ accuracy in percentage points
 
-**Statistical Test**: Linear regression, slope comparison
+**Statistical Test**: Planned contrast using paired data across seeds:
+- Compute Δ₁ = Acc(ACE-1k) − Acc(ACE-512)
+- Compute Δ₂ = Acc(ACE-2k) − Acc(ACE-1k)
+- Test H₀: Δ₂ ≥ 0.5·Δ₁ using paired bootstrap (1000 resamples)
+- Report CI for contrast: Δ₂ − 0.5·Δ₁
 
 ### H-Curation (Mechanism Check)
 Curated ACE outperforms append-only (NoCurate) by ≥5 percentage points at same token cap.
@@ -65,7 +93,8 @@ Curated ACE outperforms append-only (NoCurate) by ≥5 percentage points at same
 **Success Threshold**:
 - Curated_accuracy - NoCurate_accuracy ≥ 5 pts at 1k cap
 
-**Statistical Test**: Paired t-test, Cohen's d ≥ 0.5
+**Statistical Test**: Paired t-test across seeds, Cohen's d_z ≥ 0.5
+- d_z = mean(diff) / sd(diff) for paired comparisons
 
 ### H-Shift (Robustness)
 Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within ≤10 episodes.
@@ -74,14 +103,17 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 - post_shift_accuracy ≥ 0.95 × pre_shift_accuracy within 10 episodes
 
 **Statistical Test**: Time-to-recovery analysis, survival curves
+- **Recovery definition**: 3-episode rolling mean accuracy ≥ 0.95 × pre-shift baseline
+- **Censoring**: Episodes with no recovery within 10 episodes are right-censored at episode 10
+- **Event**: First episode when 3-episode rolling mean crosses threshold
 
 ## Decision Rules (Pre-Commit to Interpretation)
 
 ### GREEN LIGHT (Publish as Validation)
 - ACE sits on Pareto frontier in ≥2 of 3 environments
 - Curated beats NoCurate by ≥5 pts at same token cap
-- Total ops cost (tokens + API calls) ≤70% of Actor cost
-- H-ACE-vs-Belief supported (within thresholds above)
+- Total ops cost (tokens + API calls) ≤50% of Actor cost
+- H1a and H1b supported (accuracy ≥70%, cost ≤50%)
 
 **Interpretation**: ACE's advantages validated; context can substitute for interaction in these domains.
 
@@ -95,7 +127,7 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 ### RED LIGHT (Publish Limits Paper)
 - ACE advantages vanish across all environments (not on Pareto frontier)
 - OR Curation effect <3 pts
-- OR Ops costs negate token savings (total cost >70% of Actor)
+- OR Ops costs negate token savings (total cost >50% of Actor)
 
 **Interpretation**: ACE does not generalize; document failure modes and limitations.
 
@@ -284,8 +316,9 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 - **Budget sweep**: Linear regression (accuracy ~ log(token_cap))
 
 ### Multiple Comparisons Correction
-- Bonferroni correction for family-wise error rate
-- Only applied to confirmatory hypotheses, not exploratory analyses
+- **Primary confirmatory hypotheses**: H1a and H1b only (Bonferroni correction, α = 0.025 each)
+- **Secondary hypotheses**: H-Budget, H-Curation, H-Shift (labeled as exploratory, no FWER control)
+- Rationale: H1a/H1b test the core ACE claim; others are mechanistic/boundary investigations
 
 ### Confidence Intervals
 - Bootstrap 95% CI for all accuracy metrics (1000 resamples)
@@ -303,7 +336,7 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 3. Environments and seeds for main study
 4. Model versions (Sonnet 4.5, GPT-4)
 5. Primary metrics (accuracy, tokens, Pareto position)
-6. Episode budgets (40 pilot, 600 full)
+6. Episode budgets (40 pilot, 603 full)
 
 **Allowed Modifications** (If discovered during study):
 1. Bug fixes in implementation (logged with SHA)
@@ -380,12 +413,19 @@ All changes will be logged in `CHANGELOG.md` with timestamps and justification.
 
 ## Preregistration Verification
 
-This preregistration was:
+### Version 1.1 (Current)
+- **Revised on**: 2025-10-30
+- **Status**: Active version for all experiments
+- **Git Tag**: prereg-v1.1 (to be tagged on commit)
+- **Changes**: See REVISION HISTORY section above
+- **Data collected**: None yet
+
+### Version 1.0 (Superseded)
 - **Written on**: 2025-10-29
 - **Committed**: 2025-10-29
 - **Git SHA**: 0353080d7a675c6cebfec2fb2ad2ca20a3257113
 - **Git Tag**: prereg-v1.0
-- **Experiments begin**: 2025-10-29 or later
+- **Status**: Superseded before data collection
 
 ## Signature
 
