@@ -2,7 +2,7 @@
 
 **Date**: 2025-10-31
 **Study Version**: 2.0 (Post-Pilot Confirmatory)
-**Git SHA**: d2f2815a909a8971173c025f37358b17bdc1f797
+**Git SHA**: 890539e241a19bafd37b94c325d4301fc7c44a26
 **Git Tag**: prereg-v2.0
 **Data Collection Status**: NOT STARTED
 
