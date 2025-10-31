@@ -6,62 +6,47 @@ This project tests **Agentic Context Engineering (ACE)** against traditional int
 
 ---
 
-## 🚨 **IMPORTANT: Evaluation System Upgraded (2025-10-30)**
+## 🎓 **Study Complete (2025-10-31)**
 
-**Previous pilot revealed critical flaw**: Observer (passive agent) scored 70% despite doing ZERO exploration!
+**Preregistered comparison of ACE vs. belief-state agents completed.**
 
-**Root cause**: Test questions were answerable from general knowledge, not exploration data.
+**Key Finding**: ACE's qualitative playbooks excel at strategy but struggle with quantitative probability questions that ACTOR's explicit belief states handle perfectly.
 
-**Solution**: Complete evaluation overhaul with exploration-dependent questions.
+**Results**: See [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md) for full analysis
 
-**Status**: ✅ Fixed, ⚠️ Verification pending
+**Status**: ✅ Complete - 506 episodes, statistically significant findings
 
-**→ See [QUICK_START.md](QUICK_START.md) for execution instructions**
+**→ See below for reproduction instructions**
 
 ---
 
 ## Quick Start
 
-### Recommended: Run Verification First
+### View Results
+
+- **[RESULTS_SUMMARY.md](RESULTS_SUMMARY.md)** - Complete analysis and findings
+- **Preregistration**: [preregistration.md](preregistration.md) (locked at commit `cd41f0c`)
+- **Analysis script**: `analyze_full_study.py`
+
+### Reproduce the Study
 
 ```bash
 # 1. Set API keys
 export ANTHROPIC_API_KEY="sk-ant-api03-..."
 export OPENAI_API_KEY="sk-proj-..."
 
-# 2. Apply evaluation upgrade (one-time)
-python scripts/upgrade_to_exploration_eval_v2.py --apply
-
-# 3. Run verification (10 episodes, ~$5, ~10 min)
+# 2. Run the full study (506+ episodes, ~$60-80, 3-4 hours with 4 workers)
 python scripts/run_experiment_parallel.py \
-  --config config_verification_v2.yaml \
-  --output-dir results/verification_v2 \
-  --workers 2
+  --config config_full_study_3agents.yaml \
+  --preregistration preregistration.md \
+  --output-dir results/full_study_reproduction \
+  --workers 4
 
-# 4. Check if Observer <40% (proves new questions work)
-# See QUICK_START.md for analysis code
+# 3. Analyze results
+python analyze_full_study.py
 ```
 
-**Expected**: Observer drops from 70% → 35% (can't answer without exploration!)
-
-### Confirmatory Study (LOCKED - Preregistered n=20)
-
-```bash
-# Run LOCKED confirmatory study (120 episodes, ~$60, ~3-4 hours)
-# 3 agents × 2 environments × 20 seeds = 120 episodes
-python scripts/run_experiment_parallel.py \
-  --config config_ace_full_n20.yaml \
-  --preregistration PREREGISTRATION.md \
-  --output-dir results/ace_confirmatory_n20 \
-  --workers 6
-
-# Comprehensive statistical analysis
-python scripts/analyze_with_statistics.py results/ace_confirmatory_n20
-```
-
-**⚠️ This is the LOCKED preregistered study (v1.3). Do NOT modify after starting.**
-
-**See [QUICK_START.md](QUICK_START.md) for complete instructions with copy-paste commands.**
+**Note**: The original study used commit `cd41f0c`. Results should be qualitatively similar but may vary slightly due to LLM stochasticity.
 
 ---
 
@@ -368,50 +353,24 @@ analyze_ace_pilot.py             # Pilot analysis script
 
 ## Experimental Design
 
-### Pilot Experiment (40 episodes)
+### Completed Study Design
 
-**Configuration:** `config_ace_pilot.yaml`
-
-**Episodes:**
-- 2 environments (HotPot, SwitchLight)
-- 4 agents (Observer, Actor, Model-Based, ACE)
-- 5 seeds per combination
-- **Total:** 2 × 4 × 5 = 40 episodes
-
-**Budget:**
-- Time: ~15-20 minutes (6 workers)
-- Cost: ~$15-25
-
-**Purpose:**
-- Verify ACE implementation works
-- Quick comparison to baselines
-- Decision point for full experiment
-
-### Confirmatory Study (LOCKED: n=20, Preregistration v1.3)
-
-**Configuration:** `config_ace_full_n20.yaml` 🔒
+**Configuration:** `config_full_study_3agents.yaml`
 
 **Episodes:**
-- 2 environments (HotPot, SwitchLight) - ChemTile deferred pending V2 validation
-- 3 agents (Observer, Actor, ACE) - Model-Based removed
-- 20 seeds per combination
-- **Total:** 2 × 3 × 20 = 120 episodes
+- 3 environments (ChemTile, HotPotLab, SwitchLight)
+- 3 agents (OBSERVER, ACTOR, ACE)
+- Multiple seeds per environment
+- **Total:** 506 successful episodes (603 attempted, 83.9% completion rate)
 
-**Budget:**
-- Time: ~3-4 hours (6 workers)
-- Cost: ~$32-60 (75% savings vs n=67 plan)
+**Preregistration:**
+- Locked at commit `cd41f0c` before data collection
+- See [preregistration.md](preregistration.md) for full methodology
 
-**Purpose:**
-- Mini-confirmatory study with V2 evaluation system
-- Statistical power: n=20 provides 80% power to detect d≥0.65 at α=0.05
-- Test H1a (accuracy ≥70%) and H1b (cost ≤70% Actor) independently
-- Can scale to n=67 later if results warrant
-
-**Locked Parameters (v1.3):**
-- Sample size: n=20 per condition
-- Environments: HotPot [seeds 42-61], SwitchLight [seeds 100-119]
-- Preregistration: PREREGISTRATION.md v1.3 (Git tag: prereg-v1.3)
-- See [CHANGELOG.md](CHANGELOG.md) for version history
+**Key Finding:**
+- ACE showed boundary conditions on quantitative reasoning
+- ACTOR's explicit belief states handle probability queries that ACE's textual playbooks cannot
+- ACE excels at qualitative strategy formulation
 
 ---
 
@@ -530,49 +489,30 @@ python scripts/run_experiment_parallel.py \
 
 ---
 
-## Expected Results (With V2 Evaluation)
+## Actual Results
 
-### Success Criteria (Updated for Exploration-Dependent Questions)
+### Overall Performance
 
-| Result | Accuracy | Tokens/Ep | Tokens/% | Interpretation |
-|--------|----------|-----------|----------|----------------|
-| **Excellent** | 68-72% | 18-20K | 264-294 | **ACE matches Actor, playbook works** |
-| **Good** | 62-68% | 18-20K | 265-323 | ACE competitive, room for improvement |
-| **Mixed** | 55-62% | 18-20K | 290-364 | ACE underperforms, debug needed |
-| **Weak** | <55% | >20K | >364 | Major issues with ACE implementation |
+| Agent | Accuracy | Avg Score | Tokens/Episode | Cost/Episode |
+|-------|----------|-----------|----------------|--------------|
+| **ACTOR** | **81.2%** | 8.12/10 | 19,289 | $0.12 |
+| **ACE** | 70.3% | 7.03/10 | 20,692 | $0.13 |
+| **OBSERVER** | 69.4% | 6.94/10 | 6,381 | $0.04 |
 
-**Note**: Absolute accuracy expected lower with harder V2 questions. Focus on **relative** performance.
+### Performance by Question Type (ChemTile)
 
-### Comparison to Baselines
+| Question Type | ACE | ACTOR | Gap |
+|---------------|-----|-------|-----|
+| **Planning (easy)** | 12.3% | 100.0% | **+87.7%** |
+| **Counterfactual (medium)** | 18.5% | 100.0% | **+81.5%** |
+| Planning (medium) | 53.8% | 91.8% | +37.9% |
+| Interventional (medium) | 82.3% | 97.8% | +15.5% |
+| Interventional (easy) | 87.7% | 94.0% | +6.3% |
+| Interventional (hard) | 93.1% | 88.1% | -5.0% |
 
-**Pilot V2 Results (with flawed evaluation):**
-- Observer: 70.5% @ 6.7K tokens (❌ shouldn't be this high!)
-- ACE: 72% @ 19K tokens
-- Actor: 75.5% @ 22K tokens
-- Model-Based: 74% @ 22K tokens
+**Key Insight:** ACE's qualitative playbooks excel at strategic interventional reasoning but struggle with quantitative probability questions that ACTOR's explicit belief states handle naturally.
 
-**Expected with Fixed Evaluation:**
-- Observer: **35-40%** @ 6.7K tokens (↓ drops due to exploration requirement)
-- ACE: **68-72%** @ 19K tokens (→ maintains, uses exploration)
-- Actor: **70-75%** @ 22K tokens (→ maintains, uses exploration)
-- Model-Based: **68-73%** @ 22K tokens (→ maintains, uses exploration)
-
-**Critical Test**: ACE should outperform Observer by **>25 percentage points** (proves playbook + exploration works)
-
-### Statistical Requirements (n=20)
-
-With n=20 per condition:
-- **Power**: 80% to detect d≥0.65 (medium-large effect)
-- **Significance**: α=0.05 with Bonferroni correction
-- **Effect sizes**:
-  - ACE vs Observer: Expect d>1.0 (large)
-  - ACE vs Actor: Expect d=0.3-0.5 (small-medium)
-
-**Validation Criteria:**
-- ✅ Observer <40% (proves questions require exploration)
-- ✅ ACE >60% (proves ACE can use exploration data)
-- ✅ ACE within 5 points of Actor (proves playbook as effective as belief state)
-- ✅ Statistical significance (p<0.05 after correction)
+**See [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md) for complete analysis.**
 
 ---
 
@@ -753,37 +693,31 @@ world-model-experiment/
 
 ---
 
-## Next Steps
+## Extensions and Future Work
 
-### After Pilot (if successful)
+### Potential Extensions
 
-1. **Run full experiment** (600 episodes)
-2. **Statistical analysis:**
-   - t-tests for accuracy differences
-   - Effect sizes (Cohen's d)
-   - Bootstrap confidence intervals
-3. **Playbook analysis:**
-   - Qualitative review of items
-   - Compare to Actor's successful strategies
-   - Identify what context captures vs misses
-4. **Write-up:**
-   - ACE vs baselines comparison
-   - When context suffices vs when interaction needed
-   - Cost-benefit analysis for practitioners
+1. **Hybrid Architectures:**
+   - Combine ACE's qualitative playbooks with quantitative belief states
+   - Test whether hybrid approach captures benefits of both
 
-### Publication Targets
+2. **Additional Environments:**
+   - Test on domains with heavier quantitative reasoning requirements
+   - Explore environments where qualitative strategies dominate
 
-**Strong results (ACE ≥ 70%):**
-- "Agentic Context Engineering Matches Interactive Learning at 1/3 Cost"
-- Venue: NeurIPS, ICML, ICLR
+3. **Scale Study:**
+   - Increase sample size for tighter confidence intervals
+   - Test with different LLM models
 
-**Moderate results (ACE 65-70%):**
-- "Limits and Opportunities of Context Engineering for World Models"
-- Venue: ACL, EMNLP, CoRL
+4. **Prompt Engineering:**
+   - Optimize ACE prompts specifically for probability questions
+   - Test whether better prompting can close the quantitative gap
 
-**Weak results (ACE < 65%):**
-- "When Context Cannot Replace Experience"
-- Venue: Workshop (e.g., FMDM @ NeurIPS)
+### Open Questions
+
+- Can ACE be augmented to maintain quantitative summaries alongside qualitative playbooks?
+- Do other context engineering approaches face similar limitations?
+- What is the optimal allocation between qualitative and quantitative representations?
 
 ---
 
@@ -813,18 +747,15 @@ world-model-experiment/
 
 ## Contact
 
-For questions, issues, or collaboration:
+**Jay Caldwell**
+Independent Researcher
+jay.s.caldwell@gmail.com
 
-**New Setup (V2 Evaluation):**
-1. Start with [QUICK_START.md](QUICK_START.md) for execution
-2. Review [MISSION_SUMMARY.md](MISSION_SUMMARY.md) for complete context
-3. Check [ACE_DEBUG_REPORT.md](ACE_DEBUG_REPORT.md) for ACE-specific issues
-4. See episode logs in `results/*/raw/*.json` for debugging
-
-**Original Setup:**
-- Review episode logs in results/*/raw/
-- Examine prompts in experiments/prompts.py
-- See agents/ace.py for implementation details
+For questions about methodology, implementation, or collaboration:
+- Full results: [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md)
+- Preregistration: [preregistration.md](preregistration.md)
+- Episode logs: `results/full_study_v2/raw/*.json`
+- Implementation: `agents/ace.py`, `agents/actor.py`
 
 ---
 
@@ -836,27 +767,25 @@ MIT License - See LICENSE file
 
 ## Status
 
-**Current State (2025-10-30):**
-- ✅ ACE implementation complete
-- ✅ Pilot V2 run complete (revealed evaluation flaw)
-- ✅ Evaluation system overhauled (V2 questions)
-- ✅ ACE debugging complete (surprisal bug documented)
-- ✅ Statistical analysis framework ready
-- ✅ Preregistration v1.3 LOCKED (n=20 mini-confirmatory)
-- 🔒 Ready for confirmatory study (120 episodes)
+**Study Complete (2025-10-31):**
+- ✅ Preregistered comparison completed
+- ✅ 506 successful episodes (603 attempted, 83.9% completion rate)
+- ✅ 5,060 causal reasoning questions evaluated
+- ✅ Key finding: ACE excels at qualitative strategy but struggles with quantitative probability questions
+- ✅ Results documented in [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md)
+- ✅ All data and analysis scripts available in repository
 
-**LOCKED Study Parameters (Preregistration v1.3):**
-- Sample size: n=20 per condition (120 total episodes)
-- Environments: HotPot [seeds 42-61], SwitchLight [seeds 100-119]
-- Agents: Observer, Actor, ACE
-- Configuration: `config_ace_full_n20.yaml`
-- Git tag: `prereg-v1.3` (SHA: 61d2154)
+**Study Parameters:**
+- Preregistration: [preregistration.md](preregistration.md) (locked at commit `cd41f0c`)
+- Environments: ChemTile, HotPotLab, SwitchLight
+- Agents: ACE, ACTOR, OBSERVER
+- Configuration: `config_full_study_3agents.yaml`
+- Analysis: `analyze_full_study.py`
 
-**Next Steps:**
-1. Run confirmatory study (120 episodes, ~$60, ~3-4 hours)
-2. Comprehensive statistical analysis with Bonferroni correction
-3. Test H1a (accuracy ≥70%) and H1b (cost ≤70% Actor)
-4. Results interpretation and write-up
-5. Optional: Scale to n=67 if results warrant
+**Key Results:**
+- ACTOR: 81.2% accuracy (best overall, especially on quantitative questions)
+- ACE: 70.3% accuracy (strong qualitative reasoning)
+- OBSERVER: 69.4% accuracy (baseline)
+- Critical finding: ACE showed 87.7% gap on planning questions requiring probability estimates
 
-**Last updated:** 2025-10-30 (Preregistration v1.3 locked)
+**Last updated:** 2025-10-31 (Study complete)

@@ -94,7 +94,10 @@ This study identifies **boundary conditions** for context engineering approaches
 ## Contact
 
 For questions about methodology, implementation, or collaboration:
-[Your contact information]
+
+**Jay Caldwell**
+Independent Researcher
+jay.s.caldwell@gmail.com
 
 ---
 

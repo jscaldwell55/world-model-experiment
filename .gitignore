@@ -108,3 +108,9 @@ IMPLEMENTATION_COMPLETE.md
 CLEANUP_PLAN.md
 *_PREP_*.md
 *_CHECKLIST.md
+
+# Generated documentation files
+*.html
+*.pdf
+RESULTS_SUMMARY.html
+RESULTS_SUMMARY.pdf
