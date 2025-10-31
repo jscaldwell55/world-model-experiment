@@ -114,3 +114,5 @@ CLEANUP_PLAN.md
 *.pdf
 RESULTS_SUMMARY.html
 RESULTS_SUMMARY.pdf
+
+time_violations.json
