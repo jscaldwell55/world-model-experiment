@@ -3,6 +3,8 @@
 All prompts versioned in one place for reproducibility.
 """
 
+from typing import List
+
 PROMPT_VERSION = "v1.1.0"
 
 # ============================================================================
@@ -259,9 +261,12 @@ Based on your playbook and observations, decide what to do next.
 - Focus on experiments that reduce uncertainty
 - If playbook is empty, use general scientific reasoning
 
-Provide your response in this format:
+IMPORTANT: You must explicitly reference which playbook bullets informed your decision.
+
+Provide your response in this EXACT format:
 THOUGHT: <what does your playbook suggest? what's uncertain?>
 ACTION: <tool_name(params)>
+USED_BULLETS: [<comma-separated bullet IDs that you referenced, e.g. "abc123, def456">]
 """
 
 ACE_REFLECTOR_TEMPLATE = """You are reflecting on an episode to extract insights for your playbook.
@@ -405,6 +410,32 @@ REASONING: <brief explanation>
 
 Do not deviate from this format. The answer will be automatically parsed.
 """
+
+
+def extract_used_bullets(response: str) -> List[str]:
+    """
+    Extract USED_BULLETS from Generator response.
+
+    Args:
+        response: LLM response text
+
+    Returns:
+        List of bullet IDs
+    """
+    import re
+
+    # Look for USED_BULLETS: [id1, id2, id3]
+    match = re.search(r'USED_BULLETS:\s*\[(.*?)\]', response, re.IGNORECASE | re.DOTALL)
+    if match:
+        bullet_str = match.group(1)
+        # Split by comma and clean up
+        bullet_ids = [b.strip().strip('"\'') for b in bullet_str.split(',')]
+        # Filter out empty strings
+        return [b for b in bullet_ids if b]
+
+    # Fallback: look for bullet IDs in the response
+    bullet_ids = re.findall(r'\[?ID:([a-zA-Z0-9\-]+)\]?', response)
+    return list(set(bullet_ids))  # Return unique IDs
 
 
 def format_observation_history(steps: list, max_steps: int = 5) -> str:

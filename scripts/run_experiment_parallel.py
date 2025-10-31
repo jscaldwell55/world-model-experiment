@@ -189,6 +189,10 @@ def run_parallel_experiment(
         'a_c_e': ACEAgent
     }
 
+    # Get number of epochs (default 1 for non-ACE agents, or from config for ACE)
+    ace_config = config.get('ace_config', {})
+    max_epochs = ace_config.get('max_epochs', 1)
+
     for env_name, env_cls in environment_mapping.items():
         if env_name not in config.get('environments', {}):
             continue
@@ -199,16 +203,28 @@ def run_parallel_experiment(
 
         for agent_name in config.get('agents', agent_mapping.keys()):
             agent_cls = agent_mapping[agent_name]
-            for i, seed in enumerate(seeds):
-                episode_id = f"{env_name}_{agent_name}_ep{str(i+1).zfill(3)}"
-                episodes.append({
-                    'episode_id': episode_id,
-                    'env_name': env_name,
-                    'env_cls': env_cls,
-                    'agent_name': agent_name,
-                    'agent_cls': agent_cls,
-                    'seed': seed
-                })
+
+            # Determine epochs for this agent (only ACE uses multi-epoch)
+            epochs = max_epochs if agent_name == 'a_c_e' else 1
+
+            for epoch in range(epochs):
+                for i, seed in enumerate(seeds):
+                    # Include epoch in ID if multi-epoch
+                    if epochs > 1:
+                        episode_id = f"{env_name}_{agent_name}_epoch{epoch+1}_ep{str(i+1).zfill(3)}"
+                    else:
+                        episode_id = f"{env_name}_{agent_name}_ep{str(i+1).zfill(3)}"
+
+                    episodes.append({
+                        'episode_id': episode_id,
+                        'env_name': env_name,
+                        'env_cls': env_cls,
+                        'agent_name': agent_name,
+                        'agent_cls': agent_cls,
+                        'seed': seed,
+                        'epoch': epoch,
+                        'max_epochs': epochs
+                    })
 
     # Check for resume
     completed_ids = set()
@@ -238,6 +254,9 @@ def run_parallel_experiment(
     lock = threading.Lock()
     failed_episodes = []
 
+    # For ACE agents, maintain shared agent instances per (env, agent) pair to persist playbooks
+    ace_agent_cache = {}
+
     def run_episode_wrapper(episode_info):
         """Wrapper to run episode and track progress."""
         nonlocal completed_count, failed_count
@@ -246,11 +265,18 @@ def run_parallel_experiment(
         if shutdown_requested:
             return None
 
+        # For ACE multi-epoch, use a shared agent instance
+        shared_agent = None
+        if episode_info['agent_name'] == 'a_c_e' and episode_info['max_epochs'] > 1:
+            cache_key = f"{episode_info['env_name']}_{episode_info['agent_name']}"
+            shared_agent = ace_agent_cache.get(cache_key)
+
         # Create runner for this episode
         runner = ExperimentRunner(
             config=config,
             environment_cls=episode_info['env_cls'],
-            agent_cls=episode_info['agent_cls']
+            agent_cls=episode_info['agent_cls'],
+            shared_agent=shared_agent
         )
 
         # Run episode with retry
@@ -261,6 +287,13 @@ def run_parallel_experiment(
             save_dir=save_dir,
             rate_limiter=rate_limiter
         )
+
+        # Cache the agent for future episodes if ACE multi-epoch
+        if episode_info['agent_name'] == 'a_c_e' and episode_info['max_epochs'] > 1 and success:
+            cache_key = f"{episode_info['env_name']}_{episode_info['agent_name']}"
+            # Get the agent from the runner's last episode
+            if hasattr(runner, '_last_agent'):
+                ace_agent_cache[cache_key] = runner._last_agent
 
         # Update progress
         with lock:

@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class ExperimentRunner:
     """Main experiment loop with guard rails"""
 
-    def __init__(self, config: dict, environment_cls, agent_cls):
+    def __init__(self, config: dict, environment_cls, agent_cls, shared_agent=None):
         """
         Initialize experiment runner.
 
@@ -24,10 +24,13 @@ class ExperimentRunner:
             config: Configuration dictionary
             environment_cls: Environment class
             agent_cls: Agent class
+            shared_agent: Optional pre-existing agent instance to reuse (for multi-epoch ACE)
         """
         self.config = config
         self.environment_cls = environment_cls
         self.agent_cls = agent_cls
+        self.shared_agent = shared_agent
+        self._last_agent = None  # Track agent for sharing
 
         # Provenance
         import environments
@@ -118,7 +121,36 @@ class ExperimentRunner:
                 # For now, provide empty list so agent can at least run
                 agent_kwargs['prior_logs'] = []
 
-        agent = self.agent_cls(**agent_kwargs)
+            # Add ACE-specific parameters if this is an ACEAgent
+            if agent_type == 'a_c_e' and 'ace_config' in self.config:
+                ace_config = self.config['ace_config']
+
+                # Map config to agent parameters
+                ace_params = {
+                    'use_retrieval': 'use_retrieval',
+                    'top_k': 'top_k',
+                    'reflection_rounds': 'reflection_rounds',
+                    'generator_temperature': 'generator_temperature',
+                    'reflector_temperature': 'reflector_temperature',
+                    'curator_temperature': 'curator_temperature',
+                    'curation_mode': 'curation_mode',
+                    'token_cap': 'token_cap',
+                    'max_epochs': 'max_epochs'
+                }
+
+                for config_key, param_name in ace_params.items():
+                    if config_key in ace_config and param_name in sig.parameters:
+                        agent_kwargs[param_name] = ace_config[config_key]
+
+        # Use shared agent if provided (for multi-epoch ACE), otherwise create new one
+        if self.shared_agent is not None:
+            agent = self.shared_agent
+            print(f"  Reusing shared agent (playbook size: {agent._get_playbook_size() if hasattr(agent, '_get_playbook_size') else 'unknown'})")
+        else:
+            agent = self.agent_cls(**agent_kwargs)
+
+        # Store agent for potential sharing
+        self._last_agent = agent
 
         # Set environment-specific belief if Actor
         if hasattr(agent, 'set_belief_state'):
