@@ -437,8 +437,10 @@ All changes will be logged in `CHANGELOG.md` with timestamps and justification.
 
 ### Version 1.3 (Current - LOCKED)
 - **Revised on**: 2025-10-30
+- **Committed**: 2025-10-30
 - **Status**: 🔒 LOCKED - Active version for all experiments
-- **Git Tag**: prereg-v1.3 (to be tagged on commit)
+- **Git SHA**: 61d2154 (full: 615970b3fb5b9b1a54ca9d4366498a666a139149)
+- **Git Tag**: prereg-v1.3 ✅
 - **Changes**: Sample size locked at n=20 mini-confirmatory (120 episodes, 2 environments)
 - **Data collected**: None yet
 - **Next step**: Run confirmatory study using `config_ace_full_n20.yaml`
