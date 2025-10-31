@@ -9,14 +9,27 @@
 
 ## REVISION HISTORY
 
+### Version 1.3 (2025-10-30)
+**Status**: 🔒 LOCKED - Final version for data collection
+
+**Changes from v1.2**:
+1. **Locked sample size**: Mini-confirmatory study with n=20 per condition (120 total episodes)
+   - **Rationale**: Evaluation system V2 just overhauled; need to validate Observer <40% before committing to n=67. n=20 provides 80% power for d≥0.65 (medium-large effects), sufficient for primary hypotheses H1a/H1b. Can scale to n=67 later if needed.
+2. **Environment scope**: 2 environments (HotPot, SwitchLight) instead of 3
+   - **Rationale**: ChemTile not yet validated with V2 evaluation; focus resources on proven environments first.
+3. **Total episodes**: 120 (3 agents × 2 envs × 20 seeds) instead of 603
+4. **Cost reduction**: ~$60 instead of ~$241 (75% savings enables rapid iteration if fixes needed)
+
+**Data Collection Status**: NO data has been collected. All experiments will run under v1.3.
+
 ### Version 1.2 (2025-10-30)
-**Status**: ✅ Amended BEFORE any data collection
+**Status**: Superseded before data collection
 
 **Changes from v1.1**:
 1. **Revised cost threshold**: Changed H1b and decision rules from 50% to 70% of Actor cost
    - **Rationale**: Pilot shows ACE at 78% of Actor cost. 70% threshold is achievable with optimization while still representing meaningful (30%) cost reduction. 50% would require architectural changes beyond scope. Research focus is context substitution at comparable accuracy; 30% cost reduction is operationally significant.
 
-**Data Collection Status**: NO data has been collected. All experiments will run under v1.2.
+**Data Collection Status**: NO data has been collected.
 
 ### Version 1.1 (2025-10-30)
 **Status**: Superseded before data collection
@@ -239,20 +252,22 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 - **Seeds**: [42, 43, 44, 45, 46] for HotPot, [100, 101, 102, 103, 104] for SwitchLight
 - **Outputs**: Pareto plot, accuracy comparison, token analysis
 
-### Full Study
-- **Episodes**: 603 (3 envs × 3 core agents × 67 seeds)
-- **Purpose**: Confirmatory hypothesis testing
+### Confirmatory Study (LOCKED: n=20 mini-confirmatory)
+- **Episodes**: 120 (2 envs × 3 agents × 20 seeds)
+- **Purpose**: Confirmatory hypothesis testing with V2 evaluation
 - **Agents**: Observer, Actor, ACE (Model-Based removed after pilot)
-- **Environments**: HotPot, SwitchLight, ChemTile
+- **Environments**: HotPot, SwitchLight (ChemTile deferred pending V2 validation)
 - **Seeds**:
-  - HotPot: [42-108] (67 seeds)
-  - SwitchLight: [100-166] (67 seeds)
-  - ChemTile: [200-266] (67 seeds)
-- **Estimated Cost**:
-  - Observer: 603 × $0.08 = $48
-  - Actor: 603 × $0.18 = $109
-  - ACE: 603 × $0.14 = $84
-  - **Total**: ~$241 (vs $300 with Model-Based)
+  - HotPot: [42-61] (20 seeds)
+  - SwitchLight: [100-119] (20 seeds)
+- **Estimated Cost** (based on pilot averages):
+  - Observer: 40 × $0.08 = $3.20
+  - Actor: 40 × $0.18 = $7.20
+  - ACE: 40 × $0.14 = $5.60
+  - **Total**: ~$16 per environment × 2 = ~$32
+  - **Safety margin**: ~$60 (accounts for longer episodes with V2 questions)
+- **Statistical Power**: n=20 provides 80% power to detect d≥0.65 at α=0.05
+- **Configuration File**: `config_ace_full_n20.yaml` (updated to 3 agents)
 
 ### Ablation Study (After pilot if promising)
 - **Episodes**: 120 (3 envs × 4 ablations × 10 seeds)
@@ -340,10 +355,10 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 **Locked Parameters** (Cannot modify after experiments begin):
 1. Hypotheses and success thresholds
 2. Decision rules (Green/Amber/Red)
-3. Environments and seeds for main study
+3. Environments and seeds for main study (2 envs, 20 seeds each)
 4. Model versions (Sonnet 4.5, GPT-4)
 5. Primary metrics (accuracy, tokens, Pareto position)
-6. Episode budgets (40 pilot, 603 full)
+6. Episode budgets (40 pilot, 120 confirmatory)
 
 **Allowed Modifications** (If discovered during study):
 1. Bug fixes in implementation (logged with SHA)
@@ -420,12 +435,18 @@ All changes will be logged in `CHANGELOG.md` with timestamps and justification.
 
 ## Preregistration Verification
 
-### Version 1.2 (Current)
+### Version 1.3 (Current - LOCKED)
 - **Revised on**: 2025-10-30
-- **Status**: Active version for all experiments
-- **Git Tag**: prereg-v1.2 (to be tagged on commit)
-- **Changes**: Cost threshold revised from 50% to 70% based on pilot evidence
+- **Status**: 🔒 LOCKED - Active version for all experiments
+- **Git Tag**: prereg-v1.3 (to be tagged on commit)
+- **Changes**: Sample size locked at n=20 mini-confirmatory (120 episodes, 2 environments)
 - **Data collected**: None yet
+- **Next step**: Run confirmatory study using `config_ace_full_n20.yaml`
+
+### Version 1.2 (Superseded)
+- **Revised on**: 2025-10-30
+- **Status**: Superseded before data collection
+- **Changes**: Cost threshold revised from 50% to 70% based on pilot evidence
 
 ### Version 1.1 (Superseded)
 - **Revised on**: 2025-10-30
