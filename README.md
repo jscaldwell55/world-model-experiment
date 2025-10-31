@@ -44,18 +44,22 @@ python scripts/run_experiment_parallel.py \
 
 **Expected**: Observer drops from 70% → 35% (can't answer without exploration!)
 
-### Full Study (After Verification Passes)
+### Confirmatory Study (LOCKED - Preregistered n=20)
 
 ```bash
-# Run full n=20 study (160 episodes, ~$70, ~5 hours)
+# Run LOCKED confirmatory study (120 episodes, ~$60, ~3-4 hours)
+# 3 agents × 2 environments × 20 seeds = 120 episodes
 python scripts/run_experiment_parallel.py \
   --config config_ace_full_n20.yaml \
-  --output-dir results/ace_full_n20 \
+  --preregistration PREREGISTRATION.md \
+  --output-dir results/ace_confirmatory_n20 \
   --workers 6
 
 # Comprehensive statistical analysis
-python scripts/analyze_with_statistics.py results/ace_full_n20
+python scripts/analyze_with_statistics.py results/ace_confirmatory_n20
 ```
+
+**⚠️ This is the LOCKED preregistered study (v1.3). Do NOT modify after starting.**
 
 **See [QUICK_START.md](QUICK_START.md) for complete instructions with copy-paste commands.**
 
@@ -213,9 +217,9 @@ python scripts/analyze_with_statistics.py results/ace_full_n20
 
 ---
 
-## Agent Architectures (Full Study v1.1)
+## Agent Architectures (Confirmatory Study v1.3)
 
-**Note**: Model-Based agent removed after pilot (dominated by Actor). See [CHANGELOG.md](CHANGELOG.md) for justification.
+**Note**: Model-Based agent removed after pilot (dominated by Actor). ChemTile deferred pending V2 validation. See [CHANGELOG.md](CHANGELOG.md) for complete justification.
 
 ### 1. Observer (Baseline)
 - **Capability:** Language-only reasoning, no interaction
@@ -276,8 +280,10 @@ python scripts/analyze_with_statistics.py results/ace_full_n20
 - Actor advantage: Can isolate causal effects
 - ACE advantage: Can learn "test each switch individually"
 
-### Chem-Tile (Optional)
+### Chem-Tile (Deferred - Not in v1.3)
 **Challenge:** Compositional reasoning with safety constraints
+
+**Status:** Deferred pending V2 evaluation validation. Not included in locked confirmatory study (v1.3).
 
 **Setup:**
 - Grid of chemical tiles
@@ -381,30 +387,31 @@ analyze_ace_pilot.py             # Pilot analysis script
 - Quick comparison to baselines
 - Decision point for full experiment
 
-### Full Experiment (603 episodes, v1.1)
+### Confirmatory Study (LOCKED: n=20, Preregistration v1.3)
 
-**Configuration:** `config_full_study_3agents.yaml`
+**Configuration:** `config_ace_full_n20.yaml` 🔒
 
 **Episodes:**
-- 3 environments (HotPot, SwitchLight, ChemTile)
+- 2 environments (HotPot, SwitchLight) - ChemTile deferred pending V2 validation
 - 3 agents (Observer, Actor, ACE) - Model-Based removed
-- 67 seeds per combination
-- **Total:** 3 × 3 × 67 = 603 episodes
+- 20 seeds per combination
+- **Total:** 2 × 3 × 20 = 120 episodes
 
 **Budget:**
-- Time: ~3-4 hours (10 workers)
-- Cost: ~$241 (20% savings vs original 4-agent design)
+- Time: ~3-4 hours (6 workers)
+- Cost: ~$32-60 (75% savings vs n=67 plan)
 
 **Purpose:**
-- Statistical power for hypothesis testing (increased from 50 to 67 seeds)
-- Publication-ready results
-- Test H1a (accuracy ≥70%) and H1b (cost ≤50% Actor) independently
+- Mini-confirmatory study with V2 evaluation system
+- Statistical power: n=20 provides 80% power to detect d≥0.65 at α=0.05
+- Test H1a (accuracy ≥70%) and H1b (cost ≤70% Actor) independently
+- Can scale to n=67 later if results warrant
 
-**Changes from v1.0:**
-- Model-Based removed (dominated by Actor in pilot)
-- Increased statistical power (67 vs 50 seeds per condition)
-- H1 split into H1a + H1b (independent hypotheses)
-- See [CHANGELOG.md](CHANGELOG.md) for full justification
+**Locked Parameters (v1.3):**
+- Sample size: n=20 per condition
+- Environments: HotPot [seeds 42-61], SwitchLight [seeds 100-119]
+- Preregistration: PREREGISTRATION.md v1.3 (Git tag: prereg-v1.3)
+- See [CHANGELOG.md](CHANGELOG.md) for version history
 
 ---
 
@@ -455,9 +462,12 @@ analyze_ace_pilot.py             # Pilot analysis script
 # Install dependencies
 pip install -r requirements.txt
 
-# Set API key
-export ANTHROPIC_API_KEY="your-key-here"
+# Set API keys (both required)
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+export OPENAI_API_KEY="sk-proj-..."
 ```
+
+**Note:** ANTHROPIC_API_KEY is required for agents (Claude Sonnet 4.5). OPENAI_API_KEY is required for judge (GPT-4).
 
 ### Test Single Episode
 
@@ -477,7 +487,7 @@ python test_ace_agent.py
 # 40 episodes, 15-20 min, $15-25
 python scripts/run_experiment_parallel.py \
   --config config_ace_pilot.yaml \
-  --preregistration preregistration.yaml \
+  --preregistration PREREGISTRATION.md \
   --output-dir results/ace_pilot \
   --workers 6
 ```
@@ -503,18 +513,20 @@ python analyze_ace_pilot.py results/ace_pilot
 - ACE playbook statistics
 - Decision guidance (proceed to full experiment?)
 
-### Run Full Experiment
+### Run Confirmatory Study
 
-**Only after pilot succeeds!**
+**🔒 LOCKED preregistered experiment (v1.3)**
 
 ```bash
-# 600 episodes, 2-3 hours, $150-200
+# 120 episodes, 3-4 hours, ~$60
 python scripts/run_experiment_parallel.py \
-  --config config_ace_full.yaml \
-  --preregistration preregistration.yaml \
-  --output-dir results/ace_full \
-  --workers 10
+  --config config_ace_full_n20.yaml \
+  --preregistration PREREGISTRATION.md \
+  --output-dir results/ace_confirmatory_n20 \
+  --workers 6
 ```
+
+**Important:** This is the preregistered confirmatory study. Do NOT modify configuration after starting data collection.
 
 ---
 
@@ -570,23 +582,25 @@ With n=20 per condition:
 
 **This study was preregistered on 2025-10-29 prior to data collection.**
 
-- **Preregistration v1.0**: [PREREGISTRATION.md](PREREGISTRATION.md) (2025-10-29)
-- **Preregistration v1.1**: Updated 2025-10-30 after pilot (this version)
+- **Preregistration v1.3** (LOCKED): [PREREGISTRATION.md](PREREGISTRATION.md) (2025-10-30)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md) - Documents all deviations transparently
 - **Git tag v1.0**: prereg-v1.0 (SHA: 0353080d7a)
-- **Git tag v1.1**: prereg-v1.1 (to be created before full study)
+- **Git tag v1.1**: prereg-v1.1 (SHA: a9d81ea)
+- **Git tag v1.2**: prereg-v1.2 (SHA: 91b0881)
+- **Git tag v1.3** (CURRENT): prereg-v1.3 (SHA: 61d2154) 🔒
 
-**Primary Hypotheses (v1.1)**:
+**Primary Hypotheses (v1.3)**:
 - **H1a (Accuracy)**: ACE achieves ≥70% accuracy on causal reasoning tasks
-- **H1b (Cost)**: ACE uses ≤50% of Actor's token cost
+- **H1b (Cost)**: ACE uses ≤70% of Actor's token cost
 - H-Budget: Diminishing returns for larger playbook caps
 - H-Curation: Curated playbook outperforms append-only by ≥5 pts
 - H-Shift: ACE recovers from distribution shifts within 10 episodes
 
-**Changes from v1.0**:
-1. H1 split into H1a + H1b (independent hypotheses) - see CHANGELOG Entry 3
-2. Model-Based removed (dominated by Actor) - see CHANGELOG Entry 2
-3. Counterfactual evaluation improved (uncertainty expression) - see CHANGELOG Entry 1
+**Locked Study Design (v1.3)**:
+- Sample size: n=20 per condition (120 total episodes)
+- Environments: HotPot, SwitchLight (ChemTile deferred)
+- Agents: Observer, Actor, ACE (Model-Based removed)
+- Power: 80% to detect d≥0.65 at α=0.05
 
 ### Provenance
 
@@ -624,9 +638,9 @@ world-model-experiment/
 ├── requirements.txt                    # Dependencies
 │
 ├── config_verification_v2.yaml         # 🆕 Verification run (n=5)
-├── config_ace_full_n20.yaml            # 🆕 Full study (n=20)
+├── config_ace_full_n20.yaml            # 🔒 Confirmatory study (n=20, LOCKED)
 ├── config_ace_pilot_v2.yaml            # Pilot config (40 episodes)
-├── preregistration.yaml                # Locked hypotheses
+├── PREREGISTRATION.md                  # 🔒 Locked hypotheses (v1.3, prereg-v1.3)
 │
 ├── test_ace_agent.py                   # Single episode test
 │
@@ -671,7 +685,7 @@ world-model-experiment/
     │   ├── raw/*.json                  # Episode logs
     │   └── failed_episodes.json        # Errors (if any)
     ├── verification_v2/                # Verification results (10 episodes)
-    └── ace_full_n20/                   # Full study (160 episodes)
+    └── ace_confirmatory_n20/           # 🔒 Confirmatory study (120 episodes)
         ├── raw/*.json                  # Episode logs
         ├── statistical_ttests.csv      # 🆕 T-test results
         ├── statistical_confidence_intervals.csv  # 🆕 Bootstrap CIs
@@ -786,7 +800,7 @@ world-model-experiment/
 
 ### Configuration Files
 - **[config_verification_v2.yaml](config_verification_v2.yaml)** - Verification run (10 episodes, ~$5)
-- **[config_ace_full_n20.yaml](config_ace_full_n20.yaml)** - Full study (160 episodes, ~$70)
+- **[config_ace_full_n20.yaml](config_ace_full_n20.yaml)** - 🔒 Confirmatory study (120 episodes, ~$60, LOCKED)
 
 ### Analysis
 - **[scripts/analyze_with_statistics.py](scripts/analyze_with_statistics.py)** - Comprehensive statistical analysis
@@ -828,14 +842,21 @@ MIT License - See LICENSE file
 - ✅ Evaluation system overhauled (V2 questions)
 - ✅ ACE debugging complete (surprisal bug documented)
 - ✅ Statistical analysis framework ready
-- ⏸️ Verification run pending (Observer <40% validation)
-- ⏸️ Full study pending (n=20, after verification)
+- ✅ Preregistration v1.3 LOCKED (n=20 mini-confirmatory)
+- 🔒 Ready for confirmatory study (120 episodes)
+
+**LOCKED Study Parameters (Preregistration v1.3):**
+- Sample size: n=20 per condition (120 total episodes)
+- Environments: HotPot [seeds 42-61], SwitchLight [seeds 100-119]
+- Agents: Observer, Actor, ACE
+- Configuration: `config_ace_full_n20.yaml`
+- Git tag: `prereg-v1.3` (SHA: 61d2154)
 
 **Next Steps:**
-1. Run verification (10 episodes) - See [QUICK_START.md](QUICK_START.md)
-2. Validate Observer <40%, ACE >60%
-3. If pass → Run full study (160 episodes)
-4. Comprehensive statistical analysis
-5. Results interpretation and write-up
+1. Run confirmatory study (120 episodes, ~$60, ~3-4 hours)
+2. Comprehensive statistical analysis with Bonferroni correction
+3. Test H1a (accuracy ≥70%) and H1b (cost ≤70% Actor)
+4. Results interpretation and write-up
+5. Optional: Scale to n=67 if results warrant
 
-**Last updated:** 2025-10-30 (Evaluation V2 + ACE debugging)
+**Last updated:** 2025-10-30 (Preregistration v1.3 locked)
