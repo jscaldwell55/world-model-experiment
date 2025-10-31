@@ -24,10 +24,12 @@ from experiments.prompts import (
     extract_answer_components,
     extract_action,
     extract_thought,
+    extract_used_bullets,
     format_observation_history
 )
 from models.tools import get_tools_for_environment
 from utils.token_accounting import TokenAccountant
+from utils.embeddings import BulletRetriever
 
 
 class ACEAgent(Agent):
@@ -50,7 +52,14 @@ class ACEAgent(Agent):
         action_budget: int,
         environment_name: Optional[str] = None,
         curation_mode: str = "curated",
-        token_cap: Optional[int] = None
+        token_cap: Optional[int] = None,
+        use_retrieval: bool = True,
+        top_k: int = 5,
+        reflection_rounds: int = 1,
+        generator_temperature: float = 0.7,
+        reflector_temperature: float = 0.7,
+        curator_temperature: float = 0.7,
+        max_epochs: int = 1
     ):
         """
         Initialize ACE agent.
@@ -61,15 +70,36 @@ class ACEAgent(Agent):
             environment_name: Name of environment (for tool selection)
             curation_mode: Curation strategy - "curated" (default), "no_curate", "random", "greedy"
             token_cap: Maximum playbook tokens (None = unlimited, 512/1k/2k for budget tests)
+            use_retrieval: Whether to use top-k retrieval (True = faithful ACE)
+            top_k: Number of bullets to retrieve per section
+            reflection_rounds: Number of reflection iterations per episode (1+ for faithful ACE)
+            generator_temperature: Temperature for Generator LLM calls (0.7 default for faithful ACE)
+            reflector_temperature: Temperature for Reflector LLM calls (0.7 default for faithful ACE)
+            curator_temperature: Temperature for Curator LLM calls (0.7 default for faithful ACE)
+            max_epochs: Maximum number of offline epochs (replays same seeds to strengthen context)
         """
         super().__init__(llm, action_budget)
         self.environment_name = environment_name
         self.curation_mode = curation_mode
         self.token_cap = token_cap
+        self.use_retrieval = use_retrieval
+        self.top_k = top_k
+        self.reflection_rounds = reflection_rounds
+        self.max_epochs = max_epochs
+        self.generator_temperature = generator_temperature
+        self.reflector_temperature = reflector_temperature
+        self.curator_temperature = curator_temperature
         self.playbook = self._init_playbook()
         self.episode_history = []
+        self.current_epoch = 0  # Track which epoch we're on
         self.tools_class = None
         self.token_accountant = TokenAccountant()  # Track token breakdown
+
+        # Initialize retriever for top-k bullet selection
+        if use_retrieval:
+            self.retriever = BulletRetriever(top_k=top_k)
+        else:
+            self.retriever = None
 
         if environment_name:
             try:
@@ -108,7 +138,8 @@ class ACEAgent(Agent):
         self.episode_history.append({
             'steps': [],
             'outcome': None,
-            'playbook_snapshot': self._get_playbook_snapshot()
+            'playbook_snapshot': self._get_playbook_snapshot(),
+            'referenced_bullets': []  # Track which bullets were used
         })
 
     def act(self, observation: dict) -> AgentStep:
@@ -203,20 +234,26 @@ class ACEAgent(Agent):
             print("Warning: No episode history to update from")
             return
 
-        # 1. Reflect: Extract insights from episode
-        insights = self._reflect_on_episode(
+        # 1. Update bullet feedback counts based on episode success
+        self._update_bullet_feedback(outcome)
+
+        # 2. Reflect: Extract insights from episode (with multiple rounds)
+        insights = self._reflect_on_episode_multi_round(
             episode=self.episode_history[-1],
-            outcome=outcome
+            outcome=outcome,
+            rounds=self.reflection_rounds
         )
 
-        # 2. Curate: Organize insights into playbook updates
+        # 3. Curate: Organize insights into playbook updates
         delta_items = self._curate_insights(insights)
 
-        # 3. Merge: Add to playbook
+        # 4. Merge: Add to playbook
         self._merge_delta_items(delta_items)
 
-        # 4. Deduplicate: Remove redundancy (optional, can be expensive)
-        # self._deduplicate_playbook()
+        # 5. Deduplicate and prune: Remove redundancy and enforce token cap
+        self._deduplicate_playbook()
+        if self.token_cap:
+            self._prune_playbook_to_cap()
 
         # Log outcome
         self.episode_history[-1]['outcome'] = outcome
@@ -246,8 +283,19 @@ class ACEAgent(Agent):
         else:
             available_tools = "No tools available"
 
-        # Format playbook as context
-        playbook_text = self._format_playbook()
+        # Format playbook as context (with retrieval if enabled)
+        if self.use_retrieval and self.retriever:
+            # Build query from observation and recent history
+            query = f"{str(observation)} {format_observation_history(self.memory, max_steps=3)}"
+            retrieved_playbook = self.retriever.retrieve_bullets(
+                query=query,
+                playbook=self.playbook,
+                top_k=self.top_k,
+                current_step=self.action_count
+            )
+            playbook_text = self._format_playbook(playbook=retrieved_playbook)
+        else:
+            playbook_text = self._format_playbook()
 
         # Build Generator prompt
         prompt = ACE_GENERATOR_TEMPLATE.format(
@@ -259,7 +307,7 @@ class ACEAgent(Agent):
         )
 
         # Generate action
-        response = self.llm.generate(prompt, temperature=0.8)
+        response = self.llm.generate(prompt, temperature=self.generator_temperature)
 
         # Record token usage for exploration
         input_tokens, output_tokens = self.llm.get_last_usage()
@@ -270,9 +318,25 @@ class ACEAgent(Agent):
             metadata={'action_count': self.action_count}
         )
 
-        # Extract thought and action
+        # Extract thought, action, and used bullets
         thought = extract_thought(response)
         action = extract_action(response)
+        used_bullets = extract_used_bullets(response)
+
+        # Track which bullets were referenced and update last_used_step
+        if used_bullets:
+            current_step = self.action_count
+            for bullet_id in used_bullets:
+                # Update last_used_step for each referenced bullet
+                for section in self.playbook.values():
+                    for bullet in section:
+                        if bullet['id'] == bullet_id:
+                            bullet['last_used_step'] = current_step
+                            break
+
+            # Track for feedback updates
+            if self.episode_history:
+                self.episode_history[-1]['referenced_bullets'].extend(used_bullets)
 
         return thought, action
 
@@ -280,13 +344,45 @@ class ACEAgent(Agent):
     # Reflector Methods (Insight Extraction)
     # ========================================================================
 
-    def _reflect_on_episode(self, episode: dict, outcome: dict) -> Dict:
+    def _reflect_on_episode_multi_round(self, episode: dict, outcome: dict,
+                                        rounds: int = 1) -> Dict:
+        """
+        Reflect on episode with multiple rounds to strengthen insights.
+
+        Args:
+            episode: Episode dictionary with steps and outcome
+            outcome: Test results and metrics
+            rounds: Number of reflection rounds
+
+        Returns:
+            Final insights dictionary after all rounds
+        """
+        insights = None
+
+        for round_num in range(rounds):
+            # Reflect on episode (potentially incorporating prior round insights)
+            if round_num == 0:
+                insights = self._reflect_on_episode(episode, outcome)
+            else:
+                # Build on previous insights
+                insights = self._reflect_on_episode(
+                    episode, outcome, prior_insights=insights
+                )
+
+            # Record token usage for this round
+            print(f"Reflection round {round_num + 1}/{rounds} completed")
+
+        return insights
+
+    def _reflect_on_episode(self, episode: dict, outcome: dict,
+                           prior_insights: Optional[Dict] = None) -> Dict:
         """
         Reflector: Analyze episode to extract insights.
 
         Inputs:
         - Episode trajectory (observations, actions, outcomes)
         - Test query results (correctness, errors)
+        - Prior insights from previous reflection round (if iterating)
 
         Outputs:
         - Reasoning about what worked/failed
@@ -296,20 +392,27 @@ class ACEAgent(Agent):
         Args:
             episode: Episode dictionary with steps and outcome
             outcome: Test results and metrics
+            prior_insights: Optional insights from previous round
 
         Returns:
             Dictionary with insights and reasoning
         """
         # Build reflection prompt
+        if prior_insights:
+            # Multi-round reflection: refine previous insights
+            prior_text = f"\n\nPREVIOUS INSIGHTS (refine these):\n{json.dumps(prior_insights, indent=2)}"
+        else:
+            prior_text = ""
+
         prompt = ACE_REFLECTOR_TEMPLATE.format(
             playbook=self._format_playbook(),
             episode_steps=self._format_episode_steps(episode['steps']),
             test_results=json.dumps(outcome.get('test_results', {}), indent=2),
             environment_name=self.environment_name
-        )
+        ) + prior_text
 
         # Query LLM for insights
-        response = self.llm.generate(prompt, temperature=0.0)
+        response = self.llm.generate(prompt, temperature=self.reflector_temperature)
 
         # Record token usage for planning (reflection)
         input_tokens, output_tokens = self.llm.get_last_usage()
@@ -383,7 +486,7 @@ class ACEAgent(Agent):
         )
 
         # Query LLM for delta items
-        response = self.llm.generate(prompt, temperature=0.0)
+        response = self.llm.generate(prompt, temperature=self.curator_temperature)
 
         # Record token usage for curation
         input_tokens, output_tokens = self.llm.get_last_usage()
@@ -564,7 +667,8 @@ class ACEAgent(Agent):
                     'id': self._generate_bullet_id(),
                     'content': item['content'],
                     'helpful_count': 0,
-                    'harmful_count': 0
+                    'harmful_count': 0,
+                    'last_used_step': None
                 })
             elif operation == 'update':
                 # Update existing bullet (if bullet_id provided)
@@ -587,39 +691,155 @@ class ACEAgent(Agent):
                 break
 
     # ========================================================================
-    # Deduplication Methods (Optional)
+    # Bullet Feedback Methods
+    # ========================================================================
+
+    def _update_bullet_feedback(self, outcome: dict):
+        """
+        Update helpful_count/harmful_count for bullets used in this episode.
+
+        Args:
+            outcome: Episode outcome with test results
+        """
+        if not self.episode_history:
+            return
+
+        # Get referenced bullets from this episode
+        referenced_bullets = self.episode_history[-1].get('referenced_bullets', [])
+
+        # Determine if episode was successful
+        # test_results is a list of test result dicts from runner.py
+        test_results = outcome.get('test_results', [])
+        # Episode is successful if all test queries were correct
+        is_success = all(result.get('correct', False) for result in test_results) if test_results else False
+
+        # Update counts for all referenced bullets
+        for bullet_id in set(referenced_bullets):  # Deduplicate
+            for section in self.playbook.values():
+                for bullet in section:
+                    if bullet['id'] == bullet_id:
+                        if is_success:
+                            bullet['helpful_count'] += 1
+                        else:
+                            bullet['harmful_count'] += 1
+                        break
+
+    # ========================================================================
+    # Deduplication and Pruning Methods
     # ========================================================================
 
     def _deduplicate_playbook(self):
         """
         Remove redundant bullets using semantic similarity.
 
-        Note: This is expensive (requires embeddings) so disabled by default.
+        Uses simple text-based similarity for now. Could be upgraded to
+        embedding-based similarity for better accuracy.
         """
-        # TODO: Implement embedding-based deduplication
-        # For now, skip this step
-        pass
+        try:
+            from difflib import SequenceMatcher
+        except ImportError:
+            print("Warning: difflib not available, skipping deduplication")
+            return
+
+        for section_name in self.playbook:
+            bullets = self.playbook[section_name]
+            if len(bullets) <= 1:
+                continue
+
+            # Track bullets to keep
+            to_keep = []
+            for i, bullet in enumerate(bullets):
+                # Check if this bullet is similar to any we're keeping
+                is_duplicate = False
+                for kept_bullet in to_keep:
+                    similarity = SequenceMatcher(
+                        None,
+                        bullet['content'].lower(),
+                        kept_bullet['content'].lower()
+                    ).ratio()
+
+                    # If very similar (>80% match), consider it a duplicate
+                    if similarity > 0.8:
+                        is_duplicate = True
+                        # Merge feedback counts into the kept bullet
+                        kept_bullet['helpful_count'] += bullet['helpful_count']
+                        kept_bullet['harmful_count'] += bullet['harmful_count']
+                        break
+
+                if not is_duplicate:
+                    to_keep.append(bullet)
+
+            # Update section with deduplicated bullets
+            self.playbook[section_name] = to_keep
+
+    def _prune_playbook_to_cap(self):
+        """
+        Prune playbook to fit within token cap using utility scoring.
+
+        Keeps bullets with highest utility score (helpful - harmful).
+        """
+        if not self.token_cap:
+            return
+
+        # Get all bullets with utility scores
+        all_bullets = []
+        for section_name, bullets in self.playbook.items():
+            for bullet in bullets:
+                utility = bullet['helpful_count'] - bullet['harmful_count']
+                all_bullets.append({
+                    'section': section_name,
+                    'bullet': bullet,
+                    'utility': utility
+                })
+
+        # Sort by utility (descending)
+        all_bullets.sort(key=lambda x: x['utility'], reverse=True)
+
+        # Rebuild playbook within token cap
+        new_playbook = self._init_playbook()
+        current_tokens = 0
+
+        for item in all_bullets:
+            bullet_tokens = len(item['bullet']['content'].split())
+            if current_tokens + bullet_tokens <= self.token_cap:
+                new_playbook[item['section']].append(item['bullet'])
+                current_tokens += bullet_tokens
+            else:
+                break
+
+        self.playbook = new_playbook
 
     # ========================================================================
     # Playbook Management & Formatting
     # ========================================================================
 
-    def _format_playbook(self) -> str:
+    def _format_playbook(self, playbook: Optional[Dict] = None) -> str:
         """
         Format playbook as text for prompts.
+
+        Args:
+            playbook: Optional playbook to format (defaults to self.playbook)
 
         Returns:
             Formatted playbook string
         """
-        if self._get_playbook_size() == 0:
+        pb = playbook if playbook is not None else self.playbook
+
+        # Check if playbook is empty
+        total_bullets = sum(len(bullets) for bullets in pb.values())
+        if total_bullets == 0:
             return "**PLAYBOOK EMPTY** - No strategies learned yet."
 
         sections = []
-        for section_name, bullets in self.playbook.items():
+        for section_name, bullets in pb.items():
             if bullets:
                 section_text = f"\n## {section_name.replace('_', ' ').upper()}\n"
                 for i, bullet in enumerate(bullets):
-                    section_text += f"{i+1}. {bullet['content']}\n"
+                    # Include bullet ID, content, and utility score
+                    bullet_id = bullet.get('id', 'unknown')
+                    utility = bullet.get('helpful_count', 0) - bullet.get('harmful_count', 0)
+                    utility_str = f" [utility:{utility:+d}]" if utility != 0 else ""
+                    section_text += f"{i+1}. [ID:{bullet_id}] {bullet['content']}{utility_str}\n"
                 sections.append(section_text)
 
         return '\n'.join(sections) if sections else "**PLAYBOOK EMPTY**"

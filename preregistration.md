@@ -1,479 +1,619 @@
-# Preregistration: ACE Cost-Aware Evaluation Study
+# Preregistration: ACE (Agentic Context Engineering) Validation Study
 
-**Preregistration Date**: 2025-10-29
-**Study Start Date**: 2025-10-29 or later (MUST BE AFTER THIS DATE)
-**Principal Investigator**: Jay Caldwell
-**Affiliation**: Scale AI
-
----
-
-## REVISION HISTORY
-
-### Version 1.3 (2025-10-30)
-**Status**: 🔒 LOCKED - Final version for data collection
-
-**Changes from v1.2**:
-1. **Locked sample size**: Mini-confirmatory study with n=20 per condition (120 total episodes)
-   - **Rationale**: Evaluation system V2 just overhauled; need to validate Observer <40% before committing to n=67. n=20 provides 80% power for d≥0.65 (medium-large effects), sufficient for primary hypotheses H1a/H1b. Can scale to n=67 later if needed.
-2. **Environment scope**: 2 environments (HotPot, SwitchLight) instead of 3
-   - **Rationale**: ChemTile not yet validated with V2 evaluation; focus resources on proven environments first.
-3. **Total episodes**: 120 (3 agents × 2 envs × 20 seeds) instead of 603
-4. **Cost reduction**: ~$60 instead of ~$241 (75% savings enables rapid iteration if fixes needed)
-
-**Data Collection Status**: NO data has been collected. All experiments will run under v1.3.
-
-### Version 1.2 (2025-10-30)
-**Status**: Superseded before data collection
-
-**Changes from v1.1**:
-1. **Revised cost threshold**: Changed H1b and decision rules from 50% to 70% of Actor cost
-   - **Rationale**: Pilot shows ACE at 78% of Actor cost. 70% threshold is achievable with optimization while still representing meaningful (30%) cost reduction. 50% would require architectural changes beyond scope. Research focus is context substitution at comparable accuracy; 30% cost reduction is operationally significant.
-
-**Data Collection Status**: NO data has been collected.
-
-### Version 1.1 (2025-10-30)
-**Status**: Superseded before data collection
-
-**Changes from v1.0**:
-1. **Fixed episode count inconsistency**: Line 306 changed from "600 full" to "603 full" (matches 3 envs × 3 agents × 67 seeds)
-2. **Fixed cost threshold inconsistency**: GREEN LIGHT threshold changed from 70% to 50% to match H1b hypothesis
-3. **Removed undefined term**: "H-ACE-vs-Belief" replaced with "H1a and H1b"
-4. **Clarified H-Budget test**: Changed from vague "linear regression, slope comparison" to explicit planned contrast formula
-5. **Added H-Shift censoring rules**: Specified recovery definition (3-episode rolling mean) and censoring at episode 10
-6. **Clarified multiple comparisons**: Bonferroni applied only to H1a/H1b (primary); others labeled exploratory
-
-**Reason**: Technical review identified internal inconsistencies and ambiguous statistical specifications before any experiments were run.
-
-### Version 1.0 (2025-10-29)
-Original preregistration (see git tag `prereg-v1.0` for original version)
+**Date**: 2025-10-31
+**Study Version**: 2.0 (Post-Pilot Confirmatory)
+**Git SHA**: d2f2815a909a8971173c025f37358b17bdc1f797
+**Git Tag**: prereg-v2.0
+**Data Collection Status**: NOT STARTED
 
 ---
 
-## Study Overview
+## Research Question
 
-Evaluation of ACE (Agentic Context Engineering) framework against traditional interactive learning approaches, with focus on cost-efficiency and boundary conditions.
+Can language model agents achieve competitive accuracy on causal reasoning tasks using **curated context** (playbook) instead of extensive interaction, at reduced computational cost?
 
-**Research Question**: Can comprehensive, evolved context (ACE playbook) substitute for expensive interactive experience at comparable accuracy?
+**ACE Hypothesis**: Strategic curation of experience into reusable context can substitute for expensive online interaction while maintaining accuracy and reducing cost.
 
-## Primary Hypotheses
+---
 
-### H1a: ACE Accuracy Claim
-ACE achieves clinically meaningful accuracy (≥70%) on causal reasoning tasks.
+## Background & Motivation
 
-**Success Threshold**:
-- ACE overall accuracy ≥ 70%
+### Pilot Study Findings (Informing This Study)
 
-**Pilot Evidence**: 72.8% ± 6.7% (10 episodes, 95% CI: [66.1%, 79.5%])
+**Pilot Configuration**: 10 episodes per agent-environment pair across 3 environments (HotPot, SwitchLight, ChemTile)
 
-**Statistical Test**: One-sample t-test, H₀: μ < 70%, α = 0.05
+**Key Results**:
+1. **Actor baseline performance**: 76.9% accuracy at $0.175/episode
+2. **ACE pilot performance**: 72.8% accuracy at $0.14/episode (78% of Actor cost)
+3. **Model-Based underperformed**: Removed from main study (dominated by Actor)
+4. **ACE implementation issues**: Original ACE implementation had bugs preventing faithful paper implementation
 
-### H1b: ACE Cost Efficiency Claim
-ACE achieves meaningful operational cost reduction (≤70% of Actor's USD cost) compared to interactive learning.
+**Decisions Based on Pilot**:
+- Remove Model-Based agent (not competitive)
+- Fix ACE to match paper specification (multi-round reflection, feedback loops, retrieval)
+- Increase sample size to n=67 per condition for robust effect detection
+- Focus on 3-agent comparison: Observer (passive baseline), Actor (interactive baseline), ACE (curated context)
 
-**Success Threshold**:
-- ACE USD cost ≤ 0.7 × Actor USD cost
+### This Study's Purpose
 
-**Pilot Evidence**: ACE $0.14/ep vs Actor $0.18/ep = 78% (8 points from threshold)
+**Confirmatory validation** of ACE with faithful paper implementation:
+- All ACE mechanisms enabled (feedback, retrieval, multi-round reflection, deduplication)
+- Adequate power (n=67) to detect meaningful effects
+- Preregistered hypotheses and decision rules
+- Clean comparison to baselines with bugs fixed
 
-**Statistical Test**: Paired t-test across seeds, H₀: ACE cost ≥ 0.7 × Actor cost, α = 0.05
+---
 
-### Combined Interpretation (H1a × H1b)
+## Agents (Experimental Conditions)
 
-| H1a (Accuracy) | H1b (Cost) | Outcome | Interpretation |
-|----------------|------------|---------|----------------|
-| ✅ Pass | ✅ Pass | **FULL SUCCESS** | ACE validated: accurate + efficient |
-| ✅ Pass | ❌ Fail | **PARTIAL SUCCESS** | ACE accurate but not cost-efficient |
-| ❌ Fail | ✅ Pass | **WEAK SUCCESS** | ACE efficient but inaccurate |
-| ❌ Fail | ❌ Fail | **FAILURE** | ACE neither accurate nor efficient |
+### 1. Observer (Passive Baseline)
+**Description**: Language-only agent with no interaction capability
 
-**Pilot Result**: H1a supported (72.8%), H1b not yet met (78% vs 70% target) - within striking distance
+**Mechanism**:
+- Receives initial environment description (t=0)
+- No actions allowed (action_budget = 0)
+- Answers queries based solely on initial text and reasoning
 
-**Pre-Commit Decision**:
-- If H1a passes: Publish accuracy results, investigate cost optimization
-- If H1b passes: Publish cost efficiency, investigate accuracy improvements
-- If both pass: Publish full ACE validation
-- If both fail: Publish boundary conditions and failure analysis
+**Purpose**: Measures ceiling of pure language-based reasoning without interaction
 
-### H-Budget (Diminishing Returns)
-Increasing playbook cap from 1k→2k tokens yields <50% of the gain from 512→1k.
+**Expected Performance**:
+- Accuracy: 40-50% (based on pilot: some environments solvable from description alone)
+- Cost: ~$0.08/episode (~6,500 tokens)
 
-**Success Threshold**:
-- gain(1k→2k) < 0.5 × gain(512→1k)
-- where gain = Δ accuracy in percentage points
+---
 
-**Statistical Test**: Planned contrast using paired data across seeds:
-- Compute Δ₁ = Acc(ACE-1k) − Acc(ACE-512)
-- Compute Δ₂ = Acc(ACE-2k) − Acc(ACE-1k)
-- Test H₀: Δ₂ ≥ 0.5·Δ₁ using paired bootstrap (1000 resamples)
-- Report CI for contrast: Δ₂ − 0.5·Δ₁
+### 2. Actor (Interactive Baseline)
+**Description**: Interactive agent with explicit belief tracking
 
-### H-Curation (Mechanism Check)
-Curated ACE outperforms append-only (NoCurate) by ≥5 percentage points at same token cap.
+**Mechanism**:
+- Takes up to 10 actions per episode
+- Maintains probabilistic belief state (environment-specific priors)
+- Bayesian updates after observations
+- Memory of recent interactions (max 10 steps)
+- Answers queries using updated beliefs + memory
 
-**Success Threshold**:
-- Curated_accuracy - NoCurate_accuracy ≥ 5 pts at 1k cap
+**Belief Models**:
+- **HotPot**: Gaussian model over heating rate (Bayesian linear regression updates)
+- **SwitchLight**: Categorical distribution over wiring layouts (Bayesian updates)
+- **ChemTile**: Categorical reaction outcome probabilities
 
-**Statistical Test**: Paired t-test across seeds, Cohen's d_z ≥ 0.5
-- d_z = mean(diff) / sd(diff) for paired comparisons
+**Purpose**: Standard interactive learning baseline (cost upper bound)
 
-### H-Shift (Robustness)
-Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within ≤10 episodes.
+**Expected Performance**:
+- Accuracy: 75-80% (pilot: 76.9%)
+- Cost: ~$0.18/episode (~22,000 tokens)
 
-**Success Threshold**:
-- post_shift_accuracy ≥ 0.95 × pre_shift_accuracy within 10 episodes
+---
 
-**Statistical Test**: Time-to-recovery analysis, survival curves
-- **Recovery definition**: 3-episode rolling mean accuracy ≥ 0.95 × pre-shift baseline
-- **Censoring**: Episodes with no recovery within 10 episodes are right-censored at episode 10
-- **Event**: First episode when 3-episode rolling mean crosses threshold
+### 3. ACE (Agentic Context Engineering)
+**Description**: Interactive agent with curated playbook that learns across episodes
 
-## Decision Rules (Pre-Commit to Interpretation)
+**Mechanism** (Faithful Paper Implementation):
 
-### GREEN LIGHT (Publish as Validation)
-- ACE sits on Pareto frontier in ≥2 of 3 environments
-- Curated beats NoCurate by ≥5 pts at same token cap
-- Total ops cost (tokens + API calls) ≤70% of Actor cost
-- H1a and H1b supported (accuracy ≥70%, cost ≤70%)
+**Per-Episode Cycle**:
+1. **Generator**: Choose actions using playbook + top-k retrieval (5 bullets/section)
+2. **Reflector**: Multi-round reflection (2 rounds) to extract insights from episode
+3. **Curator**: Merge insights into playbook, maintain utility scores
+4. **Refine**: Deduplicate (similarity > 0.8) and prune (if token cap set)
+5. **Feedback**: Update helpful/harmful counts for used bullets based on success
 
-**Interpretation**: ACE's advantages validated; context can substitute for interaction in these domains.
+**Playbook Structure**:
+- 4 sections: "What to try", "What to avoid", "Environment dynamics", "Debugging strategies"
+- Each bullet has: content, ID, helpful_count, harmful_count, last_used_step
+- Retrieval: Embed bullets, retrieve top-5 most relevant per section per step
+- Utility scoring: helpful_count - harmful_count
 
-### AMBER LIGHT (Publish Hybrid Story)
-- Pure ACE inconsistent across environments
-- BUT shows ≥30% token savings in at least 1 environment
-- OR Curation effect 3-5 pts (marginally significant)
+**ACE Configuration** (This Study):
+- `use_retrieval: true` (top-k=5)
+- `reflection_rounds: 2` (multi-round refinement)
+- `max_epochs: 1` (single pass, no replay)
+- `generator_temperature: 0.7` (same across Generator/Reflector/Curator)
+- `curation_mode: "curated"` (LLM-based curation)
+- `token_cap: null` (no budget constraints for validation)
 
-**Interpretation**: ACE has value in specific domains; analyze boundary conditions.
+**Purpose**: Test if curated context can match Actor accuracy at lower cost
 
-### RED LIGHT (Publish Limits Paper)
-- ACE advantages vanish across all environments (not on Pareto frontier)
-- OR Curation effect <3 pts
-- OR Ops costs negate token savings (total cost >70% of Actor)
+**Expected Performance**:
+- Accuracy: 70-75% (target ≥70% for validation)
+- Cost: ≤$0.126/episode (≤70% of Actor cost for meaningful efficiency)
 
-**Interpretation**: ACE does not generalize; document failure modes and limitations.
+---
 
-## Environments
+## Environments (Causal Reasoning Tasks)
 
-### 1. Hot-Pot Lab
-**Challenge**: Deceptive labels require intervention to discover true dynamics
+### 1. HotPot Lab
+**Causal Structure**: Continuous dynamics with hidden state
 
-**Setup**:
-- Pot on stove with temperature sensor
-- Labels may say "Boiling!" when actually cold
-- Must measure temperature to verify observations
+**Setup**: Control stove to heat pot to target temperature
+- **Hidden state**: Actual pot temperature (not directly observable)
+- **Actions**: measure_temp(), toggle_stove(), wait(t)
+- **Observations**: Measured temp (noisy), stove light indicator, time
+- **Causal challenge**: Infer heating rate, measurement noise, stove power from noisy observations
 
-**Test queries**:
-- Interventional: "If I turn the stove on for 30s, what will the temperature be?"
-- Counterfactual: "If I had turned it off earlier, would it still be hot?"
+**Ground Truth Evaluation**:
+- Q1: "What is the actual pot temperature?" (±2°C tolerance)
+- Q2: "What power level is the stove at?" (off/low/medium/high)
 
-**Expected ACE advantage**: Can learn "always verify temperature before trusting labels"
+---
 
-**Distribution Shifts**:
-- New label patterns (different deception strategies)
-- Added sensor noise (+10-20%)
-- Mid-run thermometer recalibration
+### 2. SwitchLight
+**Causal Structure**: Categorical hidden state with observational confound
 
-### 2. Switch-Light
-**Challenge**: Distinguish causation from correlation
+**Setup**: Determine hidden wiring configuration
+- **Hidden state**: Wiring layout (layout_A or layout_B, inverted logic)
+- **Actions**: toggle_switch(), observe_light()
+- **Observations**: Switch position, light state, time
+- **Causal challenge**: Disambiguate wiring from observations (switch→light mapping is hidden)
 
-**Setup**:
-- 2 switches, 2 lights
-- Unknown wiring (direct, crossed, OR-gate, etc.)
-- Must intervene to determine structure
+**Ground Truth Evaluation**:
+- Q1: "Which wiring layout is active?" (layout_A / layout_B)
+- Q2: "What would happen if you toggle the switch now?" (light on/off)
 
-**Test queries**:
-- Interventional: "If I flip switch 0, which lights change?"
-- Structural: "What is the wiring configuration?"
+---
 
-**Expected ACE advantage**: Can learn "test each switch individually"
+### 3. ChemTile
+**Causal Structure**: Stochastic reaction network
 
-**Distribution Shifts**:
-- New wiring families (XOR, AND gates)
-- Observation noise (+15%)
-- Mid-run wiring swap
+**Setup**: Discover reaction rules through experiments
+- **Hidden state**: Reaction probability table (A+B→C?, C+B→D?, etc.)
+- **Actions**: mix(chem_a, chem_b), measure(), reset_tile()
+- **Observations**: Reaction outcomes (product or "nothing" or "explode"), time
+- **Causal challenge**: Infer reaction probabilities from stochastic outcomes
 
-### 3. Chem-Tile
-**Challenge**: Compositional reasoning with safety constraints
+**Ground Truth Evaluation**:
+- Q1: "What happens when you mix A and B?" (product / nothing / explode)
+- Q2: "What is the most reliable path to produce D?" (sequence of reactions)
 
-**Setup**:
-- Grid of chemical tiles
-- Combining chemicals triggers reactions
-- Some reactions are dangerous
-
-**Test queries**:
-- Compositional: "What happens if I combine A + B + C?"
-- Safety: "Is this combination safe?"
-
-**Expected ACE advantage**: Can learn reaction rules
-
-**Distribution Shifts**:
-- New chemical families
-- Changed reaction rules
-- Stochastic reaction outcomes (+20% variability)
-
-## Agents & Ablations
-
-### Core Agents (Main Study)
-
-1. **Observer**: Passive baseline, no interaction/memory
-   - Cost: ~$0.08/episode (~6,500 tokens)
-   - Expected accuracy: 65-70%
-   - Purpose: Measures text-only reasoning without environment interaction
-
-2. **Actor**: Interactive + explicit belief updates
-   - Cost: ~$0.18/episode (~22,000 tokens)
-   - Expected accuracy: 75-80%
-   - Purpose: Traditional interactive learning baseline
-   - Features: Action selection, belief state tracking, memory updates
-
-3. **ACE** (Agentic Context Engineering): Interactive + curated playbook
-   - Cost: ~$0.14/episode (~18,700 tokens, pilot estimate)
-   - Expected accuracy: 70-75%
-   - Purpose: Test if curated context can substitute for expensive interaction
-   - Features: Playbook curation, strategic exploration, knowledge synthesis
-
-**Removed from Main Study:**
-- **Model-Based**: Originally planned (Actor + MLP transition model)
-- **Reason**: Pilot showed Model-Based underperforms Actor (70.7% vs 76.9%) at same cost ($0.174 vs $0.175)
-- **Decision**: Dominated by Actor on accuracy; resources better spent on ACE ablations
-- **Logged**: CHANGELOG.md entry 2025-10-30
-
-### Ablation Controls (Need to implement)
-4. **ACE-512**: Curated playbook, 512 token cap
-5. **ACE-2k**: Curated playbook, 2k token cap
-6. **ACE-NoCurate**: Append-only memory, 1k cap (tests curation value)
-7. **ACE-RandomSubset**: Random bullet selection, 1k cap (tests selection vs curation)
+---
 
 ## Experimental Design
 
-### Pilot Study
-- **Episodes**: 40 (2 envs × 4 core agents × 5 seeds)
-- **Purpose**: Infrastructure validation, initial Pareto estimation
-- **Environments**: HotPot, SwitchLight
-- **Seeds**: [42, 43, 44, 45, 46] for HotPot, [100, 101, 102, 103, 104] for SwitchLight
-- **Outputs**: Pareto plot, accuracy comparison, token analysis
+### Sample Size
+- **n = 67 seeds** per agent × environment combination
+- **Total episodes**: 603 (3 agents × 3 environments × 67 seeds)
 
-### Confirmatory Study (LOCKED: n=20 mini-confirmatory)
-- **Episodes**: 120 (2 envs × 3 agents × 20 seeds)
-- **Purpose**: Confirmatory hypothesis testing with V2 evaluation
-- **Agents**: Observer, Actor, ACE (Model-Based removed after pilot)
-- **Environments**: HotPot, SwitchLight (ChemTile deferred pending V2 validation)
-- **Seeds**:
-  - HotPot: [42-61] (20 seeds)
-  - SwitchLight: [100-119] (20 seeds)
-- **Estimated Cost** (based on pilot averages):
-  - Observer: 40 × $0.08 = $3.20
-  - Actor: 40 × $0.18 = $7.20
-  - ACE: 40 × $0.14 = $5.60
-  - **Total**: ~$16 per environment × 2 = ~$32
-  - **Safety margin**: ~$60 (accounts for longer episodes with V2 questions)
-- **Statistical Power**: n=20 provides 80% power to detect d≥0.65 at α=0.05
-- **Configuration File**: `config_ace_full_n20.yaml` (updated to 3 agents)
+**Power Analysis**:
+- Target effect size: d ≥ 0.4 (medium effect)
+- Power: >80% for paired t-tests at α=0.05
+- Sufficient to detect 5-10 percentage point accuracy differences
 
-### Ablation Study (After pilot if promising)
-- **Episodes**: 120 (3 envs × 4 ablations × 10 seeds)
-- **Purpose**: Test budget sweep and curation mechanisms
-- **Agents**: ACE-512, ACE-1k, ACE-2k, ACE-NoCurate, ACE-RandomSubset
+### Episode Structure
+- **Action budget**: 10 actions per episode
+- **Token budget**: 2000 tokens per LLM call
+- **Models**: Claude Sonnet 4.5 (all agents), GPT-4 (evaluation judge)
+- **Evaluation**: After episode ends, agent answers test queries WITHOUT ground truth access
+- **Scoring**: Judge evaluates answers against ground truth (binary correct/incorrect per query)
 
-### Shift Study (If time permits)
-- **Episodes**: 60 (3 envs × 4 agents × 5 seeds, pre/post shift)
-- **Purpose**: Test robustness to distribution shifts
+### Experimental Controls
+1. **Fixed seeds**: Ensures reproducibility and paired comparisons
+2. **No ground truth leakage**: Validated programmatically (assertions in runner)
+3. **Same model/temperature**: All agents use Claude Sonnet 4.5, ACE uses temp=0.7 across all roles
+4. **Programmatic observation injection**: Prevents LLM hallucination of observations
 
-## Models & Configuration
+---
 
-### Agent Models
-- **Model**: Claude Sonnet 4.5 (claude-sonnet-4-5-20250929)
-- **Temperature**: 1.0 (Generator), 0.0 (action selection)
-- **Version**: Pinned (will not change mid-study)
+## Primary Hypotheses
 
-### Judge Models
-- **Programmatic Judge**: First priority (exact match, numeric tolerance)
-- **LLM Judge**: GPT-4 (vendor-disjoint from agents)
-  - Model: gpt-4-0125-preview (pinned)
-  - Temperature: 0.0
-  - Used only when programmatic judge insufficient
+### H1a: ACE Accuracy Validation
+**Hypothesis**: ACE achieves clinically meaningful accuracy (≥70%) on causal reasoning tasks.
 
-### Episode Parameters
-- **Max steps per episode**: 10 (action budget)
-- **Action budget**: 10 interactions per episode
-- **Success threshold**: 70% accuracy
+**Operationalization**:
+- Metric: Overall accuracy across all test queries (mean of per-query correctness)
+- Success threshold: ACE accuracy ≥ 70%
+- Statistical test: One-sample t-test vs 70% threshold
+- Significance level: α = 0.025 (Bonferroni correction for H1a + H1b)
 
-## Primary Metrics (Will Report All)
+**Justification**: 70% represents meaningful performance on challenging causal tasks. Below this, ACE is not useful.
 
-### Accuracy Metrics
-1. **Overall accuracy**: % episodes with correct final answer
-2. **Interventional accuracy**: % correct on interventional queries
-3. **Counterfactual accuracy**: % correct on counterfactual queries
-4. **Confidence interval**: Bootstrap 95% CI (1000 samples)
+---
 
-### Cost Metrics
-1. **Tokens per episode**: Mean ± SD
-2. **Total token budget**: Sum across all episodes
-3. **Tokens per % accuracy**: Total tokens / accuracy (efficiency metric)
-4. **Cost position**: Is agent on Pareto frontier?
+### H1b: ACE Cost Efficiency
+**Hypothesis**: ACE achieves meaningful cost reduction (≤70% of Actor's cost) compared to interactive learning.
 
-### ACE-Specific Metrics
-1. **Playbook growth**: Bullets added per episode
-2. **Playbook size**: Total tokens in playbook
-3. **Playbook utilization**: % bullets referenced in decisions
-4. **Convergence**: When playbook growth stabilizes
+**Operationalization**:
+- Metric: USD cost per episode (computed from input/output tokens × model pricing)
+- Success threshold: ACE cost ≤ 0.70 × Actor cost
+- Statistical test: Paired t-test (ACE vs Actor, paired by seed)
+- Significance level: α = 0.025 (Bonferroni correction for H1a + H1b)
 
-### Pareto Analysis
-1. **Pareto frontier**: Accuracy vs tokens curve
-2. **Pareto position**: Is ACE on/near frontier?
-3. **Dominated region**: Which configs are strictly dominated?
+**Justification**: 30% cost reduction is operationally significant. Pilot showed ACE at 78% of Actor cost; optimization should achieve 70%.
 
-## Secondary Metrics (Exploratory)
+---
 
-1. **Calibration**: Brier score, ECE (Expected Calibration Error)
-2. **Sample efficiency**: Episodes to 70% accuracy
-3. **Helpful vs harmful bullets**: Classification from post-hoc analysis
-4. **Curator agreement**: Inter-curator consistency
-5. **Shift recovery time**: Episodes to recover after distribution shift
+### Combined Interpretation (H1a × H1b)
+
+| H1a (Accuracy ≥70%) | H1b (Cost ≤70%) | Outcome | Interpretation |
+|---------------------|-----------------|---------|----------------|
+| ✅ Pass | ✅ Pass | **FULL SUCCESS** | ACE validated: accurate + efficient |
+| ✅ Pass | ❌ Fail | **PARTIAL SUCCESS** | ACE accurate but not cost-efficient (publish accuracy story) |
+| ❌ Fail | ✅ Pass | **WEAK SUCCESS** | ACE efficient but inaccurate (publish as negative result with lessons) |
+| ❌ Fail | ❌ Fail | **FAILURE** | ACE neither accurate nor efficient (publish limits paper) |
+
+---
+
+## Secondary Hypotheses (Exploratory)
+
+### H2: ACE vs Actor Comparison
+**Question**: How does ACE accuracy compare to Actor accuracy?
+
+**Analysis**:
+- Paired t-test (ACE vs Actor accuracy, paired by seed)
+- Report Cohen's d effect size
+- 95% bootstrap CI on accuracy difference
+- **No FWER correction** (exploratory)
+
+**Prediction**: ACE accuracy within 5 percentage points of Actor (non-inferiority margin)
+
+---
+
+### H3: Interaction Effect
+**Question**: Does ACE's advantage vary by environment?
+
+**Analysis**:
+- Two-way ANOVA: Agent × Environment interaction on accuracy
+- Post-hoc comparisons if interaction significant
+- **No FWER correction** (exploratory)
+
+**Prediction**: ACE performs better on environments with learnable patterns (HotPot, ChemTile) vs pure exploration (SwitchLight)
+
+---
+
+### H4: Observer Baseline
+**Question**: Does interaction improve over language-only reasoning?
+
+**Analysis**:
+- Paired t-tests: Actor vs Observer, ACE vs Observer
+- Report effect sizes
+- **No FWER correction** (exploratory)
+
+**Expected**: Observer <50%, confirming interaction is necessary
+
+---
+
+## Metrics (Will Report All)
+
+### Primary Metrics
+
+**1. Accuracy** (per agent, per environment, overall)
+- Overall accuracy: % correct across all test queries
+- Per-environment accuracy: % correct within each environment
+- Per-agent accuracy: Mean accuracy across environments
+- 95% bootstrap CI for all accuracy estimates
+
+**2. Cost** (per agent, per environment, overall)
+- USD cost per episode: (input_tokens × $0.003 + output_tokens × $0.015) / 1000
+- Total cost per agent: Sum across all episodes
+- Cost efficiency: ACE cost / Actor cost (ratio)
+- 95% bootstrap CI for cost estimates
+
+**3. ACE-Specific Metrics**
+- Playbook size: Number of bullets over time
+- Utility distribution: helpful_count - harmful_count per bullet
+- Retrieval precision: % of retrieved bullets actually used in actions
+- Curation acceptance rate: % of Reflector insights accepted by Curator
+
+---
+
+### Secondary Metrics (Exploratory)
+
+**4. Calibration**
+- Brier score: Mean squared error of confidence vs correctness
+- Expected Calibration Error (ECE): Binned calibration gap
+
+**5. Token Breakdown** (preregistration requirement)
+- Per-agent token usage: Input vs output tokens
+- Per-phase token usage (ACE): Generator vs Reflector vs Curator
+- Token accounting validation: Verify all token counts sum correctly
+
+**6. Episode Dynamics**
+- Action diversity: Unique actions per episode
+- Action efficiency: Test accuracy vs number of actions
+- Belief convergence (Actor): Variance reduction over time
+
+---
 
 ## Statistical Analysis Plan
 
 ### Primary Comparisons
-- **ACE vs Actor**: Paired t-test across seeds, report Cohen's d
-- **Curation ablations**: One-way ANOVA (Curated vs NoCurate vs RandomSubset)
-- **Budget sweep**: Linear regression (accuracy ~ log(token_cap))
 
-### Multiple Comparisons Correction
-- **Primary confirmatory hypotheses**: H1a and H1b only (Bonferroni correction, α = 0.025 each)
-- **Secondary hypotheses**: H-Budget, H-Curation, H-Shift (labeled as exploratory, no FWER control)
-- Rationale: H1a/H1b test the core ACE claim; others are mechanistic/boundary investigations
+**H1a (ACE ≥ 70%)**:
+- One-sample t-test: ACE accuracy vs 70%
+- Bonferroni-corrected α = 0.025
+- Report exact p-value, 95% CI, and effect size
 
-### Confidence Intervals
-- Bootstrap 95% CI for all accuracy metrics (1000 resamples)
-- Report CI width to assess precision
-
-### Significance Threshold
-- α = 0.05 for hypothesis tests
-- Will report exact p-values, not just significant/not significant
-
-## What We Will NOT Change Mid-Study
-
-**Locked Parameters** (Cannot modify after experiments begin):
-1. Hypotheses and success thresholds
-2. Decision rules (Green/Amber/Red)
-3. Environments and seeds for main study (2 envs, 20 seeds each)
-4. Model versions (Sonnet 4.5, GPT-4)
-5. Primary metrics (accuracy, tokens, Pareto position)
-6. Episode budgets (40 pilot, 120 confirmatory)
-
-**Allowed Modifications** (If discovered during study):
-1. Bug fixes in implementation (logged with SHA)
-2. Adding exploratory post-hoc analyses (clearly labeled as non-preregistered)
-3. Clarifying ambiguous grading rules (documented in CHANGELOG.md)
-
-All changes will be logged in `CHANGELOG.md` with timestamps and justification.
-
-## Data Exclusion Criteria
-
-**Episodes will be excluded from analysis if:**
-1. API timeout/error (logged for cost accounting, excluded from accuracy)
-2. Agent crashes mid-episode (implementation bug)
-3. Programmatic judge cannot score (ambiguous output format)
-
-**Excluded episodes must be <5% of total.** If >5%, report as study limitation.
-
-**We will NOT exclude episodes based on:**
-- Agent getting wrong answer (that's the measurement)
-- Low confidence scores
-- Unexpected strategies
-
-## Artifacts & Reproducibility
-
-### Required Outputs
-1. `preregistration.md` (this file, committed before experiments)
-2. `reproduce.sh` (one-command pilot run, ≤30 minutes)
-3. `results/ace_pilot/aggregate_metrics.csv`
-4. `results/ace_pilot/pareto_plot.png`
-5. `results/ace_pilot/summary.json`
-6. `CHANGELOG.md` (any deviations from preregistration)
-
-### Provenance Logging (Per Episode)
-- Git SHA at experiment start
-- Config file hash
-- Model IDs and versions
-- Timestamp (ISO 8601)
-- Random seed
-- Environment variant
-- Token counts (input + output)
-- Action sequence
-- Correctness (programmatic + judge if applicable)
-- Confidence scores
-- Playbook state (for ACE agents)
-
-### Public Release
-- All code, configs, results released on GitHub
-- Tag release (e.g., v1.0-pilot) with DOI (Zenodo)
-- Data under MIT license
-
-## Limitations & Boundaries
-
-**This study will NOT:**
-1. Test on >3 core environments (scope constraint)
-2. Run with >50 seeds per agent-env pair (compute constraint)
-3. Test multi-agent scenarios (out of scope)
-4. Test on proprietary/non-reproducible environments
-5. Optimize hyperparameters (use published ACE values)
-
-**Known Limitations:**
-1. Environments are relatively simple (not real-world complexity)
-2. Programmatic grading may miss nuanced reasoning
-3. Single model family (Sonnet 4.5) for agents
-4. Token costs measured, but not wall-clock time optimization
-
-## Timeline
-
-- **Day 0** (2025-10-29): Preregistration committed and tagged
-- **Day 1**: Run 40-episode pilot
-- **Day 2**: Analyze pilot + decide on full experiment
-- **Day 3**: Run full experiment (if pilot successful)
-
-**No results will be examined until experiments complete.**
-
-## Preregistration Verification
-
-### Version 1.3 (Current - LOCKED)
-- **Revised on**: 2025-10-30
-- **Committed**: 2025-10-30
-- **Status**: 🔒 LOCKED - Active version for all experiments
-- **Git SHA**: 61d2154 (full: 615970b3fb5b9b1a54ca9d4366498a666a139149)
-- **Git Tag**: prereg-v1.3 ✅
-- **Changes**: Sample size locked at n=20 mini-confirmatory (120 episodes, 2 environments)
-- **Data collected**: None yet
-- **Next step**: Run confirmatory study using `config_ace_full_n20.yaml`
-
-### Version 1.2 (Superseded)
-- **Revised on**: 2025-10-30
-- **Status**: Superseded before data collection
-- **Changes**: Cost threshold revised from 50% to 70% based on pilot evidence
-
-### Version 1.1 (Superseded)
-- **Revised on**: 2025-10-30
-- **Committed**: 2025-10-30
-- **Git SHA**: a9d81ea
-- **Git Tag**: prereg-v1.1
-- **Status**: Superseded before data collection
-
-### Version 1.0 (Superseded)
-- **Written on**: 2025-10-29
-- **Committed**: 2025-10-29
-- **Git SHA**: 0353080d7a675c6cebfec2fb2ad2ca20a3257113
-- **Git Tag**: prereg-v1.0
-- **Status**: Superseded before data collection
-
-## Signature
-
-By committing this preregistration, I commit to:
-1. Running experiments as specified above
-2. Reporting all preregistered metrics
-3. Clearly labeling any exploratory analyses
-4. Not cherry-picking results based on outcomes
-5. Publishing regardless of whether hypotheses are supported
+**H1b (ACE cost ≤ 70% of Actor)**:
+- Paired t-test: ACE cost vs (0.70 × Actor cost), paired by seed
+- Bonferroni-corrected α = 0.025
+- Report exact p-value, 95% CI, and effect size
 
 ---
 
-**Preregistration Status**: 🔒 LOCKED
-**Next Step**: Commit this file, tag it, then run experiments
+### Secondary Comparisons (Exploratory)
+
+**H2 (ACE vs Actor accuracy)**:
+- Paired t-test, paired by seed
+- Cohen's d effect size
+- 95% bootstrap CI (1000 resamples)
+- No multiple comparisons correction (exploratory)
+
+**H3 (Interaction)**:
+- Two-way ANOVA: Agent (3) × Environment (3)
+- Post-hoc Tukey HSD if interaction significant
+- Report η² effect sizes
+
+**H4 (Observer baseline)**:
+- Paired t-tests: Actor vs Observer, ACE vs Observer
+- Cohen's d effect sizes
+- No multiple comparisons correction (exploratory)
+
+---
+
+### Confidence Intervals
+- **All accuracy metrics**: 95% bootstrap CI (1000 resamples, stratified by environment)
+- **All cost metrics**: 95% bootstrap CI (1000 resamples, stratified by environment)
+- **Rationale**: Bootstrap handles non-normal distributions and respects seed pairing
+
+---
+
+### Significance Threshold
+- **Primary hypotheses (H1a, H1b)**: α = 0.025 each (Bonferroni correction for 2 tests)
+- **Secondary hypotheses**: α = 0.05 (no FWER control, labeled exploratory)
+- **Reporting**: Always report exact p-values, never "p < 0.05" without exact value
+
+---
+
+## Decision Rules (Pre-Commit to Interpretation)
+
+### GREEN LIGHT (Publish as Validation)
+**Criteria**: H1a AND H1b both pass
+- ACE accuracy ≥ 70% (p < 0.025)
+- ACE cost ≤ 70% of Actor (p < 0.025)
+
+**Story**: "ACE validated: Curated context achieves competitive accuracy at reduced cost"
+
+**Publication target**: ML conference (NeurIPS, ICLR, ICML)
+
+---
+
+### AMBER LIGHT (Publish Hybrid Story)
+**Criteria**: H1a passes XOR H1b passes (one but not both)
+
+**Case 1 - Accurate but Expensive** (H1a pass, H1b fail):
+- Story: "ACE achieves target accuracy but needs optimization for cost efficiency"
+- Focus: Accuracy results, ablations, cost optimization opportunities
+- Publication target: Workshop or domain venue
+
+**Case 2 - Efficient but Inaccurate** (H1a fail, H1b pass):
+- Story: "ACE achieves cost efficiency but accuracy needs improvement"
+- Focus: Cost reduction mechanisms, accuracy-cost tradeoffs, future work
+- Publication target: Workshop or negative results track
+
+---
+
+### RED LIGHT (Publish Limits Paper)
+**Criteria**: Both H1a AND H1b fail
+- ACE accuracy < 70% (not useful)
+- ACE cost > 70% of Actor (not efficient)
+
+**Story**: "When does context curation fail? Lessons from ACE"
+
+**Focus**:
+- Where ACE fails (environment-specific analysis)
+- Why curation didn't help (playbook analysis)
+- What we learned about LLM limitations
+- Comparison to Actor as upper bound
+
+**Publication target**: Negative results track or workshop
+
+---
+
+## What We Will NOT Change Mid-Study
+
+### Locked Parameters (Cannot Modify After Data Collection Begins)
+
+**Agent configurations**:
+- Action budgets (10 actions/episode)
+- Token budgets (2000 tokens/call)
+- Model versions (Claude Sonnet 4.5, GPT-4)
+- ACE configuration (reflection_rounds=2, top_k=5, etc.)
+
+**Experimental design**:
+- Seeds (67 per condition, [42-108], [100-166], [200-266])
+- Environments (HotPot, SwitchLight, ChemTile)
+- Agents (Observer, Actor, ACE)
+- Test queries (defined per environment)
+
+**Statistical plan**:
+- Primary hypotheses (H1a, H1b)
+- Significance thresholds (α=0.025 for primary)
+- Success criteria (70% accuracy, 70% cost ratio)
+
+**Evaluation**:
+- Ground truth never exposed to agents
+- Judge model (GPT-4)
+- Scoring rubrics (binary correct/incorrect)
+
+---
+
+### What We CAN Change (Pre-Specified)
+
+**Allowed adjustments** (must be documented):
+- Worker count for parallel execution (does not affect results)
+- Rate limiting parameters (does not affect results)
+- Bug fixes that don't change agent logic (must document and justify)
+- Output format/visualization (does not affect data)
+
+**Documentation requirement**: Any change must be logged with:
+- Timestamp
+- Description of change
+- Justification (why necessary)
+- Impact assessment (affects results? yes/no)
+
+---
+
+## Data Quality & Validation
+
+### Pre-Flight Checks (Before Main Study)
+1. ✅ Test ACE bug fix with mini-run (3 episodes)
+2. ✅ Verify belief/surprise tracking works for Actor
+3. ✅ Confirm token accounting sums correctly
+4. ✅ Validate ground truth never leaks to agents
+5. ✅ Check all ace_config parameters load correctly
+
+### During-Study Monitoring
+- Monitor failed episodes (retry up to 3 times for API errors)
+- Log all exceptions with full traceback
+- Save raw episode logs (not just aggregates)
+- Track rate limiter stats (wait times, throttle events)
+
+### Post-Study Validation
+- Verify all 603 episodes completed successfully
+- Check token accounting: total = sum of per-phase tokens
+- Validate no ground truth in any agent observations (programmatic scan)
+- Reproduce key results from raw logs (spot check 10% of episodes)
+
+---
+
+## Deviations from Pilot
+
+### Changes Made Based on Pilot Learnings
+
+**1. Removed Model-Based Agent**
+- **Reason**: Pilot showed Model-Based (70.7%) underperformed Actor (76.9%) at same cost
+- **Impact**: Focus resources on Observer vs Actor vs ACE comparison
+- **Episodes saved**: 201 (3 envs × 67 seeds)
+
+**2. Fixed ACE Implementation**
+- **Issues found**:
+  - Bug: test_results type mismatch crashed feedback updates
+  - Missing: ace_config not specified (defaulted to single reflection round)
+- **Fixes applied**:
+  - Handle test_results as list in feedback loop
+  - Add ace_config with reflection_rounds=2, retrieval=true
+- **Impact**: ACE now matches paper specification
+
+**3. Increased Sample Size**
+- **Change**: n=50 → n=67 seeds per condition
+- **Reason**: +34% more seeds for same total cost (removed Model-Based)
+- **Power**: Improved detection of 5-10pp accuracy differences
+
+**4. Verified Belief/Surprise Tracking**
+- **Issue**: Suspected belief states not updating for Actor
+- **Resolution**: Beliefs ARE updating correctly (only updates on observations with measurements)
+- **Impact**: No changes needed, Actor working as designed
+
+---
+
+## Estimated Cost & Time
+
+### Cost Breakdown (Based on Pilot Extrapolation)
+
+| Agent | Episodes | Cost/Episode | Total Cost |
+|-------|----------|--------------|------------|
+| Observer | 201 | $0.08 | $16.08 |
+| Actor | 201 | $0.18 | $36.18 |
+| ACE | 201 | $0.14 | $28.14 |
+| **Total** | **603** | - | **$80.40** |
+
+**Note**: ACE cost assumes 2× reflection overhead. May be higher with faithful implementation.
+
+**Contingency**: Budget $100 to account for variance and API retries
+
+---
+
+### Time Estimate
+
+**Sequential**: ~30-40 hours (not practical)
+
+**Parallel execution**:
+- 4 workers: ~6-8 hours
+- 6 workers: ~4-6 hours
+- 10 workers: ~3-4 hours (recommended)
+- 15 workers: ~2-3 hours (max, may hit rate limits)
+
+**Recommendation**: Use 10 workers with conservative rate limiting
+
+---
+
+## Implementation Checklist
+
+### Pre-Run Validation
+- [ ] All code changes committed with descriptive messages
+- [ ] Git tag created with SHA for preregistration
+- [ ] Config file validated (ace_config present, all params correct)
+- [ ] Mini test run (3 episodes) completed successfully
+- [ ] Token accounting verified
+- [ ] Ground truth leakage checks passing
+
+### Execution
+- [ ] Backup previous results directory
+- [ ] Clear failed_episodes.json from previous runs
+- [ ] Start experiment with --workers 10
+- [ ] Monitor console for errors
+- [ ] Track progress (episodes completed / total)
+
+### Post-Run
+- [ ] Verify 603 episodes completed (0 failures)
+- [ ] Run validation scripts
+- [ ] Archive raw results
+- [ ] Compute all preregistered metrics
+- [ ] Generate figures and tables
+- [ ] Write results according to decision rules
+
+---
+
+## Commit & Sign-Off
+
+**This preregistration will be committed to git with tag `prereg-v2.0` before data collection begins.**
+
+**Signed** (via git commit):
+- Date: (to be filled at commit)
+- Git SHA: (to be filled at commit)
+- Files locked: config_full_study_3agents.yaml, agents/*.py, environments/*.py, experiments/runner.py
+
+**Data collection begins**: After all pre-flight checks pass
+
+---
+
+## Appendix: ACE Implementation Details
+
+### Faithful Paper Implementation Checklist
+
+✅ **Feedback Loop**:
+- Track referenced_bullets during each episode
+- Increment helpful_count on episode success
+- Increment harmful_count on episode failure
+- Pass utility scores (helpful - harmful) to Curator
+
+✅ **Top-K Retrieval**:
+- Embed playbook bullets using sentence-transformers (or TF-IDF fallback)
+- Retrieve top-5 most relevant bullets per section
+- Build context query from observation + recent memory
+- Update embeddings when playbook changes
+
+✅ **Multi-Round Reflection**:
+- reflection_rounds = 2 (first round generates, second refines)
+- Pass prior_insights to second round
+- LLM temperature = 0.7 for all Reflector calls
+
+✅ **Deduplication**:
+- Semantic similarity threshold = 0.8
+- Merge feedback counts when deduplicating (sum helpful/harmful)
+- Keep bullet with higher utility score
+
+✅ **Pruning**:
+- token_cap = null (no pruning for validation study)
+- If enabled: utility-based pruning (keep high helpful-harmful bullets)
+
+✅ **Same Model/Temperature**:
+- Generator: Claude Sonnet 4.5, temp=0.7
+- Reflector: Claude Sonnet 4.5, temp=0.7
+- Curator: Claude Sonnet 4.5, temp=0.7
+
+✅ **Curation Mode**:
+- Mode: "curated" (LLM-based merge with conflict resolution)
+- Alternative modes available for ablations: "no_curate", "random", "greedy"
+
+---
+
+**END OF PREREGISTRATION**

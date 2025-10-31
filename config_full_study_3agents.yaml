@@ -23,6 +23,18 @@ budgets:
   actions_per_episode: 10
   tokens_per_call: 2000
 
+# ACE-specific configuration for faithful implementation
+ace_config:
+  use_retrieval: true              # Enable top-k retrieval
+  top_k: 5                          # Retrieve 5 most relevant bullets per section
+  reflection_rounds: 2              # Use 2 reflection iterations per episode (faithful ACE)
+  max_epochs: 1                     # Single epoch for main study (not pilot)
+  generator_temperature: 0.7        # Same temperature across all roles
+  reflector_temperature: 0.7
+  curator_temperature: 0.7
+  curation_mode: "curated"          # Use LLM-based curation
+  token_cap: null                   # No token cap for main study
+
 agents:
   - observer
   - actor
