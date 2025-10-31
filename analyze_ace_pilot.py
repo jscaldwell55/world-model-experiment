@@ -151,7 +151,7 @@ def print_comparison_table(by_agent: Dict[str, List[dict]]):
     print("-" * 90)
 
     # Print each agent
-    for agent_type in ['observer', 'actor', 'model_based', 'ace']:
+    for agent_type in ['observer', 'actor', 'model_based', 'a_c_e']:
         if agent_type not in stats:
             continue
 
@@ -176,7 +176,7 @@ def print_detailed_results(by_agent: Dict[str, List[dict]]):
     print("DETAILED RESULTS")
     print("=" * 90)
 
-    for agent_type in ['observer', 'actor', 'model_based', 'ace']:
+    for agent_type in ['observer', 'actor', 'model_based', 'a_c_e']:
         if agent_type not in by_agent:
             continue
 
@@ -206,7 +206,7 @@ def print_detailed_results(by_agent: Dict[str, List[dict]]):
         print(f"  Tokens per % accuracy: {stats['efficiency']['tokens_per_pct_accuracy']:.0f}")
 
         # ACE-specific
-        if agent_type == 'ace':
+        if agent_type == 'a_c_e':
             ace_stats = compute_ace_stats(logs)
             if 'error' not in ace_stats:
                 print(f"\nPlaybook:")
@@ -222,11 +222,11 @@ def print_decision_guidance(by_agent: Dict[str, List[dict]]):
     print("DECISION GUIDANCE")
     print("=" * 90)
 
-    if 'ace' not in by_agent:
+    if 'a_c_e' not in by_agent:
         print("\n❌ No ACE results found. Cannot make recommendation.")
         return
 
-    ace_stats = compute_agent_stats(by_agent['ace'])
+    ace_stats = compute_agent_stats(by_agent['a_c_e'])
     ace_acc = ace_stats['accuracy']['overall']['mean'] if ace_stats['accuracy']['overall'] else 0
     ace_tokens = ace_stats['tokens']['mean']
 

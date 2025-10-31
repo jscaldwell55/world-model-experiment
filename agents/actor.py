@@ -120,11 +120,11 @@ class ActorAgent(Agent):
         response = self.llm.generate(prompt)
 
         # Record token usage for evaluation
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'evaluation',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'question': question[:50]}
         )
 
@@ -347,11 +347,11 @@ class ActorAgent(Agent):
             response = self.llm.generate(prompt, temperature=0.7)
 
             # Record token usage for curation (belief update)
-            usage = self.llm.get_last_usage()
+            input_tokens, output_tokens = self.llm.get_last_usage()
             self.token_accountant.record(
                 'curation',
-                input_tokens=usage['input_tokens'],
-                output_tokens=usage['output_tokens'],
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
                 metadata={'phase': 'belief_update'}
             )
 
@@ -400,11 +400,11 @@ class ActorAgent(Agent):
         response = self.llm.generate(prompt, temperature=0.8)
 
         # Record token usage for exploration
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'exploration',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'action_count': self.action_count}
         )
 
@@ -573,11 +573,11 @@ class ActorAgent(Agent):
                 response = self.llm.generate(prompt, temperature=0.0)
 
                 # Record token usage for planning (prior generation)
-                usage = self.llm.get_last_usage()
+                input_tokens, output_tokens = self.llm.get_last_usage()
                 self.token_accountant.record(
                     'planning',
-                    input_tokens=usage['input_tokens'],
-                    output_tokens=usage['output_tokens'],
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
                     metadata={'phase': 'prior_generation', 'environment': environment_type}
                 )
 

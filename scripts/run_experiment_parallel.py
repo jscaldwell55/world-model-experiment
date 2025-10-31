@@ -34,7 +34,6 @@ from environments.chem_tile import ChemTile
 from agents.observer import ObserverAgent
 from agents.actor import ActorAgent
 from agents.text_reader import TextReaderAgent
-from agents.model_based import ModelBasedAgent
 from agents.ace import ACEAgent
 
 
@@ -187,8 +186,7 @@ def run_parallel_experiment(
         'observer': ObserverAgent,
         'actor': ActorAgent,
         'text_reader': TextReaderAgent,
-        'model_based': ModelBasedAgent,
-        'ace': ACEAgent
+        'a_c_e': ACEAgent
     }
 
     for env_name, env_cls in environment_mapping.items():

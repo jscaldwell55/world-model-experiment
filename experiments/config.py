@@ -75,7 +75,7 @@ def load_config(config_path: Optional[str] = None) -> dict:
     if 'models' not in config:
         raise ValueError("Config must contain 'models' section")
 
-    required_models = ['observer', 'actor', 'model_based', 'text_reader']
+    required_models = ['observer', 'actor', 'text_reader']
     for model_type in required_models:
         if model_type not in config['models']:
             raise ValueError(f"Config must specify model for '{model_type}'")

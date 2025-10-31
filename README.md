@@ -213,31 +213,30 @@ python scripts/analyze_with_statistics.py results/ace_full_n20
 
 ---
 
-## Agent Architectures
+## Agent Architectures (Full Study v1.1)
+
+**Note**: Model-Based agent removed after pilot (dominated by Actor). See [CHANGELOG.md](CHANGELOG.md) for justification.
 
 ### 1. Observer (Baseline)
 - **Capability:** Language-only reasoning, no interaction
 - **Belief:** None (passive reasoning)
 - **Learning:** None (flat surprisal)
-- **Expected:** 60-70% accuracy, ~6K tokens/episode
+- **Expected:** 60-70% accuracy, ~$0.08/episode (~6,500 tokens)
 
 ### 2. Actor
 - **Capability:** Interactive experimentation
 - **Belief:** Parametric distributions (HotPotBelief, SwitchLightBelief, etc.)
 - **Learning:** Bayesian updates from observations
-- **Expected:** 75% accuracy, ~22K tokens/episode
+- **Expected:** 75-80% accuracy, ~$0.18/episode (~22,000 tokens)
 
-### 3. Model-Based
-- **Capability:** Actor + explicit transition model (MLP)
-- **Belief:** Parametric + learned dynamics
-- **Learning:** Bayesian updates + model predictions
-- **Expected:** 73% accuracy, ~22K tokens/episode
-
-### 4. ACE (Agentic Context Engineering) ✨ **NEW**
+### 3. ACE (Agentic Context Engineering) ✨
 - **Capability:** Interactive experimentation with context evolution
 - **Belief:** Structured playbook of strategies (non-parametric)
 - **Learning:** Reflection → Curation → Playbook updates
-- **Expected:** 70-75% accuracy, ~8-10K tokens/episode
+- **Expected:** 70-75% accuracy, ~$0.14/episode (~18,700 tokens)
+
+**Removed from Full Study:**
+- **Model-Based** (Actor + MLP): Pilot showed underperformance (70.7% vs Actor's 76.9% at same cost). See [CHANGELOG.md](CHANGELOG.md) Entry 2.
 
 ---
 
@@ -382,24 +381,30 @@ analyze_ace_pilot.py             # Pilot analysis script
 - Quick comparison to baselines
 - Decision point for full experiment
 
-### Full Experiment (600 episodes)
+### Full Experiment (603 episodes, v1.1)
 
-**Configuration:** `config_ace_full.yaml`
+**Configuration:** `config_full_study_3agents.yaml`
 
 **Episodes:**
 - 3 environments (HotPot, SwitchLight, ChemTile)
-- 4 agents (Observer, Actor, Model-Based, ACE)
-- 50 seeds per combination
-- **Total:** 3 × 4 × 50 = 600 episodes
+- 3 agents (Observer, Actor, ACE) - Model-Based removed
+- 67 seeds per combination
+- **Total:** 3 × 3 × 67 = 603 episodes
 
 **Budget:**
-- Time: ~2-3 hours (10 workers)
-- Cost: ~$150-200
+- Time: ~3-4 hours (10 workers)
+- Cost: ~$241 (20% savings vs original 4-agent design)
 
 **Purpose:**
-- Statistical power for hypothesis testing
+- Statistical power for hypothesis testing (increased from 50 to 67 seeds)
 - Publication-ready results
-- Detailed analysis of ACE vs baselines
+- Test H1a (accuracy ≥70%) and H1b (cost ≤50% Actor) independently
+
+**Changes from v1.0:**
+- Model-Based removed (dominated by Actor in pilot)
+- Increased statistical power (67 vs 50 seeds per condition)
+- H1 split into H1a + H1b (independent hypotheses)
+- See [CHANGELOG.md](CHANGELOG.md) for full justification
 
 ---
 
@@ -565,16 +570,23 @@ With n=20 per condition:
 
 **This study was preregistered on 2025-10-29 prior to data collection.**
 
-- **Preregistration**: [preregistration.md](preregistration.md)
-- **Git commit**: 0353080d7a675c6cebfec2fb2ad2ca20a3257113
-- **Git tag**: prereg-v1.0
-- **Experiments begin**: 2025-10-29 or later
+- **Preregistration v1.0**: [PREREGISTRATION.md](PREREGISTRATION.md) (2025-10-29)
+- **Preregistration v1.1**: Updated 2025-10-30 after pilot (this version)
+- **Changelog**: [CHANGELOG.md](CHANGELOG.md) - Documents all deviations transparently
+- **Git tag v1.0**: prereg-v1.0 (SHA: 0353080d7a)
+- **Git tag v1.1**: prereg-v1.1 (to be created before full study)
 
-**Primary Hypotheses**:
-- H-ACE-vs-Belief: ACE achieves Actor-level accuracy at ≤50% token cost
+**Primary Hypotheses (v1.1)**:
+- **H1a (Accuracy)**: ACE achieves ≥70% accuracy on causal reasoning tasks
+- **H1b (Cost)**: ACE uses ≤50% of Actor's token cost
 - H-Budget: Diminishing returns for larger playbook caps
 - H-Curation: Curated playbook outperforms append-only by ≥5 pts
 - H-Shift: ACE recovers from distribution shifts within 10 episodes
+
+**Changes from v1.0**:
+1. H1 split into H1a + H1b (independent hypotheses) - see CHANGELOG Entry 3
+2. Model-Based removed (dominated by Actor) - see CHANGELOG Entry 2
+3. Counterfactual evaluation improved (uncertainty expression) - see CHANGELOG Entry 1
 
 ### Provenance
 

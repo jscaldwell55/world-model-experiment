@@ -13,14 +13,42 @@ Evaluation of ACE (Agentic Context Engineering) framework against traditional in
 
 ## Primary Hypotheses
 
-### H-ACE-vs-Belief (Main Claim)
-ACE achieves Actor-level accuracy (≥70%) while using ≤50% of Actor's total tokens.
+### H1a: ACE Accuracy Claim
+ACE achieves clinically meaningful accuracy (≥70%) on causal reasoning tasks.
 
 **Success Threshold**:
-- ACE accuracy ≥ (Actor accuracy - 5 pts) AND
-- ACE tokens ≤ 0.5 × Actor tokens
+- ACE overall accuracy ≥ 70%
 
-**Statistical Test**: Paired t-test across seeds, α = 0.05
+**Pilot Evidence**: 72.8% ± 6.7% (10 episodes, 95% CI: [66.1%, 79.5%])
+
+**Statistical Test**: One-sample t-test, H₀: μ < 70%, α = 0.05
+
+### H1b: ACE Cost Efficiency Claim
+ACE achieves substantial cost savings (≤50% of Actor's USD cost) compared to interactive learning.
+
+**Success Threshold**:
+- ACE USD cost ≤ 0.5 × Actor USD cost
+
+**Pilot Evidence**: ACE $0.14/ep vs Actor $0.18/ep = 78% (fails ≤50% threshold)
+
+**Statistical Test**: Paired t-test across seeds, H₀: ACE cost ≥ 0.5 × Actor cost, α = 0.05
+
+### Combined Interpretation (H1a × H1b)
+
+| H1a (Accuracy) | H1b (Cost) | Outcome | Interpretation |
+|----------------|------------|---------|----------------|
+| ✅ Pass | ✅ Pass | **FULL SUCCESS** | ACE validated: accurate + efficient |
+| ✅ Pass | ❌ Fail | **PARTIAL SUCCESS** | ACE accurate but not cost-efficient |
+| ❌ Fail | ✅ Pass | **WEAK SUCCESS** | ACE efficient but inaccurate |
+| ❌ Fail | ❌ Fail | **FAILURE** | ACE neither accurate nor efficient |
+
+**Pilot Result**: Row 2 (Partial Success) - H1a supported, H1b not supported
+
+**Pre-Commit Decision**:
+- If H1a passes: Publish accuracy results, investigate cost optimization
+- If H1b passes: Publish cost efficiency, investigate accuracy improvements
+- If both pass: Publish full ACE validation
+- If both fail: Publish boundary conditions and failure analysis
 
 ### H-Budget (Diminishing Returns)
 Increasing playbook cap from 1k→2k tokens yields <50% of the gain from 512→1k.
@@ -132,17 +160,36 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 
 ## Agents & Ablations
 
-### Core Agents
-1. **Observer**: Passive baseline, no interaction/memory (already implemented)
-2. **Actor**: Interaction + explicit belief updates (already implemented)
-3. **Model-Based**: Actor + MLP transition model (already implemented)
-4. **ACE**: Curated playbook, 1k token cap (already implemented)
+### Core Agents (Main Study)
+
+1. **Observer**: Passive baseline, no interaction/memory
+   - Cost: ~$0.08/episode (~6,500 tokens)
+   - Expected accuracy: 65-70%
+   - Purpose: Measures text-only reasoning without environment interaction
+
+2. **Actor**: Interactive + explicit belief updates
+   - Cost: ~$0.18/episode (~22,000 tokens)
+   - Expected accuracy: 75-80%
+   - Purpose: Traditional interactive learning baseline
+   - Features: Action selection, belief state tracking, memory updates
+
+3. **ACE** (Agentic Context Engineering): Interactive + curated playbook
+   - Cost: ~$0.14/episode (~18,700 tokens, pilot estimate)
+   - Expected accuracy: 70-75%
+   - Purpose: Test if curated context can substitute for expensive interaction
+   - Features: Playbook curation, strategic exploration, knowledge synthesis
+
+**Removed from Main Study:**
+- **Model-Based**: Originally planned (Actor + MLP transition model)
+- **Reason**: Pilot showed Model-Based underperforms Actor (70.7% vs 76.9%) at same cost ($0.174 vs $0.175)
+- **Decision**: Dominated by Actor on accuracy; resources better spent on ACE ablations
+- **Logged**: CHANGELOG.md entry 2025-10-30
 
 ### Ablation Controls (Need to implement)
-5. **ACE-512**: Curated playbook, 512 token cap
-6. **ACE-2k**: Curated playbook, 2k token cap
-7. **ACE-NoCurate**: Append-only memory, 1k cap (tests curation value)
-8. **ACE-RandomSubset**: Random bullet selection, 1k cap (tests selection vs curation)
+4. **ACE-512**: Curated playbook, 512 token cap
+5. **ACE-2k**: Curated playbook, 2k token cap
+6. **ACE-NoCurate**: Append-only memory, 1k cap (tests curation value)
+7. **ACE-RandomSubset**: Random bullet selection, 1k cap (tests selection vs curation)
 
 ## Experimental Design
 
@@ -154,10 +201,19 @@ Under distribution shift, ACE recovers to ≥95% of pre-shift accuracy within �
 - **Outputs**: Pareto plot, accuracy comparison, token analysis
 
 ### Full Study
-- **Episodes**: 600 (3 envs × 4 core agents × 50 seeds)
+- **Episodes**: 603 (3 envs × 3 core agents × 67 seeds)
 - **Purpose**: Confirmatory hypothesis testing
+- **Agents**: Observer, Actor, ACE (Model-Based removed after pilot)
 - **Environments**: HotPot, SwitchLight, ChemTile
-- **Seeds**: As specified in config_ace_full.yaml (42-91 for HotPot, 100-149 for SwitchLight, 200-249 for ChemTile)
+- **Seeds**:
+  - HotPot: [42-108] (67 seeds)
+  - SwitchLight: [100-166] (67 seeds)
+  - ChemTile: [200-266] (67 seeds)
+- **Estimated Cost**:
+  - Observer: 603 × $0.08 = $48
+  - Actor: 603 × $0.18 = $109
+  - ACE: 603 × $0.14 = $84
+  - **Total**: ~$241 (vs $300 with Model-Based)
 
 ### Ablation Study (After pilot if promising)
 - **Episodes**: 120 (3 envs × 4 ablations × 10 seeds)

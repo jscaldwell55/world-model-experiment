@@ -1,11 +1,15 @@
 # config_verification_v2.yaml
-# Verification run with NEW exploration-dependent questions (V2)
-# Purpose: Verify Observer scores <40% (can't answer without exploration)
+# Verification run for full study (3 agents)
+# Purpose: Quick infrastructure check before launching 603-episode study
 
 models:
   observer:
     model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
   a_c_e:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
     model: "claude-sonnet-4-5-20250929"
   judge:
     model: "gpt-4-0125-preview"
@@ -15,18 +19,26 @@ budgets:
   tokens_per_call: 2000
 
 agents:
-  - observer  # Should score <40% on V2 questions
-  - ace       # Should score >60% on V2 questions
+  - observer
+  - actor
+  - a_c_e
 
 environments:
   hot_pot:
-    num_episodes: 5
-    seeds: [1000, 1001, 1002, 1003, 1004]
+    num_episodes: 3
+    seeds: [1000, 1001, 1002]
+  switch_light:
+    num_episodes: 3
+    seeds: [2000, 2001, 2002]
+  chem_tile:
+    num_episodes: 3
+    seeds: [3000, 3001, 3002]
 
-# Total: 10 episodes (2 agents × 1 environment × 5 seeds)
-# Expected cost: ~$5
-# Expected time: ~10 minutes
+# Total: 27 episodes (3 agents × 3 environments × 3 seeds)
+# Expected cost: ~$7 (3 × Observer $0.08 + 3 × Actor $0.18 + 3 × ACE $0.14) × 3 envs
+# Expected time: ~15-20 minutes
 # SUCCESS CRITERIA:
-#   - Observer accuracy <40% (proves questions require exploration)
-#   - ACE accuracy >60% (proves exploration helps)
-#   - ACE outperforms Observer by >20 percentage points
+#   - All 27 episodes complete without errors
+#   - Token accounting correct
+#   - Judge scoring functional
+#   - Results follow expected ranking: Actor > ACE > Observer

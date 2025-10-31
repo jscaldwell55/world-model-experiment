@@ -102,7 +102,7 @@ def plot_pareto(df: pd.DataFrame, output_path: Path):
         'observer': 'blue',
         'actor': 'red',
         'model_based': 'green',
-        'ace': 'purple'
+        'a_c_e': 'purple'
     }
 
     for _, row in metrics.iterrows():
@@ -208,15 +208,15 @@ def generate_summary_json(df: pd.DataFrame, output_path: Path):
 def check_pareto_position(df: pd.DataFrame):
     """Check if ACE is on Pareto frontier"""
     metrics = compute_aggregate_metrics(df)
-    if metrics.empty or 'ace' not in metrics['agent'].values:
+    if metrics.empty or 'a_c_e' not in metrics['agent'].values:
         print("\nACE not found in results")
         return
 
-    ace_row = metrics[metrics['agent'] == 'ace'].iloc[0]
+    ace_row = metrics[metrics['agent'] == 'a_c_e'].iloc[0]
 
     # Check if dominated (another agent better on both metrics)
     dominated = False
-    for _, row in metrics[metrics['agent'] != 'ace'].iterrows():
+    for _, row in metrics[metrics['agent'] != 'a_c_e'].iterrows():
         if (row['accuracy'] >= ace_row['accuracy'] and
             row['tokens_per_episode'] <= ace_row['tokens_per_episode']):
             dominated = True

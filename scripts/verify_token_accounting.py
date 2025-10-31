@@ -21,7 +21,7 @@ import tempfile
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from experiments.runner import ExperimentRunner
-from environments.hotpot import HotPotLab
+from environments.hot_pot import HotPotLab
 from agents.ace import ACEAgent
 
 

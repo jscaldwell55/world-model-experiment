@@ -177,11 +177,11 @@ class ACEAgent(Agent):
         response = self.llm.generate(prompt, temperature=0.0)
 
         # Record token usage for evaluation
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'evaluation',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'question': question[:50]}  # Truncate question
         )
 
@@ -262,11 +262,11 @@ class ACEAgent(Agent):
         response = self.llm.generate(prompt, temperature=0.8)
 
         # Record token usage for exploration
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'exploration',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'action_count': self.action_count}
         )
 
@@ -312,11 +312,11 @@ class ACEAgent(Agent):
         response = self.llm.generate(prompt, temperature=0.0)
 
         # Record token usage for planning (reflection)
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'planning',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'phase': 'reflection'}
         )
 
@@ -386,11 +386,11 @@ class ACEAgent(Agent):
         response = self.llm.generate(prompt, temperature=0.0)
 
         # Record token usage for curation
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'curation',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'phase': 'curation', 'mode': 'curated'}
         )
 

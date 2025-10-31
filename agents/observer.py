@@ -79,11 +79,11 @@ class ObserverAgent(Agent):
         response = self.llm.generate(prompt)
 
         # Record token usage for evaluation
-        usage = self.llm.get_last_usage()
+        input_tokens, output_tokens = self.llm.get_last_usage()
         self.token_accountant.record(
             'evaluation',
-            input_tokens=usage['input_tokens'],
-            output_tokens=usage['output_tokens'],
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             metadata={'question': question[:50]}
         )
 

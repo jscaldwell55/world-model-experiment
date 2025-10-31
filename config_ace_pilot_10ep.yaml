@@ -1,5 +1,5 @@
-# config_ace_pilot_v2.yaml
-# FIXED: Added agents list
+# ACE Pilot: 10 episodes (5 HotPot + 5 SwitchLight)
+# Fair comparison with existing pilot data
 
 models:
   observer:
@@ -18,15 +18,12 @@ budgets:
   tokens_per_call: 2000
 
 agents:
-  - observer
-  - actor
   - a_c_e
-  - text_reader
 
 environments:
   hot_pot:
     num_episodes: 5
-    seeds: [42, 43, 44, 45, 46]
+    seeds: [42, 43, 44, 45, 46]  # Same seeds as other agents
   switch_light:
     num_episodes: 5
-    seeds: [100, 101, 102, 103, 104]
+    seeds: [100, 101, 102, 103, 104]  # Same seeds as other agents
