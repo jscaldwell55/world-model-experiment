@@ -103,4 +103,8 @@ secrets.yaml
 # Instruction files (contain examples with keys)
 ACE_RUN_INSTRUCTIONS.md
 IMPLEMENTATION_COMPLETE.md
-SYSTEM_CHECK_COMPLETE.md
+
+# Internal cleanup and planning files
+CLEANUP_PLAN.md
+*_PREP_*.md
+*_CHECKLIST.md
