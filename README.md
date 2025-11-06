@@ -6,6 +6,8 @@ This project tests **Agentic Context Engineering (ACE)** against traditional int
 
 ACE architecture based on "Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models" https://arxiv.org/abs/2510.04618
 
+Initial research inspired by blog post: https://yuanxue.github.io/2025/10/06/reflection-sutton-part1.html
+
 ---
 
 ## 🎓 **Study Complete (2025-10-31)**
