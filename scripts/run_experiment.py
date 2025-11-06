@@ -24,7 +24,6 @@ from environments.chem_tile import ChemTile
 from agents.observer import ObserverAgent
 from agents.actor import ActorAgent
 from agents.text_reader import TextReaderAgent
-from agents.model_based import ModelBasedAgent
 
 
 def main():
@@ -76,7 +75,6 @@ def main():
         'observer': ObserverAgent,
         'actor': ActorAgent,
         'text_reader': TextReaderAgent,
-        'model_based': ModelBasedAgent,
     }
 
     # Run experiments
@@ -91,7 +89,6 @@ def main():
     print(f"  Observer:     {config['models']['observer']['model']}")
     print(f"  Actor:        {config['models']['actor']['model']}")
     print(f"  Text Reader:  {config['models']['text_reader']['model']}")
-    print(f"  Model Based:  {config['models']['model_based']['model']}")
     print(f"{'='*70}\n")
 
     for env_name, env_config in config['environments'].items():

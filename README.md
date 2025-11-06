@@ -588,7 +588,6 @@ world-model-experiment/
 │   ├── base.py                         # Base Agent class
 │   ├── observer.py                     # Passive reasoning
 │   ├── actor.py                        # Interactive + beliefs
-│   ├── model_based.py                  # Actor + MLP model
 │   └── ace.py                          # ACE agent ⭐ (530 lines, surprisal=0 bug)
 │
 ├── environments/

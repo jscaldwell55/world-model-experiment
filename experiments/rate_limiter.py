@@ -297,10 +297,6 @@ TOKEN_ESTIMATES = {
         'input': 20000,
         'output': 4000
     },
-    'model_based': {
-        'input': 28000,
-        'output': 5000
-    },
     'text_reader': {
         'input': 12000,
         'output': 2000

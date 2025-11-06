@@ -101,7 +101,6 @@ def plot_pareto(df: pd.DataFrame, output_path: Path):
     agent_colors = {
         'observer': 'blue',
         'actor': 'red',
-        'model_based': 'green',
         'a_c_e': 'purple'
     }
 

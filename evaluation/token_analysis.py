@@ -679,13 +679,10 @@ class TokenAnalysis:
         """Compare coupling strength across agent types.
 
         Expected ranking (strongest to weakest):
-            model_based > actor > observer
-
-        because model_based has explicit dynamics model.
+            actor > observer
 
         Returns:
             DataFrame with columns: [agent_type, environment, pearson_r, relative_performance]
-            where relative_performance = coupling_agent / coupling_model_based
         """
         coupling_by_agent = self.compute_coupling_by_agent()
 
@@ -694,26 +691,15 @@ class TokenAnalysis:
 
         results = []
 
-        # Compute relative performance
+        # Return coupling results
         for env in coupling_by_agent['environment'].unique():
             env_data = coupling_by_agent[coupling_by_agent['environment'] == env]
 
-            # Find model_based baseline (if exists)
-            model_based_row = env_data[env_data['agent_type'] == 'ModelBased']
-
-            if len(model_based_row) > 0:
-                baseline_r = model_based_row.iloc[0]['pearson_r']
-            else:
-                baseline_r = None
-
             for _, row in env_data.iterrows():
-                relative_perf = row['pearson_r'] / baseline_r if baseline_r and baseline_r != 0 else None
-
                 results.append({
                     'agent_type': row['agent_type'],
                     'environment': row['environment'],
-                    'pearson_r': row['pearson_r'],
-                    'relative_performance': relative_perf
+                    'pearson_r': row['pearson_r']
                 })
 
         return pd.DataFrame(results)

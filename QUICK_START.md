@@ -127,7 +127,6 @@ ace:      68% (5 episodes) ← Uses exploration data ✅
 ```
 Agent Accuracy (95% CI):
   observer:    35% [30%, 40%]  ← Baseline
-  model_based: 65% [60%, 70%]
   actor:       72% [67%, 77%]
   ace:         75% [70%, 80%]  ← Best (if playbook helps)
 

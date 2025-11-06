@@ -133,7 +133,7 @@ from collections import Counter
 episodes = [json.load(open(f)) for f in glob.glob('results/ace_pilot_v2/raw/*.json')]
 agents = Counter(e['agent_type'] for e in episodes)
 
-expected = {'observer': 10, 'actor': 10, 'model_based': 10, 'a_c_e': 10}
+expected = {'observer': 10, 'actor': 10, 'a_c_e': 10}
 all_good = True
 
 for agent_type, count in sorted(agents.items()):

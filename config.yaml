@@ -4,8 +4,6 @@ models:
     model: "claude-sonnet-4-5-20250929"
   actor:
     model: "claude-sonnet-4-5-20250929"
-  model_based:
-    model: "claude-sonnet-4-5-20250929"
   text_reader:
     model: "claude-sonnet-4-5-20250929"
   ace:
