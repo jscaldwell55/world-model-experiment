@@ -4,6 +4,8 @@
 
 This project tests **Agentic Context Engineering (ACE)** against traditional interactive learning approaches to understand when rich context can replace expensive interaction.
 
+ACE architecture based on "Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models" https://arxiv.org/abs/2510.04618
+
 ---
 
 ## 🎓 **Study Complete (2025-10-31)**
