@@ -117,8 +117,8 @@ class ExperimentRunner:
 
             # Add prior_logs for TextReaderAgent
             if 'prior_logs' in sig.parameters:
-                # TODO: Load actual prior logs from previous episodes
-                # For now, provide empty list so agent can at least run
+                # Note: TextReaderAgent not used in main study.
+                # Future work: load prior episode logs for few-shot learning.
                 agent_kwargs['prior_logs'] = []
 
             # Add ACE-specific parameters if this is an ACEAgent

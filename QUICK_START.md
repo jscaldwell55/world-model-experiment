@@ -26,7 +26,7 @@ python scripts/upgrade_to_exploration_eval_v2.py --apply
 # 2. Run 10-episode verification
 ANTHROPIC_API_KEY="sk-ant-api03-..." OPENAI_API_KEY="sk-proj-..." \
 python scripts/run_experiment_parallel.py \
-  --config config_verification_v2.yaml \
+  --config configs/config_verification_v2.yaml \
   --output-dir results/verification_v2 \
   --workers 2
 
@@ -62,7 +62,7 @@ EOF
 # Run 160 episodes (4 agents × 2 environments × 20 seeds)
 ANTHROPIC_API_KEY="..." OPENAI_API_KEY="..." \
 python scripts/run_experiment_parallel.py \
-  --config config_ace_full_n20.yaml \
+  --config configs/config_ace_full_n20.yaml \
   --output-dir results/ace_full_n20 \
   --workers 6
 

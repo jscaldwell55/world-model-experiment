@@ -95,7 +95,7 @@ class ActorAgent(Agent):
             observation=observation,  # Placeholder - will be overwritten with result
             belief_state=self._serialize_belief(),  # Current belief before action
             surprisal=0.0,  # Placeholder - will be computed on result
-            token_usage=0  # TODO: track from API
+            token_usage=0  # Tracked at episode level by runner
         )
 
         self.memory.append(step)
