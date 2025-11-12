@@ -6,6 +6,8 @@
 
 This project compares **Agentic Context Engineering (ACE)** against traditional interactive learning approaches to understand when rich context can replace expensive interaction in causal reasoning tasks.
 
+**Based on:** [Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models](https://arxiv.org/abs/2510.04618)
+
 **Status:** ✅ Study Complete (2025-10-31) | 506 episodes | Statistically significant findings
 
 ---
