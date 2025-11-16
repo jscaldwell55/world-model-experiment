@@ -35,6 +35,7 @@ from agents.observer import ObserverAgent
 from agents.actor import ActorAgent
 from agents.text_reader import TextReaderAgent
 from agents.ace import ACEAgent
+from agents.simple_world_model import SimpleWorldModel
 
 
 # Global shutdown flag for graceful termination
@@ -186,7 +187,8 @@ def run_parallel_experiment(
         'observer': ObserverAgent,
         'actor': ActorAgent,
         'text_reader': TextReaderAgent,
-        'a_c_e': ACEAgent
+        'a_c_e': ACEAgent,
+        'simple_world_model': SimpleWorldModel
     }
 
     # Get number of epochs (default 1 for non-ACE agents, or from config for ACE)

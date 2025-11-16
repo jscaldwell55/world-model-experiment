@@ -142,6 +142,22 @@ class ExperimentRunner:
                     if config_key in ace_config and param_name in sig.parameters:
                         agent_kwargs[param_name] = ace_config[config_key]
 
+            # Add SimpleWorldModel-specific parameters if this is a SimpleWorldModel
+            if agent_type == 'simple_world_model' and 'world_model' in self.config:
+                world_model_config = self.config['world_model']
+
+                # Map config to agent parameters
+                world_model_params = {
+                    'prior_strength': 'prior_strength',
+                    'exploration_temperature': 'exploration_temperature',
+                    'confidence_threshold': 'confidence_threshold',
+                    'enable_persistence': 'enable_persistence'
+                }
+
+                for config_key, param_name in world_model_params.items():
+                    if config_key in world_model_config and param_name in sig.parameters:
+                        agent_kwargs[param_name] = world_model_config[config_key]
+
         # Use shared agent if provided (for multi-epoch ACE), otherwise create new one
         if self.shared_agent is not None:
             agent = self.shared_agent
@@ -170,6 +186,10 @@ class ExperimentRunner:
             else:
                 # Other agent types - standard reset
                 agent.reset()
+
+        # NEW: Start episode for domain memory (SimpleWorldModel)
+        if hasattr(agent, 'start_episode'):
+            agent.start_episode(env.__class__.__name__)
 
         # Episode loop
         steps = []
@@ -244,6 +264,12 @@ class ExperimentRunner:
         ground_truth = env.get_ground_truth()
         test_queries = get_test_queries(env.__class__.__name__)
         test_results = self._evaluate_agent(agent, env, test_queries, ground_truth)
+
+        # NEW: End episode for domain memory (SimpleWorldModel)
+        # Calculate overall score as percentage of correct answers
+        if hasattr(agent, 'end_episode') and test_results:
+            final_score = (sum(r['score'] for r in test_results) / len(test_results)) * 100
+            agent.end_episode(final_score)
 
         # Update playbook for ACE agents (after test queries)
         if hasattr(agent, 'update_playbook'):
