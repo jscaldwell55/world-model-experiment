@@ -1,0 +1,86 @@
+# Simple World Model Configuration - Version 2.2 (CRITICAL PRIOR FIXES)
+# Minimal Viable World Model - evolved from ACTOR with persistent beliefs
+#
+# VERSION 2.2 CRITICAL FIXES (Nov 2025):
+# ====================================
+# PRIOR APPLICATION FIXES (NEW):
+# 1. 🔧 Debug logging to track prior usage at each update step
+# 2. 💪 Increased prior_strength from 0.1 → 0.5 (5x stronger!)
+# 3. 💪 Adaptive prior decay: prior_strength * (0.9^episode_step)
+#    - Step 0: 0.5 (50% prior weight)
+#    - Step 5: 0.3 (30% prior weight)
+#    - Step 10: 0.17 (17% prior weight)
+# 4. 📊 Regression requires ≥5 measurements (was ≥3)
+#    - <5 samples: Use prior-weighted Kalman update
+#    - ≥5 samples: Blend prior with regression
+# 5. 📊 Prior-regression blending: new_mean = α*prior + (1-α)*regression
+#
+# PREVIOUS VERSION 2.1 ENHANCEMENTS:
+# ==================================
+# CORE FIXES (1-6):
+# 1. Better HotPot heating rate priors (2.5°C/s vs 1.5°C/s)
+# 2. Linear regression on full temperature history (>= 3 measurements)
+# 3. Stove power-specific heating rate tracking (dim vs bright)
+# 4. Boundary exploration hints for burn threshold learning
+# 5. Enhanced prior generation prompts with physical guidance
+# 6. Improved fallback priors (2.5 vs 0.0 when LLM fails)
+#
+# PERFORMANCE OPTIMIZATIONS (7-10):
+# 7. Adaptive action budget based on surprisal (6-15 actions)
+#    - HotPot (high surprisal): gets 15 actions instead of 10
+#    - Switch Light (low surprisal): uses 8 actions instead of 10
+# 8. Early stopping for converged beliefs (saves cost)
+#    - Stops after step 5 if beliefs change <1%
+# 9. Kalman-like uncertainty-weighted updates
+#    - Explicit Kalman gain: balances prior vs measurement confidence
+# 10. Medium interventional question calibration
+#    - Adds uncertainty quantification ("likely", ±error bars)
+#
+# EXPECTED IMPROVEMENTS:
+# - HotPot accuracy: 76% → ~87% (+11% via better dynamics + more actions)
+# - Overall accuracy: 81.7% → ~87-89% (+5-7%)
+# - Avg cost/episode: $0.18 → ~$0.15 (-17% via early stopping)
+# - Medium interventional Qs: 40-57% → ~70%
+#
+# TARGET: Exceed 87% overall accuracy while REDUCING cost
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Run SimpleWorldModel agent
+agents:
+  - simple_world_model
+
+# Simple World Model specific parameters
+world_model:
+  prior_strength: 0.5           # 💪 V2.2: Increased from 0.1 → 0.5 (5x stronger priors!)
+  exploration_temperature: 0.1   # Temperature for exploration bonus
+  confidence_threshold: 0.7      # Minimum confidence to exploit vs explore
+  enable_persistence: true       # Beliefs persist across episodes
+
+# Same environments and seeds as ACTOR baseline for comparison
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+  chem_tile:
+    num_episodes: 5
+    seeds: [200, 201, 202, 203, 204]
+
+use_mock_llm: false

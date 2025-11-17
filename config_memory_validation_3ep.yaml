@@ -1,0 +1,46 @@
+# Memory Validation Test - 3 Episodes per Environment
+# Purpose: Validate that SimpleWorldModel learns across episodes
+#
+# Expected behavior:
+# - Episode 1: Default priors (prior_strength=0.1, confidence=0.1)
+# - Episode 2: Loads beliefs from Episode 1 (confidence=0.12)
+# - Episode 3: Loads consolidated beliefs (confidence=0.14)
+# - Performance should improve as agent learns
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+agents:
+  - simple_world_model
+
+world_model:
+  prior_strength: 0.1
+  exploration_temperature: 0.1
+  confidence_threshold: 0.7
+  enable_persistence: true
+
+environments:
+  hot_pot:
+    num_episodes: 3
+    seeds: [50, 51, 52]
+  switch_light:
+    num_episodes: 3
+    seeds: [150, 151, 152]
+  chem_tile:
+    num_episodes: 3
+    seeds: [250, 251, 252]
+
+use_mock_llm: false

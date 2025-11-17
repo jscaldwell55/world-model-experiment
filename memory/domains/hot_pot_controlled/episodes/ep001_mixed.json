@@ -1,0 +1,58 @@
+{
+  "episode_id": "ep001_mixed",
+  "timestamp": "2025-11-17T01:49:24.845395",
+  "trajectory": {
+    "episode_id": "ep001_mixed",
+    "observations": [
+      {
+        "measured_temp": 20.0,
+        "time": 0
+      },
+      {
+        "measured_temp": 22.5,
+        "time": 1,
+        "power_setting": "HIGH"
+      },
+      {
+        "measured_temp": 23.5,
+        "time": 2,
+        "power_setting": "LOW"
+      },
+      {
+        "measured_temp": 26.0,
+        "time": 3,
+        "power_setting": "HIGH"
+      },
+      {
+        "measured_temp": 28.0,
+        "time": 4,
+        "power_setting": "HIGH"
+      }
+    ],
+    "actions": [
+      "measure_temp()",
+      "toggle_power()",
+      "measure_temp()",
+      "toggle_power()",
+      "measure_temp()"
+    ],
+    "final_beliefs": {
+      "heating_rate_mean": {
+        "value": 1.2
+      },
+      "heating_rate_std": {
+        "value": 0.3
+      },
+      "measurement_noise": {
+        "value": 2.0
+      },
+      "base_temp": {
+        "value": 20.0
+      }
+    },
+    "context_used": ""
+  },
+  "outcome": {
+    "score": 0.85
+  }
+}

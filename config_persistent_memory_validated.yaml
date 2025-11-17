@@ -1,0 +1,63 @@
+# Persistent Memory Validation - 15 Episodes
+# CORRECT CONFIGURATION with prior_strength = 0.1
+#
+# This tests persistent memory with proper sacred parameters
+# Expected: Match or exceed 81.1% baseline (90.9% ChemTile)
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Run SimpleWorldModel agent with persistent memory
+agents:
+  - simple_world_model
+
+# ✅ SACRED PARAMETERS - NEVER CHANGE THESE!
+# prior_strength: 0.5 caused -14.4% performance drop
+# prior_strength: 0.1 achieved 81.1% accuracy ← PROVEN OPTIMAL
+world_model:
+  prior_strength: 0.1           # ⚠️ SACRED VALUE - DO NOT CHANGE!
+  exploration_temperature: 0.1   # Validated optimal
+  confidence_threshold: 0.7      # Validated optimal
+  enable_persistence: true       # Memory across episodes enabled
+
+# Same environments and seeds as validated baseline for direct comparison
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]    # Same seeds as 81.1% baseline
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+  chem_tile:
+    num_episodes: 5
+    seeds: [200, 201, 202, 203, 204]
+
+use_mock_llm: false
+
+# NOTE: Memory system is built-in and uses these defaults:
+# - base_path: "memory/domains/"
+# - domain_isolation: enabled (automatic)
+# - prior_strength caps at 0.3 from memory confidence
+# - memory_weight: calculated from episode scores
+#
+# VALIDATION TARGETS (from baseline without memory):
+# Overall: 81.1%
+# ChemTile: 90.9%
+# HotPot: 80.0%
+# SwitchLight: 72.3%
+#
+# ⚠️  CRITICAL: Clear memory before running fresh test!
+# rm -rf memory/domains/*/

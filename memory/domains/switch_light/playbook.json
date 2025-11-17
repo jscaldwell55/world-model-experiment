@@ -1,0 +1,287 @@
+{
+  "observations": [
+    {
+      "episode_id": "switch_light_20251117_044224",
+      "timestamp": "2025-11-17T04:46:49.870530",
+      "score": 0.8439999999999999,
+      "beliefs": {
+        "wiring_probs": {
+          "value": {
+            "layout_A": 0.85,
+            "layout_B": 0.15
+          },
+          "confidence": 0.25,
+          "observation_count": 7,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:46:49.870291"
+        },
+        "failure_prob": {
+          "value": 0.02,
+          "confidence": 0.25,
+          "observation_count": 7,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:46:49.870370"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "light_on": {
+              "mean": 0.5714285714285714,
+              "variance": 0.24489795918367346,
+              "n_obs": 7
+            },
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            },
+            "inspection_count": {
+              "mean": 1.5,
+              "variance": 0.25,
+              "n_obs": 2
+            }
+          },
+          "action_outcomes": {
+            "observe_light": {
+              "success": 0,
+              "total": 1
+            },
+            "flip_switch": {
+              "success": 0,
+              "total": 6
+            },
+            "inspect_wires": {
+              "success": 0,
+              "total": 2
+            },
+            "jiggle_relay": {
+              "success": 0,
+              "total": 1
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "HIGH",
+      "reason": "Systematic exploration (6 flips) - good coverage",
+      "metadata": {
+        "patterns": [
+          "Achieved 84% accuracy"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "episode_id": "switch_light_20251117_044649",
+      "timestamp": "2025-11-17T04:51:09.491503",
+      "score": 0.8420000000000001,
+      "beliefs": {
+        "wiring_probs": {
+          "value": {
+            "layout_A": 0.002,
+            "layout_B": 0.998
+          },
+          "confidence": 0.5,
+          "observation_count": 8,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:51:09.491301"
+        },
+        "failure_prob": {
+          "value": 0.01,
+          "confidence": 0.5,
+          "observation_count": 8,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:51:09.491344"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "light_on": {
+              "mean": 0.375,
+              "variance": 0.234375,
+              "n_obs": 8
+            },
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            }
+          },
+          "action_outcomes": {
+            "observe_light": {
+              "success": 0,
+              "total": 2
+            },
+            "flip_switch": {
+              "success": 0,
+              "total": 6
+            },
+            "jiggle_relay": {
+              "success": 0,
+              "total": 2
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "HIGH",
+      "reason": "Systematic exploration (6 flips) - good coverage",
+      "metadata": {
+        "patterns": [
+          "Achieved 84% accuracy"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "episode_id": "switch_light_20251117_045109",
+      "timestamp": "2025-11-17T04:55:33.515884",
+      "score": 0.6919999999999998,
+      "beliefs": {
+        "wiring_probs": {
+          "value": {
+            "layout_A": 0.5,
+            "layout_B": 0.5
+          },
+          "confidence": 0.5,
+          "observation_count": 8,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:55:33.515797"
+        },
+        "failure_prob": {
+          "value": 0.01,
+          "confidence": 0.5,
+          "observation_count": 8,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:55:33.515818"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "light_on": {
+              "mean": 0.625,
+              "variance": 0.234375,
+              "n_obs": 8
+            },
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            },
+            "inspection_count": {
+              "mean": 1.5,
+              "variance": 0.25,
+              "n_obs": 2
+            }
+          },
+          "action_outcomes": {
+            "observe_light": {
+              "success": 0,
+              "total": 2
+            },
+            "flip_switch": {
+              "success": 0,
+              "total": 6
+            },
+            "inspect_wires": {
+              "success": 0,
+              "total": 2
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "HIGH",
+      "reason": "Systematic exploration (6 flips) - good coverage",
+      "metadata": {
+        "patterns": [],
+        "failures": []
+      }
+    },
+    {
+      "episode_id": "switch_light_20251117_045533",
+      "timestamp": "2025-11-17T05:00:03.345169",
+      "score": 0.7903999999999999,
+      "beliefs": {
+        "wiring_probs": {
+          "value": {
+            "layout_A": 0.5,
+            "layout_B": 0.5
+          },
+          "confidence": 0.5,
+          "observation_count": 8,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:00:03.344832"
+        },
+        "failure_prob": {
+          "value": 0.015,
+          "confidence": 0.5,
+          "observation_count": 8,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:00:03.344916"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "light_on": {
+              "mean": 0.5,
+              "variance": 0.25,
+              "n_obs": 8
+            },
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            },
+            "inspection_count": {
+              "mean": 1.0,
+              "variance": 0.0,
+              "n_obs": 1
+            }
+          },
+          "action_outcomes": {
+            "observe_light": {
+              "success": 0,
+              "total": 1
+            },
+            "flip_switch": {
+              "success": 0,
+              "total": 7
+            },
+            "jiggle_relay": {
+              "success": 0,
+              "total": 1
+            },
+            "inspect_wires": {
+              "success": 0,
+              "total": 1
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "HIGH",
+      "reason": "Systematic exploration (7 flips) - good coverage",
+      "metadata": {
+        "patterns": [
+          "Achieved 79% accuracy"
+        ],
+        "failures": []
+      }
+    }
+  ],
+  "strategies_and_rules": [
+    {
+      "content": "Achieved 84% accuracy",
+      "confidence": 0.8439999999999999,
+      "source_episode": "switch_light_20251117_044224"
+    },
+    {
+      "content": "Achieved 84% accuracy",
+      "confidence": 0.8420000000000001,
+      "source_episode": "switch_light_20251117_044649"
+    }
+  ],
+  "troubleshooting": [],
+  "context_patterns": []
+}

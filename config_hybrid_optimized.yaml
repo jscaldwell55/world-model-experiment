@@ -1,0 +1,92 @@
+# Hybrid Agent Optimized Configuration
+# Cost-optimized hybrid agent with weighted selection and text_reader pre-screening
+# Reduces ACTOR calls from 5 to 2 per decision (60% cost reduction)
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  ace:
+    model: "claude-sonnet-4-5-20250929"
+  hybrid:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Hybrid-specific configuration with cost optimization
+hybrid_config:
+  num_candidates: 5  # Number of strategies ACE generates (Stage 1)
+  candidate_temperature: 0.9  # Temperature for diverse strategy generation
+  scoring_temperature: 0.3  # Temperature for consistent scoring
+
+  # Cost optimization settings
+  enable_cost_optimization: true  # Enable three-stage selection pipeline
+  num_prescreening_candidates: 5  # How many candidates text_reader scores (Stage 2)
+  num_final_candidates: 2  # How many candidates ACTOR scores (Stage 3)
+
+  # Weighted selection parameters
+  # These weights determine how much to trust ACE vs ACTOR for different scenarios
+  selection_weights:
+    # HotPotLab: ACE excels at planning
+    hotpot_planning:
+      ace_weight: 0.7
+      actor_weight: 0.3
+    hotpot_counterfactual:
+      ace_weight: 0.6
+      actor_weight: 0.4
+    hotpot_interventional:
+      ace_weight: 0.3
+      actor_weight: 0.7
+
+    # ChemTile: ACTOR excels at interventional reasoning
+    chemtile_any:
+      ace_weight: 0.35
+      actor_weight: 0.65
+
+    # SwitchLight: Balanced approach
+    switchlight_counterfactual:
+      ace_weight: 0.6
+      actor_weight: 0.4
+    switchlight_interventional:
+      ace_weight: 0.4
+      actor_weight: 0.6
+
+    # Default fallback
+    default:
+      ace_weight: 0.5
+      actor_weight: 0.5
+
+# ACE configuration (inherited by hybrid agent)
+ace_config:
+  use_retrieval: true
+  top_k: 5
+  reflection_rounds: 1
+  generator_temperature: 0.7
+  reflector_temperature: 0.7
+  curator_temperature: 0.7
+  curation_mode: "curated"
+  token_cap: null  # No token cap for full performance
+  max_epochs: 1
+
+# Which agents to run
+agents_to_run:
+  - hybrid
+
+# Test on all three environments
+environments:
+  hot_pot:
+    num_episodes: 10
+    seeds: [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
+  switch_light:
+    num_episodes: 10
+    seeds: [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
+  chem_tile:
+    num_episodes: 10
+    seeds: [200, 201, 202, 203, 204, 205, 206, 207, 208, 209]

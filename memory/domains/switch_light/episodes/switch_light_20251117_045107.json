@@ -1,0 +1,133 @@
+{
+  "episode_id": "switch_light_20251117_045107",
+  "timestamp": "2025-11-17T04:55:29.522926",
+  "trajectory": {
+    "episode_id": "switch_light_20251117_045107",
+    "observations": [
+      {
+        "action": "observe_light",
+        "light_on": false,
+        "switch_position": "on",
+        "time": 1.0
+      },
+      {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": true,
+        "time": 2.0
+      },
+      {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 3.0
+      },
+      {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": true,
+        "time": 4.0
+      },
+      {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 5.0
+      },
+      {
+        "action": "flip_switch",
+        "switch_position": "off",
+        "light_on": true,
+        "time": 6.0
+      },
+      {
+        "action": "jiggle_relay",
+        "message": "Jiggled the relay. No obvious change.",
+        "time": 7.0
+      },
+      {
+        "action": "observe_light",
+        "light_on": true,
+        "switch_position": "off",
+        "time": 8.0
+      },
+      {
+        "action": "flip_switch",
+        "switch_position": "on",
+        "light_on": false,
+        "time": 9.0
+      },
+      {
+        "action": "observe_light",
+        "light_on": false,
+        "switch_position": "on",
+        "time": 10.0
+      }
+    ],
+    "actions": [
+      "observe_light()",
+      "flip_switch()",
+      "flip_switch()",
+      "flip_switch()",
+      "flip_switch()",
+      "flip_switch()",
+      "jiggle_relay()",
+      "observe_light()",
+      "flip_switch()",
+      "observe_light()"
+    ],
+    "final_beliefs": {
+      "wiring_probs": {
+        "value": {
+          "layout_A": 0.001,
+          "layout_B": 0.999
+        },
+        "confidence": 0.5,
+        "observation_count": 9,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:55:29.518460"
+      },
+      "failure_prob": {
+        "value": 0.012,
+        "confidence": 0.5,
+        "observation_count": 9,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:55:29.518520"
+      },
+      "_accumulated_stats": {
+        "total_steps": 10,
+        "observation_statistics": {
+          "light_on": {
+            "mean": 0.4444444444444444,
+            "variance": 0.2469135802469136,
+            "n_obs": 9
+          },
+          "time": {
+            "mean": 5.5,
+            "variance": 8.25,
+            "n_obs": 10
+          }
+        },
+        "action_outcomes": {
+          "observe_light": {
+            "success": 0,
+            "total": 3
+          },
+          "flip_switch": {
+            "success": 0,
+            "total": 6
+          },
+          "jiggle_relay": {
+            "success": 0,
+            "total": 1
+          }
+        }
+      }
+    },
+    "context_used": "=== SwitchLight KNOWLEDGE BASE ===\n\n\n\u2713 HIGH-RELIABILITY OBSERVATIONS:\n  \u2022 Episode switch_light_20251117_044633 (score: 79%): {'layout_A': 0.9985, 'layout_B': 0.0015}\n    \u2192 Systematic exploration (8 flips) - good coverage\n\n\ud83d\udca1 RECOMMENDATION:\n  Initialize with WEAK priors (prior_strength=0.1)\n  Trust current observations over past averages\n  Pay attention to context (settings, actions taken)"
+  },
+  "outcome": {
+    "score": 0.8439999999999999,
+    "test_results": []
+  }
+}

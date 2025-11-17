@@ -1,0 +1,68 @@
+# Simple World Model Configuration - Clean Memory Test
+# Testing with fresh memory and default prior strength of 0.1
+#
+# KEY FEATURES:
+# - Clean start with cleared memory directories
+# - Default prior_strength: 0.1 (balanced adaptability)
+# - Persistent beliefs enabled for cross-episode learning
+# - Statistical tracking for noise filtering
+# - Causal belief learning
+#
+# OBJECTIVE: Validate simple world model performance with clean slate
+
+# Memory handling (manually verified before run):
+# - Cleaned memory/domains directories (0 files confirmed)
+# - Fresh start with no prior beliefs loaded
+# - Persistence enabled to save new learnings after each episode
+# - Default prior_strength: 0.1 maintained throughout
+# - Storage location: memory/domains/{hot_pot,switch_light,chem_tile}/
+#
+# Future enhancement - add this section to config for automated handling:
+# memory:
+#   clean_start: true              # Clear memories before run
+#   storage_path: "memory/domains/"
+#   persistence:
+#     enabled: true                # Save beliefs after each episode
+#     save_after_episode: true     # Write to disk after completion
+#     load_at_start: false         # Start fresh for this validation
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Run SimpleWorldModel agent
+agents:
+  - simple_world_model
+
+# Simple World Model specific parameters
+world_model:
+  prior_strength: 0.1           # Default strength - balanced between adaptability and stability
+  exploration_temperature: 0.1   # Temperature for exploration bonus
+  confidence_threshold: 0.7      # Minimum confidence to exploit vs explore
+  enable_persistence: true       # Enable persistent beliefs across episodes
+
+# Test with 3 episodes per environment to start
+environments:
+  hot_pot:
+    num_episodes: 3
+    seeds: [42, 43, 44]
+  switch_light:
+    num_episodes: 3
+    seeds: [100, 101, 102]
+  chem_tile:
+    num_episodes: 3
+    seeds: [200, 201, 202]
+
+use_mock_llm: false

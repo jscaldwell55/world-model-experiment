@@ -1,0 +1,63 @@
+# Hybrid Agent Validation Test - 15 Episodes
+# Optimized selection weights based on empirical findings:
+#   - ACTOR dominates counterfactuals (90%)
+#   - ACE handles planning better (70%)
+#   - Split interventional (50/50)
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  ace:
+    model: "claude-sonnet-4-5-20250929"
+  a_c_e:
+    model: "claude-sonnet-4-5-20250929"
+  hybrid:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# ACE sub-agent configuration
+ace_config:
+  use_retrieval: true
+  top_k: 5
+  reflection_rounds: 1
+  generator_temperature: 0.7
+  reflector_temperature: 0.7
+  curator_temperature: 0.7
+  curation_mode: "curated"
+  token_cap: null
+  max_epochs: 1
+  use_environment_specific_prompts: true
+
+# Hybrid agent configuration with optimized weights
+hybrid_config:
+  # Selection weights: [ACTOR_weight, ACE_weight]
+  selection_weights:
+    counterfactual: [0.9, 0.1]  # 90% ACTOR - huge advantage on "what if" scenarios
+    planning: [0.3, 0.7]        # 70% ACE - better at strategy/procedure questions
+    interventional: [0.5, 0.5]  # 50/50 - both agents perform similarly
+    default: [0.6, 0.4]         # Slight ACTOR bias for uncategorized questions
+
+# RUN HYBRID ONLY - 15 EPISODES TOTAL
+agents: ["hybrid"]
+num_episodes: 5  # Per environment
+
+# Same seeds as ACE experiments for direct comparison
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+  chem_tile:
+    num_episodes: 5
+    seeds: [200, 201, 202, 203, 204]

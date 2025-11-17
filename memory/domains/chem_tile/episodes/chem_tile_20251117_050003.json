@@ -1,0 +1,141 @@
+{
+  "episode_id": "chem_tile_20251117_050003",
+  "timestamp": "2025-11-17T05:03:41.917737",
+  "trajectory": {
+    "episode_id": "chem_tile_20251117_050003",
+    "observations": [
+      {
+        "reaction": "A+B",
+        "outcome": "nothing",
+        "message": "Reaction fizzled. No product formed.",
+        "available_compounds": [
+          "B"
+        ],
+        "temperature": "medium",
+        "time": 1.0
+      },
+      {
+        "action": "inspect(B)",
+        "compound": "B",
+        "info": "Catalyst compound. Required for multiple reactions.",
+        "time": 2.0
+      },
+      {
+        "message": "Compound A not available.",
+        "available_compounds": [
+          "B"
+        ],
+        "time": 3.0
+      },
+      {
+        "action": "inspect(C)",
+        "compound": "C",
+        "info": "Intermediate product. Can be further reacted.",
+        "time": 4.0
+      },
+      {
+        "message": "Compound C not available.",
+        "available_compounds": [
+          "B"
+        ],
+        "time": 5.0
+      },
+      {
+        "action": "inspect(A)",
+        "compound": "A",
+        "info": "Base reagent. Stable but reactive with B.",
+        "time": 6.0
+      },
+      {
+        "message": "Compound A not available.",
+        "available_compounds": [
+          "B"
+        ],
+        "time": 7.0
+      },
+      {
+        "action": "inspect(B)",
+        "compound": "B",
+        "info": "Catalyst compound. Required for multiple reactions.",
+        "time": 8.0
+      },
+      {
+        "action": "inspect(C)",
+        "compound": "C",
+        "info": "Intermediate product. Can be further reacted.",
+        "time": 9.0
+      },
+      {
+        "message": "Compound C not available.",
+        "available_compounds": [
+          "B"
+        ],
+        "time": 10.0
+      }
+    ],
+    "actions": [
+      "mix(A, B)",
+      "inspect(B)",
+      "mix(A, B)",
+      "inspect(C)",
+      "mix(C, B)",
+      "inspect(A)",
+      "mix(A, B)",
+      "inspect(B)",
+      "inspect(C)",
+      "mix(C, B)"
+    ],
+    "final_beliefs": {
+      "reaction_probs": {
+        "value": {
+          "A+B": {
+            "C": 0.7875647668393781,
+            "explode": 0.09844559585492227,
+            "nothing": 0.11398963730569948
+          },
+          "C+B": {
+            "D": 0.7,
+            "explode": 0.2,
+            "nothing": 0.1
+          }
+        },
+        "confidence": 0.5,
+        "observation_count": 1,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T05:03:41.915420"
+      },
+      "temperature": {
+        "value": "medium",
+        "confidence": 0.5,
+        "observation_count": 1,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T05:03:41.915455"
+      },
+      "_accumulated_stats": {
+        "total_steps": 10,
+        "observation_statistics": {
+          "time": {
+            "mean": 5.5,
+            "variance": 8.25,
+            "n_obs": 10
+          }
+        },
+        "action_outcomes": {
+          "mix": {
+            "success": 0,
+            "total": 5
+          },
+          "inspect": {
+            "success": 0,
+            "total": 5
+          }
+        }
+      }
+    },
+    "context_used": "=== ChemTile KNOWLEDGE BASE ===\n\n\n\u26a0\ufe0f  LOW-RELIABILITY OBSERVATIONS (USE WITH CAUTION):\n  \u2022 Episode chem_tile_20251117_045548 (score: 78%)\n    \u2192 Few reactions - limited exploration\n\n\ud83d\udca1 RECOMMENDATION:\n  Initialize with WEAK priors (prior_strength=0.1)\n  Trust current observations over past averages\n  Pay attention to context (settings, actions taken)"
+  },
+  "outcome": {
+    "score": 0.9,
+    "test_results": []
+  }
+}

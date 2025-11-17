@@ -1,0 +1,82 @@
+{
+  "episode_id": "chem_tile_20251117_050700",
+  "timestamp": "2025-11-17T05:09:05.938702",
+  "trajectory": {
+    "episode_id": "chem_tile_20251117_050700",
+    "observations": [
+      {
+        "reaction": "A+B",
+        "outcome": "C",
+        "message": "Success! Produced compound C.",
+        "available_compounds": [
+          "B",
+          "C"
+        ],
+        "temperature": "medium",
+        "time": 1.0
+      },
+      {
+        "reaction": "C+B",
+        "outcome": "D",
+        "message": "Success! Produced compound D.",
+        "available_compounds": [
+          "D"
+        ],
+        "temperature": "medium",
+        "time": 2.0
+      }
+    ],
+    "actions": [
+      "mix(A, B)",
+      "mix(C, B)"
+    ],
+    "final_beliefs": {
+      "reaction_probs": {
+        "value": {
+          "A+B": {
+            "C": 0.8224299065420562,
+            "explode": 0.08878504672897196,
+            "nothing": 0.08878504672897196
+          },
+          "C+B": {
+            "D": 0.7298578199052134,
+            "explode": 0.18009478672985782,
+            "nothing": 0.09004739336492891
+          }
+        },
+        "confidence": 0.5,
+        "observation_count": 1,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T05:09:05.936999"
+      },
+      "temperature": {
+        "value": "medium",
+        "confidence": 0.5,
+        "observation_count": 1,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T05:09:05.937105"
+      },
+      "_accumulated_stats": {
+        "total_steps": 2,
+        "observation_statistics": {
+          "time": {
+            "mean": 1.5,
+            "variance": 0.25,
+            "n_obs": 2
+          }
+        },
+        "action_outcomes": {
+          "mix": {
+            "success": 0,
+            "total": 2
+          }
+        }
+      }
+    },
+    "context_used": "=== ChemTile KNOWLEDGE BASE ===\n\n\n\u26a0\ufe0f  LOW-RELIABILITY OBSERVATIONS (USE WITH CAUTION):\n  \u2022 Episode chem_tile_20251117_045548 (score: 78%)\n    \u2192 Few reactions - limited exploration\n  \u2022 Episode chem_tile_20251117_045953 (score: 89%)\n    \u2192 Few reactions - limited exploration\n  \u2022 Episode chem_tile_20251117_050325 (score: 93%)\n    \u2192 Few reactions - limited exploration\n\n\ud83d\udca1 RECOMMENDATION:\n  Initialize with WEAK priors (prior_strength=0.1)\n  Trust current observations over past averages\n  Pay attention to context (settings, actions taken)"
+  },
+  "outcome": {
+    "score": 0.95,
+    "test_results": []
+  }
+}

@@ -1,0 +1,42 @@
+# ACTOR Baseline Configuration
+# Pure ACTOR agent for comparison with ACE and Hybrid results
+# Uses same environments, seeds, and model for fair comparison
+# This is CRITICAL for diagnosing hybrid agent issues
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  ace:
+    model: "claude-sonnet-4-5-20250929"
+  a_c_e:
+    model: "claude-sonnet-4-5-20250929"
+  hybrid:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Run ACTOR agent only
+agents_to_run:
+  - actor
+
+# Same environments and seeds as ACE/Hybrid experiments for fair comparison
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+  chem_tile:
+    num_episodes: 5
+    seeds: [200, 201, 202, 203, 204]
+
+use_mock_llm: false

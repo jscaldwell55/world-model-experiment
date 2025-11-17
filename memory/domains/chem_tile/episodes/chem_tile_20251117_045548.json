@@ -1,0 +1,145 @@
+{
+  "episode_id": "chem_tile_20251117_045548",
+  "timestamp": "2025-11-17T04:59:29.838362",
+  "trajectory": {
+    "episode_id": "chem_tile_20251117_045548",
+    "observations": [
+      {
+        "action": "inspect(A)",
+        "compound": "A",
+        "info": "Base reagent. Stable but reactive with B.",
+        "time": 1.0
+      },
+      {
+        "action": "inspect(B)",
+        "compound": "B",
+        "info": "Catalyst compound. Required for multiple reactions.",
+        "time": 2.0
+      },
+      {
+        "reaction": "A+B",
+        "outcome": "C",
+        "message": "Success! Produced compound C.",
+        "available_compounds": [
+          "B",
+          "C"
+        ],
+        "temperature": "medium",
+        "time": 3.0
+      },
+      {
+        "reaction": "C+B",
+        "outcome": "nothing",
+        "message": "Reaction fizzled. No product formed.",
+        "available_compounds": [],
+        "temperature": "medium",
+        "time": 4.0
+      },
+      {
+        "action": "heat",
+        "temperature": "high",
+        "message": "Temperature increased to high.",
+        "time": 5.0
+      },
+      {
+        "message": "Compound C not available.",
+        "available_compounds": [],
+        "time": 6.0
+      },
+      {
+        "action": "cool",
+        "temperature": "medium",
+        "message": "Temperature decreased to medium.",
+        "time": 7.0
+      },
+      {
+        "message": "Compound A not available.",
+        "available_compounds": [],
+        "time": 8.0
+      },
+      {
+        "action": "inspect(A)",
+        "compound": "A",
+        "info": "Base reagent. Stable but reactive with B.",
+        "time": 9.0
+      },
+      {
+        "message": "Compound A not available.",
+        "available_compounds": [],
+        "time": 10.0
+      }
+    ],
+    "actions": [
+      "inspect(A)",
+      "inspect(B)",
+      "mix(A, B)",
+      "mix(C, B)",
+      "heat()",
+      "mix(C, B)",
+      "cool()",
+      "mix(A, B)",
+      "inspect(A)",
+      "mix(A, B)"
+    ],
+    "final_beliefs": {
+      "reaction_probs": {
+        "value": {
+          "A+B": {
+            "C": 0.8224299065420562,
+            "explode": 0.08878504672897196,
+            "nothing": 0.08878504672897196
+          },
+          "C+B": {
+            "D": 0.6891191709844559,
+            "explode": 0.19689119170984457,
+            "nothing": 0.1139896373056995
+          }
+        },
+        "confidence": 0.5,
+        "observation_count": 1,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:59:29.835024"
+      },
+      "temperature": {
+        "value": "medium",
+        "confidence": 0.5,
+        "observation_count": 1,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:59:29.835170"
+      },
+      "_accumulated_stats": {
+        "total_steps": 10,
+        "observation_statistics": {
+          "time": {
+            "mean": 5.5,
+            "variance": 8.25,
+            "n_obs": 10
+          }
+        },
+        "action_outcomes": {
+          "inspect": {
+            "success": 0,
+            "total": 3
+          },
+          "mix": {
+            "success": 0,
+            "total": 5
+          },
+          "heat": {
+            "success": 0,
+            "total": 1
+          },
+          "cool": {
+            "success": 0,
+            "total": 1
+          }
+        }
+      }
+    },
+    "context_used": ""
+  },
+  "outcome": {
+    "score": 0.78,
+    "test_results": []
+  }
+}

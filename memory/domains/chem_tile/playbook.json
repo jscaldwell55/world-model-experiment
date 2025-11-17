@@ -1,0 +1,263 @@
+{
+  "observations": [
+    {
+      "episode_id": "chem_tile_20251117_045548",
+      "timestamp": "2025-11-17T04:59:29.835573",
+      "score": 0.78,
+      "beliefs": {
+        "reaction_probs": {
+          "value": {
+            "A+B": {
+              "C": 0.8224299065420562,
+              "explode": 0.08878504672897196,
+              "nothing": 0.08878504672897196
+            },
+            "C+B": {
+              "D": 0.6891191709844559,
+              "explode": 0.19689119170984457,
+              "nothing": 0.1139896373056995
+            }
+          },
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:59:29.835024"
+        },
+        "temperature": {
+          "value": "medium",
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T04:59:29.835170"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            }
+          },
+          "action_outcomes": {
+            "inspect": {
+              "success": 0,
+              "total": 3
+            },
+            "mix": {
+              "success": 0,
+              "total": 5
+            },
+            "heat": {
+              "success": 0,
+              "total": 1
+            },
+            "cool": {
+              "success": 0,
+              "total": 1
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "LOW",
+      "reason": "Few reactions - limited exploration",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "episode_id": "chem_tile_20251117_045953",
+      "timestamp": "2025-11-17T05:03:25.655324",
+      "score": 0.89,
+      "beliefs": {
+        "reaction_probs": {
+          "value": {
+            "A+B": {
+              "C": 0.7875647668393781,
+              "explode": 0.11398963730569948,
+              "nothing": 0.09844559585492227
+            },
+            "C+B": {
+              "D": 0.7,
+              "explode": 0.2,
+              "nothing": 0.1
+            }
+          },
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:03:25.653547"
+        },
+        "temperature": {
+          "value": "low",
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:03:25.653577"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            }
+          },
+          "action_outcomes": {
+            "inspect": {
+              "success": 0,
+              "total": 6
+            },
+            "mix": {
+              "success": 0,
+              "total": 3
+            },
+            "cool": {
+              "success": 0,
+              "total": 1
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "LOW",
+      "reason": "Few reactions - limited exploration",
+      "metadata": {
+        "patterns": [
+          "Achieved 89% accuracy"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "episode_id": "chem_tile_20251117_050325",
+      "timestamp": "2025-11-17T05:07:00.880417",
+      "score": 0.932,
+      "beliefs": {
+        "reaction_probs": {
+          "value": {
+            "A+B": {
+              "C": 0.8224299065420562,
+              "explode": 0.08878504672897196,
+              "nothing": 0.08878504672897196
+            },
+            "C+B": {
+              "D": 0.6891191709844559,
+              "explode": 0.19689119170984457,
+              "nothing": 0.1139896373056995
+            }
+          },
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:07:00.880098"
+        },
+        "temperature": {
+          "value": "low",
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:07:00.880142"
+        },
+        "_accumulated_stats": {
+          "total_steps": 10,
+          "observation_statistics": {
+            "time": {
+              "mean": 5.5,
+              "variance": 8.25,
+              "n_obs": 10
+            }
+          },
+          "action_outcomes": {
+            "mix": {
+              "success": 0,
+              "total": 6
+            },
+            "cool": {
+              "success": 0,
+              "total": 1
+            },
+            "inspect": {
+              "success": 0,
+              "total": 3
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "LOW",
+      "reason": "Few reactions - limited exploration",
+      "metadata": {
+        "patterns": [
+          "Achieved 93% accuracy"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "episode_id": "chem_tile_20251117_050700",
+      "timestamp": "2025-11-17T05:09:05.937247",
+      "score": 0.95,
+      "beliefs": {
+        "reaction_probs": {
+          "value": {
+            "A+B": {
+              "C": 0.8224299065420562,
+              "explode": 0.08878504672897196,
+              "nothing": 0.08878504672897196
+            },
+            "C+B": {
+              "D": 0.7298578199052134,
+              "explode": 0.18009478672985782,
+              "nothing": 0.09004739336492891
+            }
+          },
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:09:05.936999"
+        },
+        "temperature": {
+          "value": "medium",
+          "confidence": 0.5,
+          "observation_count": 1,
+          "episode_count": 1,
+          "last_updated": "2025-11-17T05:09:05.937105"
+        },
+        "_accumulated_stats": {
+          "total_steps": 2,
+          "observation_statistics": {
+            "time": {
+              "mean": 1.5,
+              "variance": 0.25,
+              "n_obs": 2
+            }
+          },
+          "action_outcomes": {
+            "mix": {
+              "success": 0,
+              "total": 2
+            }
+          }
+        }
+      },
+      "context": [],
+      "reliability": "LOW",
+      "reason": "Few reactions - limited exploration",
+      "metadata": {
+        "patterns": [
+          "Achieved 95% accuracy"
+        ],
+        "failures": []
+      }
+    }
+  ],
+  "strategies_and_rules": [],
+  "troubleshooting": [],
+  "context_patterns": []
+}

@@ -1,0 +1,140 @@
+{
+  "episode_id": "hot_pot_20251117_042951",
+  "timestamp": "2025-11-17T04:34:09.676344",
+  "trajectory": {
+    "episode_id": "hot_pot_20251117_042951",
+    "observations": [
+      {
+        "measured_temp": 20.514799850689386,
+        "time": 1.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "dim",
+        "time": 2.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 5.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 22.183037134438678,
+        "time": 6.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 11.0,
+        "action": "wait(5.0)",
+        "duration": 5.0
+      },
+      {
+        "measured_temp": 29.242993787882355,
+        "time": 12.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 17.0,
+        "action": "wait(5.0)",
+        "duration": 5.0
+      },
+      {
+        "measured_temp": 34.93016880244886,
+        "time": 18.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "bright",
+        "time": 19.0,
+        "action": "toggle_stove"
+      },
+      {
+        "measured_temp": 41.21614669214325,
+        "time": 20.0,
+        "action": "measure_temp"
+      }
+    ],
+    "actions": [
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(3)",
+      "measure_temp()",
+      "wait(5)",
+      "measure_temp()",
+      "wait(5)",
+      "measure_temp()",
+      "toggle_stove()",
+      "measure_temp()"
+    ],
+    "final_beliefs": {
+      "heating_rate_mean": {
+        "value": 1.1311985940946583,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:34:09.675005"
+      },
+      "heating_rate_std": {
+        "value": 0.19857101769644855,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:34:09.675043"
+      },
+      "measurement_noise": {
+        "value": 2.0,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:34:09.675057"
+      },
+      "base_temp": {
+        "value": 20.0,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:34:09.675071"
+      },
+      "_accumulated_stats": {
+        "total_steps": 10,
+        "observation_statistics": {
+          "measured_temp": {
+            "mean": 29.617429253520505,
+            "variance": 60.20473957584761,
+            "n_obs": 5
+          },
+          "time": {
+            "mean": 11.1,
+            "variance": 47.290000000000006,
+            "n_obs": 10
+          },
+          "duration": {
+            "mean": 4.333333333333333,
+            "variance": 0.888888888888889,
+            "n_obs": 3
+          }
+        },
+        "action_outcomes": {
+          "measure_temp": {
+            "success": 0,
+            "total": 5
+          },
+          "toggle_stove": {
+            "success": 0,
+            "total": 2
+          },
+          "wait": {
+            "success": 0,
+            "total": 3
+          }
+        }
+      }
+    },
+    "context_used": ""
+  },
+  "outcome": {
+    "score": 0.8800000000000001,
+    "test_results": []
+  }
+}

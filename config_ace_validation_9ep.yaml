@@ -1,0 +1,44 @@
+# ACE Memory System Validation - 9 Episodes
+# Tests the new ACE playbook with methodology tracking
+# 3 episodes per domain to verify belief trap prevention
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "claude-sonnet-4-5-20250929"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Run SimpleWorldModel agent with ACE memory
+agents:
+  - simple_world_model
+
+# SimpleWorldModel with ACE configuration
+world_model:
+  prior_strength: 0.1              # CRITICAL: Keep at 0.1 for ACE
+  exploration_temperature: 0.1
+  confidence_threshold: 0.7
+  enable_persistence: true         # ACE requires persistence
+
+# 3 episodes per domain (9 total)
+environments:
+  hot_pot:
+    num_episodes: 3
+    seeds: [42, 43, 44]
+  chem_tile:
+    num_episodes: 3
+    seeds: [42, 43, 44]
+  switch_light:
+    num_episodes: 3
+    seeds: [42, 43, 44]
+
+use_mock_llm: false

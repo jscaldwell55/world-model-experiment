@@ -1,0 +1,51 @@
+# Simple World Model Configuration
+# Minimal Viable World Model - evolved from ACTOR with persistent beliefs
+#
+# KEY IMPROVEMENTS OVER ACTOR:
+# - Beliefs persist across episodes (accumulate knowledge)
+# - Statistical tracking for noise filtering (fixes HotPot)
+# - Causal belief learning (action-outcome relationships)
+# - Confidence-based exploration
+#
+# TARGET: Beat ACTOR's 82.3% baseline while maintaining simplicity
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# Run SimpleWorldModel agent
+agents:
+  - simple_world_model
+
+# Simple World Model specific parameters
+world_model:
+  prior_strength: 0.1           # Strength of prior beliefs (lower = more adaptable)
+  exploration_temperature: 0.1   # Temperature for exploration bonus
+  confidence_threshold: 0.7      # Minimum confidence to exploit vs explore
+  enable_persistence: true       # Beliefs persist across episodes
+
+# Same environments and seeds as ACTOR baseline for comparison
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+  chem_tile:
+    num_episodes: 5
+    seeds: [200, 201, 202, 203, 204]
+
+use_mock_llm: false

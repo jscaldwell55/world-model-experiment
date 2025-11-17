@@ -1,0 +1,140 @@
+{
+  "episode_id": "hot_pot_20251117_044224",
+  "timestamp": "2025-11-17T04:46:33.580678",
+  "trajectory": {
+    "episode_id": "hot_pot_20251117_044224",
+    "observations": [
+      {
+        "measured_temp": 19.418993653302735,
+        "time": 1.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "dim",
+        "time": 2.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 4.0,
+        "action": "wait(2.0)",
+        "duration": 2.0
+      },
+      {
+        "measured_temp": 23.224256094124552,
+        "time": 5.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 8.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 29.501590245608163,
+        "time": 9.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "bright",
+        "time": 10.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 12.0,
+        "action": "wait(2.0)",
+        "duration": 2.0
+      },
+      {
+        "measured_temp": 32.77822005775571,
+        "time": 13.0,
+        "action": "measure_temp"
+      },
+      {
+        "measured_temp": 38.19986576461712,
+        "time": 14.0,
+        "action": "measure_temp"
+      }
+    ],
+    "actions": [
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(2)",
+      "measure_temp()",
+      "wait(3)",
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(2)",
+      "measure_temp()",
+      "measure_temp()"
+    ],
+    "final_beliefs": {
+      "heating_rate_mean": {
+        "value": 1.0552228588863497,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:46:33.575766"
+      },
+      "heating_rate_std": {
+        "value": 0.2626128657194451,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:46:33.575808"
+      },
+      "measurement_noise": {
+        "value": 2.0,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:46:33.575820"
+      },
+      "base_temp": {
+        "value": 20.0,
+        "confidence": 0.25,
+        "observation_count": 5,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T04:46:33.575831"
+      },
+      "_accumulated_stats": {
+        "total_steps": 10,
+        "observation_statistics": {
+          "measured_temp": {
+            "mean": 28.624585163081658,
+            "variance": 44.72285768982191,
+            "n_obs": 5
+          },
+          "time": {
+            "mean": 7.8,
+            "variance": 19.16,
+            "n_obs": 10
+          },
+          "duration": {
+            "mean": 2.3333333333333335,
+            "variance": 0.22222222222222224,
+            "n_obs": 3
+          }
+        },
+        "action_outcomes": {
+          "measure_temp": {
+            "success": 0,
+            "total": 5
+          },
+          "toggle_stove": {
+            "success": 0,
+            "total": 2
+          },
+          "wait": {
+            "success": 0,
+            "total": 3
+          }
+        }
+      }
+    },
+    "context_used": "=== HotPotLab KNOWLEDGE BASE ===\n\n\n\u26a0\ufe0f  LOW-RELIABILITY OBSERVATIONS (USE WITH CAUTION):\n  \u2022 Episode hot_pot_20251117_042951 (score: 88%): heating_rate ~1.13\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_043409 (score: 83%): heating_rate ~1.41\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_043813 (score: 73%): heating_rate ~1.05\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n\n\ud83d\udca1 RECOMMENDATION:\n  Initialize with WEAK priors (prior_strength=0.1)\n  Trust current observations over past averages\n  Pay attention to context (settings, actions taken)"
+  },
+  "outcome": {
+    "score": 0.73,
+    "test_results": []
+  }
+}

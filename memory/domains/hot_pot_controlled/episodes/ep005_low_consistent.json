@@ -1,0 +1,59 @@
+{
+  "episode_id": "ep005_low_consistent",
+  "timestamp": "2025-11-17T01:49:24.846791",
+  "trajectory": {
+    "episode_id": "ep005_low_consistent",
+    "observations": [
+      {
+        "measured_temp": 20.0,
+        "time": 0,
+        "power_setting": "LOW"
+      },
+      {
+        "measured_temp": 20.5,
+        "time": 1,
+        "power_setting": "LOW"
+      },
+      {
+        "measured_temp": 21.0,
+        "time": 2,
+        "power_setting": "LOW"
+      },
+      {
+        "measured_temp": 21.5,
+        "time": 3,
+        "power_setting": "LOW"
+      },
+      {
+        "measured_temp": 22.0,
+        "time": 4,
+        "power_setting": "LOW"
+      }
+    ],
+    "actions": [
+      "measure_temp()",
+      "wait(1)",
+      "measure_temp()",
+      "wait(1)",
+      "measure_temp()"
+    ],
+    "final_beliefs": {
+      "heating_rate_mean": {
+        "value": 0.5
+      },
+      "heating_rate_std": {
+        "value": 0.3
+      },
+      "measurement_noise": {
+        "value": 2.0
+      },
+      "base_temp": {
+        "value": 20.0
+      }
+    },
+    "context_used": ""
+  },
+  "outcome": {
+    "score": 0.87
+  }
+}

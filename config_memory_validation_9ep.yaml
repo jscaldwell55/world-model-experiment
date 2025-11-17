@@ -1,0 +1,45 @@
+# Memory Validation Test - 3 Episodes per Environment (9 total)
+# Purpose: Quick validation that new belief format enables cross-episode learning
+#
+# Expected behavior per domain:
+# - Episode 1: No prior, default confidence (0.5), establishes baseline
+# - Episode 2: Loads Episode 1 beliefs, confidence ~0.6-0.7, performance should improve
+# - Episode 3: Loads consolidated beliefs, confidence ~0.75+, performance should improve further
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+agents:
+  - simple_world_model
+
+world_model:
+  prior_strength: 0.1
+  exploration_temperature: 0.1
+  confidence_threshold: 0.7
+  enable_persistence: true
+
+environments:
+  hot_pot:
+    num_episodes: 3
+    seeds: [50, 51, 52]
+  switch_light:
+    num_episodes: 3
+    seeds: [150, 151, 152]
+  chem_tile:
+    num_episodes: 3
+    seeds: [250, 251, 252]
+
+use_mock_llm: false

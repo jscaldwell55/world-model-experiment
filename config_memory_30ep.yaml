@@ -1,0 +1,41 @@
+# SimpleWorldModel Memory Validation - 30 Episodes
+# 10 episodes per environment to validate cross-episode learning
+# Memory persists across episodes within each domain
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+agents:
+  - simple_world_model
+
+world_model:
+  prior_strength: 0.1           # Default strength - increases with experience
+  exploration_temperature: 0.1   # Temperature for exploration bonus
+  confidence_threshold: 0.7      # Minimum confidence to exploit vs explore
+  enable_persistence: true       # Enable persistent beliefs across episodes
+
+environments:
+  hot_pot:
+    num_episodes: 10
+    seeds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  switch_light:
+    num_episodes: 10
+    seeds: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
+  chem_tile:
+    num_episodes: 10
+    seeds: [201, 202, 203, 204, 205, 206, 207, 208, 209, 210]
+
+use_mock_llm: false

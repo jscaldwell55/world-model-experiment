@@ -1,0 +1,31 @@
+models:
+  observer:
+    model: claude-sonnet-4-5-20250929
+  actor:
+    model: claude-sonnet-4-5-20250929
+  text_reader:
+    model: claude-sonnet-4-5-20250929
+  simple_world_model:
+    model: claude-sonnet-4-5-20250929
+  judge:
+    model: gpt-4o-mini
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+agents:
+  - simple_world_model
+
+world_model:
+  prior_strength: 0.1
+  exploration_temperature: 0.1
+  confidence_threshold: 0.7
+  enable_persistence: true
+
+environments:
+  chem_tile:
+    num_episodes: 2
+    seeds: [200, 201]
+
+use_mock_llm: false

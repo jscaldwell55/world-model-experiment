@@ -1,0 +1,84 @@
+# Validation Test Configuration
+# Runs all 3 agents (ACE, ACTOR, Hybrid) with 5 episodes per environment
+# Total: 15 episodes x 3 agents = 45 episodes
+
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  ace:
+    model: "claude-sonnet-4-5-20250929"
+  a_c_e:  # ACEAgent class converts to a_c_e in snake_case
+    model: "claude-sonnet-4-5-20250929"
+  hybrid:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 10
+  tokens_per_call: 2000
+
+# ACE configuration (inherited by hybrid agent)
+ace_config:
+  use_retrieval: true
+  top_k: 5
+  reflection_rounds: 1
+  generator_temperature: 0.7
+  reflector_temperature: 0.7
+  curator_temperature: 0.7
+  curation_mode: "curated"
+  token_cap: null
+  max_epochs: 1
+
+# Hybrid-specific configuration with cost optimization
+hybrid_config:
+  num_candidates: 5
+  candidate_temperature: 0.9
+  scoring_temperature: 0.3
+  enable_cost_optimization: true
+  num_prescreening_candidates: 5
+  num_final_candidates: 2
+  selection_weights:
+    hotpot_planning:
+      ace_weight: 0.7
+      actor_weight: 0.3
+    hotpot_counterfactual:
+      ace_weight: 0.6
+      actor_weight: 0.4
+    hotpot_interventional:
+      ace_weight: 0.3
+      actor_weight: 0.7
+    chemtile_any:
+      ace_weight: 0.35
+      actor_weight: 0.65
+    switchlight_counterfactual:
+      ace_weight: 0.6
+      actor_weight: 0.4
+    switchlight_interventional:
+      ace_weight: 0.4
+      actor_weight: 0.6
+    default:
+      ace_weight: 0.5
+      actor_weight: 0.5
+
+# Run all three agents for comparison
+agents_to_run:
+  - ace
+  - actor
+  - hybrid
+
+# 5 episodes per environment across all 3 environments
+environments:
+  hot_pot:
+    num_episodes: 5
+    seeds: [42, 43, 44, 45, 46]
+  switch_light:
+    num_episodes: 5
+    seeds: [100, 101, 102, 103, 104]
+  chem_tile:
+    num_episodes: 5
+    seeds: [200, 201, 202, 203, 204]
