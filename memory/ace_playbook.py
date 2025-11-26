@@ -554,6 +554,148 @@ No prior observations available.
                 else:
                     self.playbook[section] = self.playbook[section][-10:]
 
+    def _is_molecular_domain(self, observations):
+        """
+        Detect if observations are from molecular/drug discovery domain.
+
+        Args:
+            observations: List of observation dicts
+
+        Returns:
+            True if molecular domain, False if toy domain
+        """
+        if not observations:
+            return False
+
+        # Check first few observations for molecular features
+        sample_size = min(3, len(observations))
+        for obs in observations[:sample_size]:
+            # Molecular domain indicators
+            molecular_keys = ['smiles', 'molecule', 'molecular_weight',
+                            'descriptors', 'compound', 'solubility']
+
+            # Check if observation has any molecular keys
+            if any(key in obs for key in molecular_keys):
+                return True
+
+            # Check nested fields
+            if 'context' in obs and isinstance(obs['context'], dict):
+                if any(key in obs['context'] for key in molecular_keys):
+                    return True
+
+        return False
+
+    def _reliability_priority(self, reliability):
+        """
+        Map reliability to priority for sorting.
+
+        Args:
+            reliability: Reliability string (HIGH, MEDIUM, LOW, SYNTHETIC_*)
+
+        Returns:
+            Priority value (higher = more important)
+        """
+        priority_map = {
+            'HIGH': 4,
+            'SYNTHETIC_HIGH': 3,
+            'MEDIUM': 2,
+            'SYNTHETIC_MEDIUM': 2,
+            'LOW': 1,
+            'SYNTHETIC_LOW': 1
+        }
+        return priority_map.get(reliability, 0)
+
+    def _merge_section(self, section, current_items, our_items):
+        """
+        Merge items with domain-specific limits.
+
+        Args:
+            section: Section name ('observations', etc.)
+            current_items: Items from disk
+            our_items: Items from memory
+
+        Returns:
+            Merged list of items
+        """
+        if section == 'observations':
+            # Determine domain type from observations
+            is_molecular = self._is_molecular_domain(our_items) or \
+                          self._is_molecular_domain(current_items)
+
+            if is_molecular:
+                # DRUG DISCOVERY MODE: Keep all observations, high limit
+                merged = current_items + our_items
+                MAX_OBSERVATIONS = 10000  # Enough for large datasets
+
+                # No deduplication - each molecule is unique
+                # But remove exact duplicates by molecule_id if present
+                if merged:
+                    seen_ids = set()
+                    unique_merged = []
+                    for obs in merged:
+                        # Use molecule_id if present, otherwise use full observation hash
+                        mol_id = obs.get('molecule_id') or obs.get('smiles')
+                        if mol_id:
+                            if mol_id not in seen_ids:
+                                seen_ids.add(mol_id)
+                                unique_merged.append(obs)
+                        else:
+                            # No molecular ID, keep all
+                            unique_merged.append(obs)
+                    merged = unique_merged
+
+                # Apply high limit with reliability-based sorting
+                if len(merged) > MAX_OBSERVATIONS:
+                    sorted_obs = sorted(
+                        merged,
+                        key=lambda x: (
+                            self._reliability_priority(x.get('reliability', 'LOW')),
+                            x.get('timestamp', 0)
+                        ),
+                        reverse=True
+                    )
+                    merged = sorted_obs[:MAX_OBSERVATIONS]
+
+                return merged
+
+            else:
+                # TOY DOMAIN MODE: Deduplication with reasonable limit for experiments
+                # Deduplicate by episode_id (keep most recent per episode)
+                obs_by_episode = {}
+                for obs in current_items + our_items:
+                    episode_id = obs.get('episode_id')
+                    if episode_id:
+                        if episode_id not in obs_by_episode:
+                            obs_by_episode[episode_id] = obs
+                        else:
+                            # Keep most recent
+                            if obs.get('timestamp', 0) > obs_by_episode[episode_id].get('timestamp', 0):
+                                obs_by_episode[episode_id] = obs
+
+                merged = list(obs_by_episode.values())
+
+                # Apply limit (increased from 10 to 100 for experiments)
+                MAX_TOY_OBSERVATIONS = 100
+                if len(merged) > MAX_TOY_OBSERVATIONS:
+                    sorted_obs = sorted(
+                        merged,
+                        key=lambda x: (
+                            self._reliability_priority(x.get('reliability', 'LOW')),
+                            x.get('score', 0)
+                        ),
+                        reverse=True
+                    )
+                    merged = sorted_obs[:MAX_TOY_OBSERVATIONS]
+
+                return merged
+
+        else:
+            # For other sections, keep last 10 items
+            merged = current_items + our_items
+            if len(merged) > 10:
+                merged = merged[-10:]
+            return merged
+
     def save_playbook(self):
         """
         Save playbook to disk with file locking to prevent race conditions.
@@ -599,38 +741,8 @@ No prior observations available.
                 current_items = current_playbook.get(section, [])
                 our_items = self.playbook.get(section, [])
 
-                # Combine and deduplicate
-                if section == 'observations':
-                    # Deduplicate by episode_id
-                    seen_ids = set()
-                    merged = []
-
-                    for item in current_items + our_items:
-                        episode_id = item.get('episode_id')
-                        if episode_id and episode_id not in seen_ids:
-                            seen_ids.add(episode_id)
-                            merged.append(item)
-
-                    # Apply the limit of 10 observations (keep high-reliability preferentially)
-                    if len(merged) > 10:
-                        sorted_obs = sorted(
-                            merged,
-                            key=lambda x: (
-                                1 if x.get('reliability') == 'HIGH' else (0 if x.get('reliability') == 'MEDIUM' else -1),
-                                x.get('score', 0)
-                            ),
-                            reverse=True
-                        )
-                        merged = sorted_obs[:10]
-
-                    merged_playbook[section] = merged
-
-                else:
-                    # For other sections, keep last 10 items
-                    merged = current_items + our_items
-                    if len(merged) > 10:
-                        merged = merged[-10:]
-                    merged_playbook[section] = merged
+                # Use domain-aware merge logic (handles toy vs molecular domains)
+                merged_playbook[section] = self._merge_section(section, current_items, our_items)
 
             # Write merged playbook atomically: write to temp file, then rename
             temp_path = playbook_path.with_suffix('.json.tmp')

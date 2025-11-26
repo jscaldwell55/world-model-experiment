@@ -1,0 +1,24 @@
+{
+  "mae": 0.3653890182568545,
+  "rmse": 0.45887307210474254,
+  "r2": 0.7998164624198167,
+  "context_performance": {
+    "('aliphatic', 'all_sizes')": {
+      "mae": 0.36236634739133805,
+      "n_samples": 24
+    },
+    "('aromatic', 'all_sizes')": {
+      "mae": 0.36620412051272405,
+      "n_samples": 89
+    }
+  },
+  "uncertainty_correlation": 0.23646644476466222,
+  "uncertainty_pvalue": 0.01168247258934831,
+  "n_train": 902,
+  "n_test": 113,
+  "trained_models": 2,
+  "context_counts_train": {
+    "('aliphatic', 'all_sizes')": 404,
+    "('aromatic', 'all_sizes')": 498
+  }
+}

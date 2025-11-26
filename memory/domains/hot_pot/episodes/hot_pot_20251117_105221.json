@@ -1,0 +1,170 @@
+{
+  "episode_id": "hot_pot_20251117_105221",
+  "timestamp": "2025-11-17T10:57:16.488261",
+  "trajectory": {
+    "episode_id": "hot_pot_20251117_105221",
+    "observations": [
+      {
+        "measured_temp": 19.575933669037862,
+        "time": 1.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "dim",
+        "time": 2.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 5.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 23.43014166041243,
+        "time": 6.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 9.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 26.85220358238292,
+        "time": 10.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "bright",
+        "time": 11.0,
+        "action": "toggle_stove"
+      },
+      {
+        "measured_temp": 30.619379666801652,
+        "time": 12.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 15.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 40.83977888945754,
+        "time": 16.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "off",
+        "time": 17.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 20.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 46.36738913982327,
+        "time": 21.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 26.0,
+        "action": "wait(5.0)",
+        "duration": 5.0
+      },
+      {
+        "measured_temp": 47.23074585669876,
+        "time": 27.0,
+        "action": "measure_temp"
+      }
+    ],
+    "actions": [
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(3)",
+      "measure_temp()",
+      "wait(3)",
+      "measure_temp()",
+      "toggle_stove()",
+      "measure_temp()",
+      "wait(3)",
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(3)",
+      "measure_temp()",
+      "wait(5)",
+      "measure_temp()"
+    ],
+    "final_beliefs": {
+      "heating_rate_mean": {
+        "value": 1.2377575455469214,
+        "confidence": 0.25,
+        "observation_count": 7,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:57:16.480694"
+      },
+      "heating_rate_std": {
+        "value": 0.19156525704423027,
+        "confidence": 0.25,
+        "observation_count": 7,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:57:16.480722"
+      },
+      "measurement_noise": {
+        "value": 2.0,
+        "confidence": 0.25,
+        "observation_count": 7,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:57:16.480732"
+      },
+      "base_temp": {
+        "value": 20.0,
+        "confidence": 0.25,
+        "observation_count": 7,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:57:16.480741"
+      },
+      "_accumulated_stats": {
+        "total_steps": 15,
+        "observation_statistics": {
+          "measured_temp": {
+            "mean": 33.55936749494492,
+            "variance": 107.96051551276275,
+            "n_obs": 7
+          },
+          "time": {
+            "mean": 13.200000000000001,
+            "variance": 60.96000000000001,
+            "n_obs": 15
+          },
+          "duration": {
+            "mean": 3.4,
+            "variance": 0.64,
+            "n_obs": 5
+          }
+        },
+        "action_outcomes": {
+          "measure_temp": {
+            "success": 0,
+            "total": 7
+          },
+          "toggle_stove": {
+            "success": 0,
+            "total": 3
+          },
+          "wait": {
+            "success": 0,
+            "total": 5
+          }
+        }
+      }
+    },
+    "context_used": "=== HotPotLab KNOWLEDGE BASE ===\n\n\n\u2713 HIGH-RELIABILITY OBSERVATIONS:\n  \u2022 Episode hot_pot_ep011_high_consistent (score: 90%): heating_rate ~2.50\u00b0C/s [power: HIGH]\n    \u2192 Consistent power setting - reliable measurement\n\n\u26a0\ufe0f  LOW-RELIABILITY OBSERVATIONS (USE WITH CAUTION):\n  \u2022 Episode hot_pot_20251117_042951 (score: 88%): heating_rate ~1.13\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_104204 (score: 88%): heating_rate ~1.61\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_104210 (score: 88%): heating_rate ~1.35\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (3) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_104230 (score: 88%): heating_rate ~1.65\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (3) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_043409 (score: 83%): heating_rate ~1.41\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_103156 (score: 83%): heating_rate ~1.55\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (3) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_103701 (score: 83%): heating_rate ~1.50\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (3) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_103704 (score: 83%): heating_rate ~1.42\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (4) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_103718 (score: 83%): heating_rate ~1.32\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (3) - averaged across contexts\n\n\ud83d\udccb LEARNED STRATEGIES:\n  \u2022 Achieved 90% accuracy\n  \u2022 Achieved 90% accuracy\n  \u2022 Achieved 90% accuracy\n\n\ud83d\udca1 RECOMMENDATION:\n  Initialize with WEAK priors (prior_strength=0.1)\n  Trust current observations over past averages\n  Pay attention to context (settings, actions taken)"
+  },
+  "outcome": {
+    "score": 0.78,
+    "test_results": []
+  }
+}

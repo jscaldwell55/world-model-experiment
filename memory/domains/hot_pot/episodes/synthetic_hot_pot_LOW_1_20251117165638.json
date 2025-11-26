@@ -1,0 +1,56 @@
+{
+  "episode_id": "synthetic_hot_pot_LOW_1_20251117165638",
+  "observations": [
+    {
+      "time": 4,
+      "measured_temp": 25.11701681083127,
+      "context": {
+        "power_setting": "LOW"
+      }
+    },
+    {
+      "time": 8,
+      "measured_temp": 27.388956279126486,
+      "context": {
+        "power_setting": "LOW"
+      }
+    },
+    {
+      "time": 12,
+      "measured_temp": 32.35934272632316,
+      "context": {
+        "power_setting": "LOW"
+      }
+    },
+    {
+      "time": 16,
+      "measured_temp": 36.12767406703932,
+      "context": {
+        "power_setting": "LOW"
+      }
+    }
+  ],
+  "is_synthetic": true,
+  "source_context": "LOW",
+  "variant_type": "variant_1",
+  "context": {
+    "power_setting": "LOW"
+  },
+  "reliability": "SYNTHETIC_LOW",
+  "timestamp": "2025-11-17T16:56:38.976640",
+  "beliefs": {
+    "heating_rate_mean": {
+      "value": 1.0
+    },
+    "base_temp": {
+      "value": 20.0
+    }
+  },
+  "fidelity_score": 0.6837368554068944,
+  "weight": 0.4,
+  "parent_episode_ids": [],
+  "generation_method": "variant_1",
+  "ftb_version": "v1",
+  "similarity_to_nearest": 0.7,
+  "generated_at": "2025-11-17T16:56:38.977117"
+}

@@ -1,0 +1,43 @@
+# Configuration for collecting 30 HotPot episodes for fidelity validation experiments
+#
+# Goal: Collect enough data to run all three critical experiments:
+# - Experiment A: 20 train + 10 test episodes
+# - Experiment B: 3+ HIGH reliability episodes for cross-validation
+# - Experiment C: Mix of reliability levels for wrong model detection
+#
+# Strategy: Run 30 episodes to ensure statistical power
+
+# Model configuration
+models:
+  observer:
+    model: "claude-sonnet-4-5-20250929"
+  actor:
+    model: "claude-sonnet-4-5-20250929"
+  text_reader:
+    model: "claude-sonnet-4-5-20250929"
+  simple_world_model:
+    model: "claude-sonnet-4-5-20250929"
+  judge:
+    model: "gpt-4o-mini"
+
+budgets:
+  actions_per_episode: 15
+  tokens_per_call: 2000
+
+agents:
+  - simple_world_model
+
+world_model:
+  prior_strength: 0.1           # Adapt quickly to observations
+  exploration_temperature: 0.1  # Low exploration (focus on learning)
+  confidence_threshold: 0.7     # Moderate confidence for exploitation
+  enable_persistence: true      # Enable persistent memory across episodes
+
+environments:
+  hot_pot:
+    num_episodes: 30
+    seeds: [100, 101, 102, 103, 104, 105, 106, 107, 108, 109,
+            110, 111, 112, 113, 114, 115, 116, 117, 118, 119,
+            120, 121, 122, 123, 124, 125, 126, 127, 128, 129]
+
+use_mock_llm: false

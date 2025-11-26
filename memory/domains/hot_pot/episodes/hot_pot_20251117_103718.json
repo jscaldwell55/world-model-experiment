@@ -1,0 +1,174 @@
+{
+  "episode_id": "hot_pot_20251117_103718",
+  "timestamp": "2025-11-17T10:42:30.322411",
+  "trajectory": {
+    "episode_id": "hot_pot_20251117_103718",
+    "observations": [
+      {
+        "measured_temp": 17.946190976401827,
+        "time": 1.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "dim",
+        "time": 2.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 5.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 24.443498852696514,
+        "time": 6.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 9.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "stove_light": "bright",
+        "time": 10.0,
+        "action": "toggle_stove"
+      },
+      {
+        "measured_temp": 32.76078022380489,
+        "time": 11.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 14.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 42.79237043650938,
+        "time": 15.0,
+        "action": "measure_temp"
+      },
+      {
+        "stove_light": "off",
+        "time": 16.0,
+        "action": "toggle_stove"
+      },
+      {
+        "time": 19.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 41.81453142363148,
+        "time": 20.0,
+        "action": "measure_temp"
+      },
+      {
+        "time": 23.0,
+        "action": "wait(3.0)",
+        "duration": 3.0
+      },
+      {
+        "measured_temp": 43.23756805997219,
+        "time": 24.0,
+        "action": "measure_temp"
+      },
+      {
+        "sensation": "warm",
+        "time": 25.0,
+        "action": "touch_pot"
+      }
+    ],
+    "actions": [
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(3)",
+      "measure_temp()",
+      "wait(3)",
+      "toggle_stove()",
+      "measure_temp()",
+      "wait(3)",
+      "measure_temp()",
+      "toggle_stove()",
+      "wait(3)",
+      "measure_temp()",
+      "wait(3)",
+      "measure_temp()",
+      "touch_pot()"
+    ],
+    "final_beliefs": {
+      "heating_rate_mean": {
+        "value": 1.3225262362689922,
+        "confidence": 0.25,
+        "observation_count": 6,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:42:30.317714"
+      },
+      "heating_rate_std": {
+        "value": 0.20739033894608505,
+        "confidence": 0.25,
+        "observation_count": 6,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:42:30.317873"
+      },
+      "measurement_noise": {
+        "value": 2.0,
+        "confidence": 0.25,
+        "observation_count": 6,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:42:30.317883"
+      },
+      "base_temp": {
+        "value": 20.0,
+        "confidence": 0.25,
+        "observation_count": 6,
+        "episode_count": 1,
+        "last_updated": "2025-11-17T10:42:30.317891"
+      },
+      "_accumulated_stats": {
+        "total_steps": 15,
+        "observation_statistics": {
+          "measured_temp": {
+            "mean": 33.83248999550271,
+            "variance": 95.68735821916573,
+            "n_obs": 6
+          },
+          "time": {
+            "mean": 13.333333333333334,
+            "variance": 57.95555555555555,
+            "n_obs": 15
+          },
+          "duration": {
+            "mean": 3.0,
+            "variance": 0.0,
+            "n_obs": 5
+          }
+        },
+        "action_outcomes": {
+          "measure_temp": {
+            "success": 0,
+            "total": 6
+          },
+          "toggle_stove": {
+            "success": 0,
+            "total": 3
+          },
+          "wait": {
+            "success": 0,
+            "total": 5
+          },
+          "touch_pot": {
+            "success": 0,
+            "total": 1
+          }
+        }
+      }
+    },
+    "context_used": "=== HotPotLab KNOWLEDGE BASE ===\n\n\n\u2713 HIGH-RELIABILITY OBSERVATIONS:\n  \u2022 Episode hot_pot_ep011_high_consistent (score: 90%): heating_rate ~2.50\u00b0C/s [power: HIGH]\n    \u2192 Consistent power setting - reliable measurement\n\n\u26a0\ufe0f  LOW-RELIABILITY OBSERVATIONS (USE WITH CAUTION):\n  \u2022 Episode hot_pot_20251117_042951 (score: 88%): heating_rate ~1.13\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_043409 (score: 83%): heating_rate ~1.41\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_043813 (score: 73%): heating_rate ~1.05\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_044224 (score: 73%): heating_rate ~1.06\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (2) - averaged across contexts\n  \u2022 Episode hot_pot_20251117_103156 (score: 83%): heating_rate ~1.55\u00b0C/s [power: MIXED]\n    \u2192 Multiple power toggles (3) - averaged across contexts\n\n\ud83d\udccb LEARNED STRATEGIES:\n  \u2022 Achieved 90% accuracy\n  \u2022 Achieved 90% accuracy\n  \u2022 Achieved 90% accuracy\n\n\ud83d\udca1 RECOMMENDATION:\n  Initialize with WEAK priors (prior_strength=0.1)\n  Trust current observations over past averages\n  Pay attention to context (settings, actions taken)"
+  },
+  "outcome": {
+    "score": 0.83,
+    "test_results": []
+  }
+}

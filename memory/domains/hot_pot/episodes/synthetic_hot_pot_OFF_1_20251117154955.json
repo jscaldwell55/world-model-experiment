@@ -1,0 +1,56 @@
+{
+  "episode_id": "synthetic_hot_pot_OFF_1_20251117154955",
+  "observations": [
+    {
+      "time": 4,
+      "measured_temp": 20.260358489303535,
+      "context": {
+        "power_setting": "OFF"
+      }
+    },
+    {
+      "time": 8,
+      "measured_temp": 20.415410075472515,
+      "context": {
+        "power_setting": "OFF"
+      }
+    },
+    {
+      "time": 12,
+      "measured_temp": 20.189350935748692,
+      "context": {
+        "power_setting": "OFF"
+      }
+    },
+    {
+      "time": 16,
+      "measured_temp": 20.293790344040552,
+      "context": {
+        "power_setting": "OFF"
+      }
+    }
+  ],
+  "is_synthetic": true,
+  "source_context": "OFF",
+  "variant_type": "variant_1",
+  "context": {
+    "power_setting": "OFF"
+  },
+  "reliability": "SYNTHETIC_HIGH",
+  "timestamp": "2025-11-17T15:49:55.803181",
+  "beliefs": {
+    "heating_rate_mean": {
+      "value": 0.0
+    },
+    "base_temp": {
+      "value": 20.0
+    }
+  },
+  "fidelity_score": 1.0,
+  "weight": 0.8,
+  "parent_episode_ids": [],
+  "generation_method": "variant_1",
+  "ftb_version": "v1",
+  "similarity_to_nearest": 0.7,
+  "generated_at": "2025-11-17T15:49:55.803878"
+}

@@ -1,0 +1,26 @@
+{
+  "oracle_gap_source": "COVERAGE",
+  "pseudo_label_quality": "HIGH",
+  "pseudo_label_correlation": 0.8855087224053283,
+  "extrapolation_fraction": 0.6017699115044248,
+  "bias_targets": [
+    "MW",
+    "NumRotatableBonds"
+  ],
+  "distribution_mismatches": [
+    "MW",
+    "LogP"
+  ],
+  "recommendations": [
+    "diversity_maximization",
+    "oversample_MW,NumRotatableBonds"
+  ],
+  "decision": "PROCEED",
+  "feature_correlations": {
+    "MW": 0.2439968727106809,
+    "LogP": 0.05572998756613651,
+    "TPSA": 0.05621976709354189,
+    "NumRotatableBonds": 0.1715429113642712,
+    "NumAromaticRings": 0.07698172008117445
+  }
+}

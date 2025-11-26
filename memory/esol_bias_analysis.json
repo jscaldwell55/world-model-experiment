@@ -1,0 +1,40 @@
+{
+  "n_biases_found": 3,
+  "analysis_settings": {
+    "threshold_percentile": 75,
+    "min_count": 15,
+    "min_error_increase": 0.05
+  },
+  "biases": {
+    "MW": {
+      "threshold": 337.4630000000001,
+      "error_increase": 0.09969993666201776,
+      "high_error": 0.4395022455100358,
+      "low_error": 0.33980230884801804,
+      "bias_direction": 0.1338043571265401,
+      "count_high": 29,
+      "count_low": 84,
+      "interpretation": "Model overpredicts solubility for molecules with high MW (>337.46). Error increases by 0.100 (29%)."
+    },
+    "LogP": {
+      "threshold": 4.198300000000004,
+      "error_increase": 0.05499309019112475,
+      "high_error": 0.40626883751397375,
+      "low_error": 0.351275747322849,
+      "bias_direction": 0.12949123526741296,
+      "count_high": 29,
+      "count_low": 84,
+      "interpretation": "Model overpredicts solubility for molecules with high LogP (>4.20). Error increases by 0.055 (16%)."
+    },
+    "NumRotatableBonds": {
+      "threshold": 3.0,
+      "error_increase": 0.12872126054304894,
+      "high_error": 0.45651911421653507,
+      "low_error": 0.32779785367348613,
+      "bias_direction": 0.06756874374003824,
+      "count_high": 33,
+      "count_low": 80,
+      "interpretation": "Model overpredicts solubility for molecules with high NumRotatableBonds (>3.00). Error increases by 0.129 (39%)."
+    }
+  }
+}

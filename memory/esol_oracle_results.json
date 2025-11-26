@@ -1,0 +1,14 @@
+{
+  "oracle_mae": 0.18269450912842725,
+  "oracle_rmse": 0.2192334109541127,
+  "oracle_r2": 0.9499541156049542,
+  "baseline_mae": 0.3653890182568545,
+  "baseline_r2": 0.7998164624198167,
+  "improvement_potential_absolute": 0.18269450912842725,
+  "improvement_potential_percent": 50.0,
+  "target_success": 0.2740417636926409,
+  "target_excellent": 0.2192334109541127,
+  "target_success_revised": 0.31971539097474766,
+  "target_excellent_revised": 0.2740417636926409,
+  "practical_ceiling": 0.09134725456421362
+}

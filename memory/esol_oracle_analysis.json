@@ -1,0 +1,23 @@
+{
+  "mean_similarity_to_train": 0.38029016901956186,
+  "median_similarity_to_train": 0.3673469387755102,
+  "similarity_error_correlation": 0.12354493850337332,
+  "similarity_error_pvalue": 0.1923361479650043,
+  "data_increase_pct": 12.527716186252771,
+  "improvement_pct": 50.0,
+  "data_efficiency": 3.9911504424778763,
+  "context_performance": {
+    "('aromatic', 'all_sizes')": {
+      "train_n": 498,
+      "test_n": 89,
+      "mean_error": 0.36620412051272405
+    },
+    "('aliphatic', 'all_sizes')": {
+      "train_n": 404,
+      "test_n": 24,
+      "mean_error": 0.36236634739133794
+    }
+  },
+  "expected_oc_ftb_mae": 0.3615087808948348,
+  "expected_gap_captured": 0.021238938053097383
+}
