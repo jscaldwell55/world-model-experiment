@@ -1,0 +1,37 @@
+{
+  "tanimoto_distribution": {
+    "test_mean": 0.38029016901956186,
+    "synthetic_mean": 0.4858943815643285,
+    "test_extrapolation_fraction": 0.6017699115044248,
+    "synthetic_extrapolation_fraction": 0.085,
+    "ks_statistic": 0.5167699115044248,
+    "ks_pvalue": 6.601266427758816e-24,
+    "check": "FAIL"
+  },
+  "bias_coverage": {
+    "train_mw_bias": 0.09312638580931264,
+    "test_mw_bias": 0.25663716814159293,
+    "synthetic_mw_bias": 0.12333333333333334,
+    "train_logp_bias": 0.12416851441241686,
+    "test_logp_bias": 0.24778761061946902,
+    "synthetic_logp_bias": 0.22,
+    "check": "PARTIAL"
+  },
+  "pca": {
+    "variance_explained": 0.9992527412976572,
+    "pc1_variance": 0.9176738217131101,
+    "pc2_variance": 0.08157891958454709
+  },
+  "pseudo_labels": {
+    "correlation": 0.8632832386977011,
+    "pvalue": 7.35186731062039e-16,
+    "n_samples": 50,
+    "check": "PASS"
+  },
+  "verdict": "PARTIAL",
+  "checks": {
+    "tanimoto": "FAIL",
+    "bias": "PARTIAL",
+    "pseudo_labels": "PASS"
+  }
+}

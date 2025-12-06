@@ -1,0 +1,999 @@
+[
+  {
+    "instruction": "What is the heating rate when the stove is set to HIGH power?",
+    "response": "At HIGH power, the heating rate is approximately 2.5\u00b0C per second.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.78,
+    "metadata": {
+      "power_setting": "HIGH",
+      "heating_rate": 2.5
+    }
+  },
+  {
+    "instruction": "How long will it take to heat water from 20\u00b0C to boiling at HIGH power?",
+    "response": "At HIGH power with a heating rate of 2.5\u00b0C/s, it will take approximately 32 seconds to reach 100\u00b0C from 20\u00b0C.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.78,
+    "metadata": {
+      "power_setting": "HIGH",
+      "time_to_boil": 32.0
+    }
+  },
+  {
+    "instruction": "Which power setting heats water faster, HIGH or LOW?",
+    "response": "HIGH power heats water faster at 2.5\u00b0C/s. LOW power typically heats at around 1.0\u00b0C/s.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.78,
+    "metadata": {
+      "comparison": true
+    }
+  },
+  {
+    "instruction": "What temperature will the pot reach after 30 seconds at HIGH power?",
+    "response": "Starting from 20\u00b0C at HIGH power (2.5\u00b0C/s), the pot will reach approximately 95\u00b0C after 30 seconds.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.78,
+    "metadata": {
+      "time": 30,
+      "predicted_temp": 95.0
+    }
+  },
+  {
+    "instruction": "What is the heating rate when the stove is set to OFF power?",
+    "response": "At OFF power, the heating rate is approximately 0.0\u00b0C per second.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep032",
+    "reliability": "HIGH",
+    "score": 0.73,
+    "metadata": {
+      "power_setting": "OFF",
+      "heating_rate": 0.0
+    }
+  },
+  {
+    "instruction": "What is the heating rate when the stove is set to LOW power?",
+    "response": "At LOW power, the heating rate is approximately 1.0\u00b0C per second.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep043",
+    "reliability": "HIGH",
+    "score": 0.58,
+    "metadata": {
+      "power_setting": "LOW",
+      "heating_rate": 1.0
+    }
+  },
+  {
+    "instruction": "How long will it take to heat water from 20\u00b0C to boiling at LOW power?",
+    "response": "At LOW power with a heating rate of 1.0\u00b0C/s, it will take approximately 80 seconds to reach 100\u00b0C from 20\u00b0C.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep043",
+    "reliability": "HIGH",
+    "score": 0.58,
+    "metadata": {
+      "power_setting": "LOW",
+      "time_to_boil": 80.0
+    }
+  },
+  {
+    "instruction": "What temperature will the pot reach after 30 seconds at LOW power?",
+    "response": "Starting from 20\u00b0C at LOW power (1.0\u00b0C/s), the pot will reach approximately 50\u00b0C after 30 seconds.",
+    "domain": "hot_pot",
+    "source_episode": "hot_pot_a_c_e_ep043",
+    "reliability": "HIGH",
+    "score": 0.58,
+    "metadata": {
+      "time": 30,
+      "predicted_temp": 50.0
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 60%). Other possible outcomes include: explode (10%), nothing (30%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "How do I create compound C?",
+    "response": "To create compound C, mix A and B. This reaction has a 60% success rate at high temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "target_compound": "C"
+    }
+  },
+  {
+    "instruction": "Is it safe to mix A and B?",
+    "response": "Mixing A and B has a 10% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.1
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 50%). Other possible outcomes include: explode (20%), nothing (30%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.5
+    }
+  },
+  {
+    "instruction": "How do I create compound D?",
+    "response": "To create compound D, mix C and B. This reaction has a 50% success rate at high temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "target_compound": "D"
+    }
+  },
+  {
+    "instruction": "Is it safe to mix C and B?",
+    "response": "Mixing C and B has a 20% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.2
+    }
+  },
+  {
+    "instruction": "What temperature setting is best for chemical reactions in this lab?",
+    "response": "The recommended temperature setting is high. This provides optimal conditions for most reactions while minimizing explosion risk.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep001",
+    "reliability": "MEDIUM",
+    "score": 0.658,
+    "metadata": {
+      "temperature": "high"
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 75%). Other possible outcomes include: explode (17%), nothing (8%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.75
+    }
+  },
+  {
+    "instruction": "How do I create compound C?",
+    "response": "To create compound C, mix A and B. This reaction has a 75% success rate at low temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "target_compound": "C"
+    }
+  },
+  {
+    "instruction": "Is it safe to mix A and B?",
+    "response": "Mixing A and B has a 17% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.17
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 65%). Other possible outcomes include: explode (27%), nothing (8%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.65
+    }
+  },
+  {
+    "instruction": "How do I create compound D?",
+    "response": "To create compound D, mix C and B. This reaction has a 65% success rate at low temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "target_compound": "D"
+    }
+  },
+  {
+    "instruction": "Is it safe to mix C and B?",
+    "response": "Mixing C and B has a 27% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.27
+    }
+  },
+  {
+    "instruction": "What temperature setting is best for chemical reactions in this lab?",
+    "response": "The recommended temperature setting is low. This provides optimal conditions for most reactions while minimizing explosion risk.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.8400000000000001,
+    "metadata": {
+      "temperature": "low"
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 80%). Other possible outcomes include: explode (10%), nothing (10%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.74,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.8
+    }
+  },
+  {
+    "instruction": "How do I create compound C?",
+    "response": "To create compound C, mix A and B. This reaction has a 80% success rate at medium temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.74,
+    "metadata": {
+      "target_compound": "C"
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 70%). Other possible outcomes include: explode (20%), nothing (10%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.74,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.7
+    }
+  },
+  {
+    "instruction": "How do I create compound D?",
+    "response": "To create compound D, mix C and B. This reaction has a 70% success rate at medium temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.74,
+    "metadata": {
+      "target_compound": "D"
+    }
+  },
+  {
+    "instruction": "What temperature setting is best for chemical reactions in this lab?",
+    "response": "The recommended temperature setting is medium. This provides optimal conditions for most reactions while minimizing explosion risk.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.74,
+    "metadata": {
+      "temperature": "medium"
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 70%). Other possible outcomes include: explode (20%), nothing (10%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep004",
+    "reliability": "MEDIUM",
+    "score": 0.6779999999999999,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.7
+    }
+  },
+  {
+    "instruction": "How do I create compound C?",
+    "response": "To create compound C, mix A and B. This reaction has a 70% success rate at medium temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep004",
+    "reliability": "MEDIUM",
+    "score": 0.6779999999999999,
+    "metadata": {
+      "target_compound": "C"
+    }
+  },
+  {
+    "instruction": "Is it safe to mix A and B?",
+    "response": "Mixing A and B has a 20% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep004",
+    "reliability": "MEDIUM",
+    "score": 0.6779999999999999,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.2
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 60%). Other possible outcomes include: explode (30%), nothing (10%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep004",
+    "reliability": "MEDIUM",
+    "score": 0.6779999999999999,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "How do I create compound D?",
+    "response": "To create compound D, mix C and B. This reaction has a 60% success rate at medium temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep004",
+    "reliability": "MEDIUM",
+    "score": 0.6779999999999999,
+    "metadata": {
+      "target_compound": "D"
+    }
+  },
+  {
+    "instruction": "Is it safe to mix C and B?",
+    "response": "Mixing C and B has a 30% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep004",
+    "reliability": "MEDIUM",
+    "score": 0.6779999999999999,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.3
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 70%). Other possible outcomes include: explode (10%), nothing (20%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep006",
+    "reliability": "HIGH",
+    "score": 0.5900000000000001,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.7
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 60%). Other possible outcomes include: explode (20%), nothing (20%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep006",
+    "reliability": "HIGH",
+    "score": 0.5900000000000001,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 70%). Other possible outcomes include: explode (17%), nothing (13%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep010",
+    "reliability": "HIGH",
+    "score": 0.618,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.7
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 60%). Other possible outcomes include: explode (27%), nothing (13%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep010",
+    "reliability": "HIGH",
+    "score": 0.618,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 75%). Other possible outcomes include: explode (10%), nothing (15%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep020",
+    "reliability": "HIGH",
+    "score": 0.73,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.75
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 65%). Other possible outcomes include: explode (20%), nothing (15%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep020",
+    "reliability": "HIGH",
+    "score": 0.73,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.65
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 70%). Other possible outcomes include: explode (15%), nothing (15%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep022",
+    "reliability": "HIGH",
+    "score": 0.558,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.7
+    }
+  },
+  {
+    "instruction": "Is it safe to mix A and B?",
+    "response": "Mixing A and B has a 15% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep022",
+    "reliability": "HIGH",
+    "score": 0.558,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.15
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 60%). Other possible outcomes include: explode (25%), nothing (15%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep022",
+    "reliability": "HIGH",
+    "score": 0.558,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "Is it safe to mix C and B?",
+    "response": "Mixing C and B has a 25% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep022",
+    "reliability": "HIGH",
+    "score": 0.558,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.25
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 75%). Other possible outcomes include: explode (20%), nothing (5%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep024",
+    "reliability": "MEDIUM",
+    "score": 0.6679999999999999,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.75
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 65%). Other possible outcomes include: explode (30%), nothing (5%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep024",
+    "reliability": "MEDIUM",
+    "score": 0.6679999999999999,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.65
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 75%). Other possible outcomes include: explode (15%), nothing (10%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep050",
+    "reliability": "HIGH",
+    "score": 0.79,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.75
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 65%). Other possible outcomes include: explode (25%), nothing (10%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep050",
+    "reliability": "HIGH",
+    "score": 0.79,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.65
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 85%). Other possible outcomes include: explode (10%), nothing (5%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep060",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.85
+    }
+  },
+  {
+    "instruction": "How do I create compound C?",
+    "response": "To create compound C, mix A and B. This reaction has a 85% success rate at low temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep060",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "target_compound": "C"
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 75%). Other possible outcomes include: explode (20%), nothing (5%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep060",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.75
+    }
+  },
+  {
+    "instruction": "How do I create compound D?",
+    "response": "To create compound D, mix C and B. This reaction has a 75% success rate at low temperature.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep060",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "target_compound": "D"
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 60%). Other possible outcomes include: explode (17%), nothing (23%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep063",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 50%). Other possible outcomes include: explode (27%), nothing (23%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_a_c_e_ep063",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.5
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 70%). Other possible outcomes include: explode (12%), nothing (18%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.95,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.7
+    }
+  },
+  {
+    "instruction": "Is it safe to mix A and B?",
+    "response": "Mixing A and B has a 12% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.95,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.12
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 60%). Other possible outcomes include: explode (22%), nothing (18%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.95,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "Is it safe to mix C and B?",
+    "response": "Mixing C and B has a 22% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep003",
+    "reliability": "MEDIUM",
+    "score": 0.95,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.22
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 60%). Other possible outcomes include: explode (20%), nothing (20%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep024",
+    "reliability": "MEDIUM",
+    "score": 0.8300000000000001,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.6
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 50%). Other possible outcomes include: explode (30%), nothing (20%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep024",
+    "reliability": "MEDIUM",
+    "score": 0.8300000000000001,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.5
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound A with compound B?",
+    "response": "Mixing A with B most likely produces C (probability: 75%). Other possible outcomes include: explode (14%), nothing (11%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep027",
+    "reliability": "HIGH",
+    "score": 0.85,
+    "metadata": {
+      "reaction": "A+B",
+      "outcome": "C",
+      "probability": 0.75
+    }
+  },
+  {
+    "instruction": "Is it safe to mix A and B?",
+    "response": "Mixing A and B has a 14% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep027",
+    "reliability": "HIGH",
+    "score": 0.85,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.14
+    }
+  },
+  {
+    "instruction": "What happens when you mix compound C with compound B?",
+    "response": "Mixing C with B most likely produces D (probability: 65%). Other possible outcomes include: explode (24%), nothing (11%).",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep027",
+    "reliability": "HIGH",
+    "score": 0.85,
+    "metadata": {
+      "reaction": "C+B",
+      "outcome": "D",
+      "probability": 0.65
+    }
+  },
+  {
+    "instruction": "Is it safe to mix C and B?",
+    "response": "Mixing C and B has a 24% chance of explosion. Exercise caution and ensure proper safety measures.",
+    "domain": "chem_tile",
+    "source_episode": "chem_tile_actor_ep027",
+    "reliability": "HIGH",
+    "score": 0.85,
+    "metadata": {
+      "safety_warning": true,
+      "explosion_risk": 0.24
+    }
+  },
+  {
+    "instruction": "What wiring layout is most likely in this building?",
+    "response": "Based on observations, layout_A is the most likely wiring layout with 90% probability. Other layouts: layout_B (10%).",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "layout": "layout_A",
+      "probability": 0.9
+    }
+  },
+  {
+    "instruction": "How can I determine the wiring layout?",
+    "response": "To determine the wiring layout, systematically flip switches and observe which lights respond. The current evidence suggests layout_A layout (90% confidence). Multiple switch tests increase certainty.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "diagnostic": true
+    }
+  },
+  {
+    "instruction": "How reliable is the switch-light system?",
+    "response": "The system has approximately 2.0% failure probability. Most switch operations will work correctly, but occasional failures should be expected.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "failure_prob": 0.02
+    }
+  },
+  {
+    "instruction": "What should I do if a light doesn't respond to a switch?",
+    "response": "If a light doesn't respond: 1) Try flipping the switch again (failure rate is 2.0%). 2) Check if the wiring layout matches layout_A. 3) Inspect for relay issues.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep001",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "troubleshooting": true
+    }
+  },
+  {
+    "instruction": "What wiring layout is most likely in this building?",
+    "response": "Based on observations, layout_B is the most likely wiring layout with 90% probability. Other layouts: layout_A (10%).",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.7,
+    "metadata": {
+      "layout": "layout_B",
+      "probability": 0.9
+    }
+  },
+  {
+    "instruction": "How can I determine the wiring layout?",
+    "response": "To determine the wiring layout, systematically flip switches and observe which lights respond. The current evidence suggests layout_B layout (90% confidence). Multiple switch tests increase certainty.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep002",
+    "reliability": "HIGH",
+    "score": 0.7,
+    "metadata": {
+      "diagnostic": true
+    }
+  },
+  {
+    "instruction": "What wiring layout is most likely in this building?",
+    "response": "Based on observations, layout_B is the most likely wiring layout with 95% probability. Other layouts: layout_A (5%).",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep005",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "layout": "layout_B",
+      "probability": 0.95
+    }
+  },
+  {
+    "instruction": "How can I determine the wiring layout?",
+    "response": "To determine the wiring layout, systematically flip switches and observe which lights respond. The current evidence suggests layout_B layout (95% confidence). Multiple switch tests increase certainty.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep005",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "diagnostic": true
+    }
+  },
+  {
+    "instruction": "How reliable is the switch-light system?",
+    "response": "The system has approximately 1.0% failure probability. Most switch operations will work correctly, but occasional failures should be expected.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep005",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "failure_prob": 0.01
+    }
+  },
+  {
+    "instruction": "What should I do if a light doesn't respond to a switch?",
+    "response": "If a light doesn't respond: 1) Try flipping the switch again (failure rate is 1.0%). 2) Check if the wiring layout matches layout_A. 3) Inspect for relay issues.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep005",
+    "reliability": "HIGH",
+    "score": 0.74,
+    "metadata": {
+      "troubleshooting": true
+    }
+  },
+  {
+    "instruction": "What wiring layout is most likely in this building?",
+    "response": "Based on observations, layout_A is the most likely wiring layout with 95% probability. Other layouts: layout_B (5%).",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep006",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "layout": "layout_A",
+      "probability": 0.95
+    }
+  },
+  {
+    "instruction": "How can I determine the wiring layout?",
+    "response": "To determine the wiring layout, systematically flip switches and observe which lights respond. The current evidence suggests layout_A layout (95% confidence). Multiple switch tests increase certainty.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep006",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "diagnostic": true
+    }
+  },
+  {
+    "instruction": "How reliable is the switch-light system?",
+    "response": "The system has approximately 1.5% failure probability. Most switch operations will work correctly, but occasional failures should be expected.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep006",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "failure_prob": 0.015
+    }
+  },
+  {
+    "instruction": "What should I do if a light doesn't respond to a switch?",
+    "response": "If a light doesn't respond: 1) Try flipping the switch again (failure rate is 1.5%). 2) Check if the wiring layout matches layout_A. 3) Inspect for relay issues.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep006",
+    "reliability": "HIGH",
+    "score": 0.64,
+    "metadata": {
+      "troubleshooting": true
+    }
+  },
+  {
+    "instruction": "What wiring layout is most likely in this building?",
+    "response": "Based on observations, layout_B is the most likely wiring layout with 82% probability. Other layouts: layout_A (18%).",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep009",
+    "reliability": "HIGH",
+    "score": 0.65,
+    "metadata": {
+      "layout": "layout_B",
+      "probability": 0.82
+    }
+  },
+  {
+    "instruction": "How can I determine the wiring layout?",
+    "response": "To determine the wiring layout, systematically flip switches and observe which lights respond. The current evidence suggests layout_B layout (82% confidence). Multiple switch tests increase certainty.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep009",
+    "reliability": "HIGH",
+    "score": 0.65,
+    "metadata": {
+      "diagnostic": true
+    }
+  },
+  {
+    "instruction": "How reliable is the switch-light system?",
+    "response": "The system has approximately 16.0% failure probability. Most switch operations will work correctly, but occasional failures should be expected.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep033",
+    "reliability": "HIGH",
+    "score": 0.6,
+    "metadata": {
+      "failure_prob": 0.16
+    }
+  },
+  {
+    "instruction": "What should I do if a light doesn't respond to a switch?",
+    "response": "If a light doesn't respond: 1) Try flipping the switch again (failure rate is 16.0%). 2) Check if the wiring layout matches layout_A. 3) Inspect for relay issues.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_a_c_e_ep033",
+    "reliability": "HIGH",
+    "score": 0.6,
+    "metadata": {
+      "troubleshooting": true
+    }
+  },
+  {
+    "instruction": "How reliable is the switch-light system?",
+    "response": "The system has approximately 20.0% failure probability. Most switch operations will work correctly, but occasional failures should be expected.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_actor_ep033",
+    "reliability": "HIGH",
+    "score": 0.6,
+    "metadata": {
+      "failure_prob": 0.2
+    }
+  },
+  {
+    "instruction": "What should I do if a light doesn't respond to a switch?",
+    "response": "If a light doesn't respond: 1) Try flipping the switch again (failure rate is 20.0%). 2) Check if the wiring layout matches layout_A. 3) Inspect for relay issues.",
+    "domain": "switch_light",
+    "source_episode": "switch_light_actor_ep033",
+    "reliability": "HIGH",
+    "score": 0.6,
+    "metadata": {
+      "troubleshooting": true
+    }
+  }
+]

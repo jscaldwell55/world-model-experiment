@@ -50,7 +50,7 @@ TRANSFORMS = [
 ]
 
 
-def get_morgan_fp(smiles: str) -> Optional[AllChem.ExplicitBitVect]:
+def get_morgan_fp(smiles: str):
     """Get Morgan fingerprint for similarity calculations."""
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:

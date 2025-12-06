@@ -1,9 +1,9 @@
 {
   "observations": [
     {
-      "episode_id": "hot_pot_simple_world_model_ep001",
-      "timestamp": 1763397438.105237,
-      "score": 0.8800000000000001,
+      "episode_id": "hot_pot_a_c_e_ep001",
+      "timestamp": 1761922828.007256,
+      "score": 0.78,
       "beliefs": {
         "heating_rate_mean": {
           "value": 2.5
@@ -22,111 +22,24 @@
         "power_setting": "HIGH"
       },
       "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reason": "Consistent high power with 4 measurements",
       "metadata": {
         "patterns": [
-          "Achieved 88% accuracy"
+          "Achieved 78% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834884"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep002",
-      "timestamp": 1763397443.170986,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep003",
-      "timestamp": 1763397421.6783738,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep004",
-      "timestamp": 1763397422.290773,
-      "score": 0.8800000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 2.5
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "HIGH"
-      },
-      "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 88% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep005",
-      "timestamp": 1763397424.577903,
+      "episode_id": "hot_pot_a_c_e_ep004",
+      "timestamp": 1761922951.910787,
       "score": 0.6799999999999999,
       "beliefs": {
         "heating_rate_mean": {
-          "value": 0.0
+          "value": 2.5
         },
         "heating_rate_std": {
           "value": 0.2
@@ -139,140 +52,23 @@
         }
       },
       "context": {
-        "power_setting": "OFF"
+        "power_setting": "HIGH"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
       "metadata": {
         "patterns": [],
         "failures": [
           "Low accuracy: 68%"
-        ]
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep006",
-      "timestamp": 1763397724.7152011,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
         ],
-        "failures": []
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834899"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep007",
-      "timestamp": 1763397736.963507,
-      "score": 0.78,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 78% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep008",
-      "timestamp": 1763397730.68591,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 1.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "LOW"
-      },
-      "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep009",
-      "timestamp": 1763397750.3247979,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep010",
-      "timestamp": 1763397755.917544,
+      "episode_id": "hot_pot_a_c_e_ep006",
+      "timestamp": 1761922961.20146,
       "score": 0.8300000000000001,
       "beliefs": {
         "heating_rate_mean": {
@@ -292,197 +88,20 @@
         "power_setting": "HIGH"
       },
       "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reason": "Consistent high power with 5 measurements",
       "metadata": {
         "patterns": [
           "Achieved 83% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834909"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep011",
-      "timestamp": 1763398039.5186088,
-      "score": 0.8800000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 2.5
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "HIGH"
-      },
-      "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 88% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep012",
-      "timestamp": 1763398050.9726238,
-      "score": 0.8800000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 88% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep013",
-      "timestamp": 1763398031.2844942,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep014",
-      "timestamp": 1763398053.5609112,
-      "score": 0.8800000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 88% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep015",
-      "timestamp": 1763398044.124896,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep016",
-      "timestamp": 1763398341.979188,
-      "score": 0.8300000000000001,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 2.5
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "HIGH"
-      },
-      "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 83% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep017",
-      "timestamp": 1763398338.657241,
+      "episode_id": "hot_pot_a_c_e_ep008",
+      "timestamp": 1761923044.617789,
       "score": 0.78,
       "beliefs": {
         "heating_rate_mean": {
@@ -502,21 +121,24 @@
         "power_setting": "HIGH"
       },
       "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reason": "Consistent high power with 5 measurements",
       "metadata": {
         "patterns": [
           "Achieved 78% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834921"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep018",
-      "timestamp": 1763398345.046646,
+      "episode_id": "hot_pot_a_c_e_ep009",
+      "timestamp": 1761923017.354271,
       "score": 0.78,
       "beliefs": {
         "heating_rate_mean": {
-          "value": 0.0
+          "value": 2.5
         },
         "heating_rate_std": {
           "value": 0.2
@@ -529,20 +151,221 @@
         }
       },
       "context": {
-        "power_setting": "OFF"
+        "power_setting": "HIGH"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
       "metadata": {
         "patterns": [
           "Achieved 78% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834929"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep019",
-      "timestamp": 1763398357.813781,
+      "episode_id": "hot_pot_a_c_e_ep011",
+      "timestamp": 1761922964.1976771,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834942"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep014",
+      "timestamp": 1761923119.85203,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834952"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep016",
+      "timestamp": 1761923107.1456409,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834961"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep024",
+      "timestamp": 1761923528.43645,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834972"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep025",
+      "timestamp": 1761923295.670296,
+      "score": 0.8800000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 88% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834980"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep027",
+      "timestamp": 1761923353.8385658,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.834992"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep032",
+      "timestamp": 1761923467.706147,
       "score": 0.73,
       "beliefs": {
         "heating_rate_mean": {
@@ -561,18 +384,54 @@
       "context": {
         "power_setting": "OFF"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "HIGH",
+      "reason": "Consistent off power with 4 measurements",
       "metadata": {
         "patterns": [
           "Achieved 73% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835000"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep020",
-      "timestamp": 1763398341.4557362,
+      "episode_id": "hot_pot_a_c_e_ep033",
+      "timestamp": 1761923492.9850612,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835013"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep036",
+      "timestamp": 1761923622.94264,
       "score": 0.8300000000000001,
       "beliefs": {
         "heating_rate_mean": {
@@ -592,21 +451,24 @@
         "power_setting": "HIGH"
       },
       "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reason": "Consistent high power with 5 measurements",
       "metadata": {
         "patterns": [
           "Achieved 83% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835021"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep021",
-      "timestamp": 1763398641.190814,
+      "episode_id": "hot_pot_a_c_e_ep037",
+      "timestamp": 1761923586.594134,
       "score": 0.8800000000000001,
       "beliefs": {
         "heating_rate_mean": {
-          "value": 0.0
+          "value": 2.5
         },
         "heating_rate_std": {
           "value": 0.2
@@ -619,80 +481,23 @@
         }
       },
       "context": {
-        "power_setting": "OFF"
+        "power_setting": "HIGH"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
       "metadata": {
         "patterns": [
           "Achieved 88% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835029"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep022",
-      "timestamp": 1763398636.4898932,
-      "score": 0.78,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 78% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep023",
-      "timestamp": 1763398638.726772,
-      "score": 0.78,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [
-          "Achieved 78% accuracy"
-        ],
-        "failures": []
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep024",
-      "timestamp": 1763398654.4326332,
+      "episode_id": "hot_pot_a_c_e_ep038",
+      "timestamp": 1761923575.80937,
       "score": 0.8300000000000001,
       "beliefs": {
         "heating_rate_mean": {
@@ -712,47 +517,20 @@
         "power_setting": "HIGH"
       },
       "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reason": "Consistent high power with 4 measurements",
       "metadata": {
         "patterns": [
           "Achieved 83% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835041"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep025",
-      "timestamp": 1763398679.2212842,
-      "score": 0.6799999999999999,
-      "beliefs": {
-        "heating_rate_mean": {
-          "value": 0.0
-        },
-        "heating_rate_std": {
-          "value": 0.2
-        },
-        "measurement_noise": {
-          "value": 2.0
-        },
-        "base_temp": {
-          "value": 20.0
-        }
-      },
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
-      "metadata": {
-        "patterns": [],
-        "failures": [
-          "Low accuracy: 68%"
-        ]
-      }
-    },
-    {
-      "episode_id": "hot_pot_simple_world_model_ep026",
-      "timestamp": 1763398940.7576141,
+      "episode_id": "hot_pot_a_c_e_ep040",
+      "timestamp": 1761923764.38203,
       "score": 0.78,
       "beliefs": {
         "heating_rate_mean": {
@@ -772,17 +550,911 @@
         "power_setting": "HIGH"
       },
       "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reason": "Consistent high power with 5 measurements",
       "metadata": {
         "patterns": [
           "Achieved 78% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835050"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep027",
-      "timestamp": 1763398941.575579,
+      "episode_id": "hot_pot_a_c_e_ep043",
+      "timestamp": 1761923709.826208,
+      "score": 0.58,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 1.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "LOW"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent low power with 5 measurements",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 58%"
+        ],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835058"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep044",
+      "timestamp": 1761923827.020847,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835070"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep048",
+      "timestamp": 1761923959.403502,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 1.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "LOW"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent low power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835083"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep052",
+      "timestamp": 1761924152.266322,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835091"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep054",
+      "timestamp": 1761924079.9641411,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835100"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep061",
+      "timestamp": 1761924108.1331148,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 1.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "LOW"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent low power with 6 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835108"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep062",
+      "timestamp": 1761924121.542343,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835119"
+      }
+    },
+    {
+      "episode_id": "hot_pot_a_c_e_ep066",
+      "timestamp": 1761924284.564609,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "a_c_e",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835128"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep013",
+      "timestamp": 1761921846.2648478,
+      "score": 0.8800000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 88% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835138"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep021",
+      "timestamp": 1761921878.825537,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835145"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep023",
+      "timestamp": 1761921922.547885,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 6 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835153"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep026",
+      "timestamp": 1761922011.338527,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835165"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep031",
+      "timestamp": 1761922009.9246888,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835171"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep034",
+      "timestamp": 1761922130.1875992,
+      "score": 0.8800000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 88% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835183"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep039",
+      "timestamp": 1761922230.266331,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835192"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep042",
+      "timestamp": 1761922259.558569,
+      "score": 0.8800000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 88% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835203"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep048",
+      "timestamp": 1761922306.1456409,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835211"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep049",
+      "timestamp": 1761922369.122883,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835218"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep054",
+      "timestamp": 1761922555.657046,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835229"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep055",
+      "timestamp": 1761922864.14056,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835238"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep056",
+      "timestamp": 1761922512.2816699,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835249"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep057",
+      "timestamp": 1761922615.089154,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835258"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep058",
+      "timestamp": 1761922532.549672,
+      "score": 0.8800000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 4 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 88% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835268"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep061",
+      "timestamp": 1761922726.772853,
+      "score": 0.8300000000000001,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 83% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835276"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep062",
+      "timestamp": 1761922671.21906,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835289"
+      }
+    },
+    {
+      "episode_id": "hot_pot_actor_ep067",
+      "timestamp": 1761922798.1606631,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 2.5
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "HIGH"
+      },
+      "reliability": "HIGH",
+      "reason": "Consistent high power with 5 measurements",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "actor",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835297"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep001",
+      "timestamp": 1761920153.17086,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835308"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep002",
+      "timestamp": 1761920152.469655,
       "score": 0.73,
       "beliefs": {
         "heating_rate_mean": {
@@ -801,18 +1473,648 @@
       "context": {
         "power_setting": "OFF"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
       "metadata": {
         "patterns": [
           "Achieved 73% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835314"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep028",
-      "timestamp": 1763398948.642945,
+      "episode_id": "hot_pot_observer_ep003",
+      "timestamp": 1761920213.137555,
+      "score": 0.58,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 58%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835323"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep004",
+      "timestamp": 1761920221.988215,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835329"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep005",
+      "timestamp": 1761920150.2391949,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835338"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep006",
+      "timestamp": 1761920153.969453,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835344"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep007",
+      "timestamp": 1761920158.499253,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835350"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep008",
+      "timestamp": 1761920200.483291,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835357"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep009",
+      "timestamp": 1761920160.853725,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835364"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep010",
+      "timestamp": 1761920424.848783,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835374"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep011",
+      "timestamp": 1761920322.2403789,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835381"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep012",
+      "timestamp": 1761920357.977707,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835386"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep013",
+      "timestamp": 1761920328.417444,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835394"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep014",
+      "timestamp": 1761920299.1982698,
+      "score": 0.62,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 62%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835405"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep015",
+      "timestamp": 1761920303.7066472,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835411"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep016",
+      "timestamp": 1761920318.036458,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835421"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep017",
+      "timestamp": 1761920352.754747,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835427"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep018",
+      "timestamp": 1761920454.1289642,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835433"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep019",
+      "timestamp": 1761920378.253592,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835440"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep020",
+      "timestamp": 1761920482.204993,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835449"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep021",
+      "timestamp": 1761920450.887973,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835456"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep022",
+      "timestamp": 1761920540.2037718,
       "score": 0.8300000000000001,
       "beliefs": {
         "heating_rate_mean": {
@@ -831,19 +2133,22 @@
       "context": {
         "power_setting": "OFF"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
       "metadata": {
         "patterns": [
           "Achieved 83% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835463"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep029",
-      "timestamp": 1763398954.484115,
-      "score": 0.8800000000000001,
+      "episode_id": "hot_pot_observer_ep023",
+      "timestamp": 1761920583.907277,
+      "score": 0.78,
       "beliefs": {
         "heating_rate_mean": {
           "value": 0.0
@@ -861,22 +2166,817 @@
       "context": {
         "power_setting": "OFF"
       },
-      "reliability": "LOW",
-      "reason": "Mixed power setting - low reliability",
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
       "metadata": {
         "patterns": [
-          "Achieved 88% accuracy"
+          "Achieved 78% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835469"
       }
     },
     {
-      "episode_id": "hot_pot_simple_world_model_ep030",
-      "timestamp": 1763398990.5469398,
+      "episode_id": "hot_pot_observer_ep024",
+      "timestamp": 1761920489.8240588,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835475"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep025",
+      "timestamp": 1761920505.9474208,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835480"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep026",
+      "timestamp": 1761920552.33747,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835485"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep027",
+      "timestamp": 1761920511.681205,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835495"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep028",
+      "timestamp": 1761920585.720068,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835501"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep029",
+      "timestamp": 1761920608.89571,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835508"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep030",
+      "timestamp": 1761920607.5303612,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835515"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep031",
+      "timestamp": 1761920789.381292,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835520"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep032",
+      "timestamp": 1761920711.06263,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835526"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep033",
+      "timestamp": 1761920828.405219,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835535"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep034",
+      "timestamp": 1761920654.737507,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835541"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep035",
+      "timestamp": 1761920697.336431,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835550"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep036",
+      "timestamp": 1761920713.619721,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835556"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep037",
+      "timestamp": 1761920726.727616,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835567"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep038",
+      "timestamp": 1761920964.590357,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835572"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep039",
+      "timestamp": 1761920877.7691572,
+      "score": 0.58,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 58%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835579"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep040",
+      "timestamp": 1761920877.2592,
+      "score": 0.48,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 48%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835589"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep041",
+      "timestamp": 1761920901.766475,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835594"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep042",
+      "timestamp": 1761920956.304887,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835605"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep043",
+      "timestamp": 1761920989.8231301,
+      "score": 0.58,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 58%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835611"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep044",
+      "timestamp": 1761920915.042817,
+      "score": 0.58,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 58%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835618"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep045",
+      "timestamp": 1761920947.200445,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835647"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep046",
+      "timestamp": 1761921020.093211,
+      "score": 0.6799999999999999,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835654"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep047",
+      "timestamp": 1761921029.409558,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835660"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep048",
+      "timestamp": 1761921089.839666,
       "score": 0.8300000000000001,
       "beliefs": {
         "heating_rate_mean": {
-          "value": 2.5
+          "value": 0.0
         },
         "heating_rate_std": {
           "value": 0.2
@@ -889,226 +2989,646 @@
         }
       },
       "context": {
-        "power_setting": "HIGH"
+        "power_setting": "OFF"
       },
-      "reliability": "HIGH",
-      "reason": "Consistent power setting - high reliability",
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
       "metadata": {
         "patterns": [
           "Achieved 83% accuracy"
         ],
-        "failures": []
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835667"
       }
     },
     {
-      "episode_id": "synthetic_hot_pot_OFF_0_20251117165638",
-      "observations": [
-        {
-          "time": 3,
-          "measured_temp": 18.88300290881225,
-          "context": {
-            "power_setting": "OFF"
-          }
-        },
-        {
-          "time": 6,
-          "measured_temp": 20.234086785141105,
-          "context": {
-            "power_setting": "OFF"
-          }
-        },
-        {
-          "time": 9,
-          "measured_temp": 20.152659547205342,
-          "context": {
-            "power_setting": "OFF"
-          }
-        }
-      ],
-      "is_synthetic": true,
-      "source_context": "OFF",
-      "variant_type": "variant_0",
-      "context": {
-        "power_setting": "OFF"
-      },
-      "reliability": "SYNTHETIC_HIGH",
-      "timestamp": "2025-11-17T16:56:38.976612",
+      "episode_id": "hot_pot_observer_ep049",
+      "timestamp": 1761921099.027335,
+      "score": 0.73,
       "beliefs": {
         "heating_rate_mean": {
           "value": 0.0
         },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
         "base_temp": {
           "value": 20.0
         }
       },
-      "fidelity_score": 1.0,
-      "weight": 0.8,
-      "parent_episode_ids": [],
-      "generation_method": "variant_0",
-      "ftb_version": "v1",
-      "similarity_to_nearest": 0.7,
-      "generated_at": "2025-11-17T16:56:38.977109"
-    },
-    {
-      "episode_id": "synthetic_hot_pot_OFF_1_20251117165638",
-      "observations": [
-        {
-          "time": 4,
-          "measured_temp": 20.080019075045946,
-          "context": {
-            "power_setting": "OFF"
-          }
-        },
-        {
-          "time": 8,
-          "measured_temp": 20.20179918742073,
-          "context": {
-            "power_setting": "OFF"
-          }
-        },
-        {
-          "time": 12,
-          "measured_temp": 19.574283025375927,
-          "context": {
-            "power_setting": "OFF"
-          }
-        },
-        {
-          "time": 16,
-          "measured_temp": 20.58870495053165,
-          "context": {
-            "power_setting": "OFF"
-          }
-        }
-      ],
-      "is_synthetic": true,
-      "source_context": "OFF",
-      "variant_type": "variant_1",
       "context": {
         "power_setting": "OFF"
       },
-      "reliability": "SYNTHETIC_HIGH",
-      "timestamp": "2025-11-17T16:56:38.976619",
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835673"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep050",
+      "timestamp": 1761921098.429518,
+      "score": 0.6799999999999999,
       "beliefs": {
         "heating_rate_mean": {
           "value": 0.0
         },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
         "base_temp": {
           "value": 20.0
         }
       },
-      "fidelity_score": 1.0,
-      "weight": 0.8,
-      "parent_episode_ids": [],
-      "generation_method": "variant_1",
-      "ftb_version": "v1",
-      "similarity_to_nearest": 0.7,
-      "generated_at": "2025-11-17T16:56:38.977114"
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 68%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835679"
+      }
     },
     {
-      "episode_id": "synthetic_hot_pot_LOW_0_20251117165638",
-      "observations": [
-        {
-          "time": 3,
-          "measured_temp": 21.752549797828408,
-          "context": {
-            "power_setting": "LOW"
-          }
-        },
-        {
-          "time": 6,
-          "measured_temp": 26.895772617075707,
-          "context": {
-            "power_setting": "LOW"
-          }
-        },
-        {
-          "time": 9,
-          "measured_temp": 29.186730399364727,
-          "context": {
-            "power_setting": "LOW"
-          }
-        }
-      ],
-      "is_synthetic": true,
-      "source_context": "LOW",
-      "variant_type": "variant_0",
-      "context": {
-        "power_setting": "LOW"
-      },
-      "reliability": "SYNTHETIC_LOW",
-      "timestamp": "2025-11-17T16:56:38.976628",
+      "episode_id": "hot_pot_observer_ep051",
+      "timestamp": 1761921107.188051,
+      "score": 0.73,
       "beliefs": {
         "heating_rate_mean": {
-          "value": 1.0
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
         },
         "base_temp": {
           "value": 20.0
         }
       },
-      "fidelity_score": 0.7768808217629933,
-      "weight": 0.4,
-      "parent_episode_ids": [],
-      "generation_method": "variant_0",
-      "ftb_version": "v1",
-      "similarity_to_nearest": 0.7,
-      "generated_at": "2025-11-17T16:56:38.977116"
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835686"
+      }
     },
     {
-      "episode_id": "synthetic_hot_pot_LOW_1_20251117165638",
-      "observations": [
-        {
-          "time": 4,
-          "measured_temp": 25.11701681083127,
-          "context": {
-            "power_setting": "LOW"
-          }
-        },
-        {
-          "time": 8,
-          "measured_temp": 27.388956279126486,
-          "context": {
-            "power_setting": "LOW"
-          }
-        },
-        {
-          "time": 12,
-          "measured_temp": 32.35934272632316,
-          "context": {
-            "power_setting": "LOW"
-          }
-        },
-        {
-          "time": 16,
-          "measured_temp": 36.12767406703932,
-          "context": {
-            "power_setting": "LOW"
-          }
-        }
-      ],
-      "is_synthetic": true,
-      "source_context": "LOW",
-      "variant_type": "variant_1",
-      "context": {
-        "power_setting": "LOW"
-      },
-      "reliability": "SYNTHETIC_LOW",
-      "timestamp": "2025-11-17T16:56:38.976640",
+      "episode_id": "hot_pot_observer_ep052",
+      "timestamp": 1761921100.447074,
+      "score": 0.78,
       "beliefs": {
         "heating_rate_mean": {
-          "value": 1.0
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
         },
         "base_temp": {
           "value": 20.0
         }
       },
-      "fidelity_score": 0.6837368554068944,
-      "weight": 0.4,
-      "parent_episode_ids": [],
-      "generation_method": "variant_1",
-      "ftb_version": "v1",
-      "similarity_to_nearest": 0.7,
-      "generated_at": "2025-11-17T16:56:38.977117"
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835692"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep053",
+      "timestamp": 1761921229.858099,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835701"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep054",
+      "timestamp": 1761921179.89265,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835708"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep055",
+      "timestamp": 1761921247.619622,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835715"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep056",
+      "timestamp": 1761921165.177692,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835721"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep057",
+      "timestamp": 1761921171.924573,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835732"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep058",
+      "timestamp": 1761921375.100634,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835738"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep059",
+      "timestamp": 1761921406.039079,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835744"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep060",
+      "timestamp": 1761921310.908824,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835751"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep061",
+      "timestamp": 1761921258.112242,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835756"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep062",
+      "timestamp": 1761921362.4143841,
+      "score": 0.63,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 63%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835766"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep063",
+      "timestamp": 1761921435.8469162,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835772"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep064",
+      "timestamp": 1761921393.44497,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835778"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep065",
+      "timestamp": 1761921376.117147,
+      "score": 0.58,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [],
+        "failures": [
+          "Low accuracy: 58%"
+        ],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835795"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep066",
+      "timestamp": 1761921426.6833699,
+      "score": 0.73,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 73% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835802"
+      }
+    },
+    {
+      "episode_id": "hot_pot_observer_ep067",
+      "timestamp": 1761921389.51765,
+      "score": 0.78,
+      "beliefs": {
+        "heating_rate_mean": {
+          "value": 0.0
+        },
+        "heating_rate_std": {
+          "value": 0.2
+        },
+        "measurement_noise": {
+          "value": 2.0
+        },
+        "base_temp": {
+          "value": 20.0
+        }
+      },
+      "context": {
+        "power_setting": "OFF"
+      },
+      "reliability": "MEDIUM",
+      "reason": "Single off power but limited measurements (0)",
+      "metadata": {
+        "patterns": [
+          "Achieved 78% accuracy"
+        ],
+        "failures": [],
+        "source_agent": "observer",
+        "backfilled": true,
+        "backfill_timestamp": "2025-12-03T13:05:20.835810"
+      }
     }
   ],
   "strategies_and_rules": [],

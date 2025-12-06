@@ -1,0 +1,14 @@
+{
+  "model_name": "Qwen/Qwen2.5-0.5B",
+  "lora_config": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05
+  },
+  "training_config": {
+    "num_epochs": 1,
+    "batch_size": 1,
+    "learning_rate": 0.0003
+  },
+  "num_training_pairs": 50
+}

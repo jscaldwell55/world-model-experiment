@@ -1,0 +1,1038 @@
+{
+  "env_name": "molecular_design",
+  "steps": [
+    {
+      "step": 1,
+      "action": "104",
+      "smiles": "CCCCCCCBr",
+      "context": [
+        7,
+        "2",
+        "2"
+      ],
+      "prediction": -0.42418185339959247,
+      "uncertainty": 0.5554089917504726,
+      "true_label": -0.6585017060940769,
+      "error": 0.2343198526944844,
+      "reward": 0.1191238752232481,
+      "cumulative_reward": 0.1191238752232481,
+      "remaining_budget": 49,
+      "pool_mean_uncertainty": 0.552718767754439
+    },
+    {
+      "step": 2,
+      "action": "439",
+      "smiles": "CC(=O)Nc1ccc(cc1)N(=O)=O",
+      "context": [
+        6,
+        "2",
+        "0"
+      ],
+      "prediction": 0.13266542311081253,
+      "uncertainty": 0.4720686187754356,
+      "true_label": 0.17088997649118048,
+      "error": 0.038224553380367954,
+      "reward": 0.21288855191202477,
+      "cumulative_reward": 0.3320124271352729,
+      "remaining_budget": 48,
+      "pool_mean_uncertainty": 0.4822728345940091
+    },
+    {
+      "step": 3,
+      "action": "273",
+      "smiles": "CCC(O)C(C)C",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.17553800582856852,
+      "uncertainty": 0.30048115833678085,
+      "true_label": 1.1214931017557561,
+      "error": 0.9459550959271876,
+      "reward": -0.21786726420023012,
+      "cumulative_reward": 0.11414516293504279,
+      "remaining_budget": 47,
+      "pool_mean_uncertainty": 0.5809858991673966
+    },
+    {
+      "step": 4,
+      "action": "109",
+      "smiles": "ClC(Cl)(Cl)C(Cl)(Cl)Cl",
+      "context": [
+        7,
+        "3",
+        "3"
+      ],
+      "prediction": -0.3748192091840469,
+      "uncertainty": 0.3558037214285861,
+      "true_label": -0.2958217988646204,
+      "error": 0.07899741031942648,
+      "reward": 0.17476948261269365,
+      "cumulative_reward": 0.28891464554773644,
+      "remaining_budget": 46,
+      "pool_mean_uncertainty": 0.565064782316236
+    },
+    {
+      "step": 5,
+      "action": "73",
+      "smiles": "Clc1cccc2ccccc12",
+      "context": [
+        7,
+        "2",
+        "2"
+      ],
+      "prediction": -0.3936212991114686,
+      "uncertainty": 0.25986624622965354,
+      "true_label": -0.4198965039694346,
+      "error": 0.026275204857966028,
+      "reward": 0.12935562618155236,
+      "cumulative_reward": 0.41827027172928877,
+      "remaining_budget": 45,
+      "pool_mean_uncertainty": 0.5689539025976629
+    },
+    {
+      "step": 6,
+      "action": "714",
+      "smiles": "Clc1ccc(cc1Cl)c2cc(Cl)c(Cl)c(Cl)c2Cl ",
+      "context": [
+        4,
+        "4",
+        "4"
+      ],
+      "prediction": -1.3203925367878355,
+      "uncertainty": 0.7367705136111471,
+      "true_label": -2.2762449764991532,
+      "error": 0.9558524397113177,
+      "reward": -0.1704764640226747,
+      "cumulative_reward": 0.24779380770661408,
+      "remaining_budget": 44,
+      "pool_mean_uncertainty": 0.5392926229430319
+    },
+    {
+      "step": 7,
+      "action": "20",
+      "smiles": "CC(C)Nc1nc(Cl)nc(NC(C)C)n1",
+      "context": [
+        7,
+        "3",
+        "0"
+      ],
+      "prediction": 0.18125498647147487,
+      "uncertainty": 0.4249745113102036,
+      "true_label": -0.6585017060940769,
+      "error": 0.8397566925655517,
+      "reward": -0.15487485900891584,
+      "cumulative_reward": 0.09291894869769823,
+      "remaining_budget": 43,
+      "pool_mean_uncertainty": 0.5867230778997697
+    },
+    {
+      "step": 8,
+      "action": "627",
+      "smiles": "CC12CCC(=O)C=C1CCC3C2CCC4(C)C3CCC4(O)C#C ",
+      "context": [
+        7,
+        "4",
+        "3"
+      ],
+      "prediction": -0.3882956310000467,
+      "uncertainty": 0.7783112842677685,
+      "true_label": -1.2454705033206976,
+      "error": 0.8571748723206509,
+      "reward": -0.14309896662403915,
+      "cumulative_reward": -0.050180017926340914,
+      "remaining_budget": 42,
+      "pool_mean_uncertainty": 0.5872956221392166
+    },
+    {
+      "step": 9,
+      "action": "127",
+      "smiles": "CNC(=O)C(C)SCCSP(=O)(OC)(OC)",
+      "context": [
+        7,
+        "4",
+        "0"
+      ],
+      "prediction": -0.4409701154210828,
+      "uncertainty": 0.8675161585866905,
+      "true_label": 2.001469087191438,
+      "error": 2.442439202612521,
+      "reward": -0.8046423378402112,
+      "cumulative_reward": -0.8548223557665522,
+      "remaining_budget": 41,
+      "pool_mean_uncertainty": 0.6564622641272237
+    },
+    {
+      "step": 10,
+      "action": "477",
+      "smiles": "Clc1cc(Cl)c(Cl)cc1Cl",
+      "context": [
+        6,
+        "2",
+        "3"
+      ],
+      "prediction": -0.7987061228625172,
+      "uncertainty": 0.6768209939126778,
+      "true_label": -1.197749462895769,
+      "error": 0.3990433400332518,
+      "reward": 0.0518040245294025,
+      "cumulative_reward": -0.8030183312371497,
+      "remaining_budget": 40,
+      "pool_mean_uncertainty": 0.6279088627704656
+    },
+    {
+      "step": 11,
+      "action": "221",
+      "smiles": "CCCCCCCCCO",
+      "context": [
+        7,
+        "1",
+        "1"
+      ],
+      "prediction": -0.20135322723943191,
+      "uncertainty": 0.5256710679266382,
+      "true_label": 0.0191370679399078,
+      "error": 0.2204902951793397,
+      "reward": 0.12577028037372326,
+      "cumulative_reward": -0.6772480508634264,
+      "remaining_budget": 39,
+      "pool_mean_uncertainty": 0.5929928666568178
+    },
+    {
+      "step": 12,
+      "action": "339",
+      "smiles": "CCOC(=O)c1ccc(O)cc1",
+      "context": [
+        6,
+        "2",
+        "0"
+      ],
+      "prediction": 0.5327872586576685,
+      "uncertainty": 0.5757687381565355,
+      "true_label": 0.3340959347444358,
+      "error": 0.19869132391323274,
+      "reward": 0.06855189966196829,
+      "cumulative_reward": -0.6086961512014581,
+      "remaining_budget": 38,
+      "pool_mean_uncertainty": 0.5764751841819381
+    },
+    {
+      "step": 13,
+      "action": "471",
+      "smiles": "CN(C)C(=O)Nc1ccc(Cl)c(Cl)c1",
+      "context": [
+        6,
+        "3",
+        "2"
+      ],
+      "prediction": -0.20831095493338622,
+      "uncertainty": 0.466361097826277,
+      "true_label": -0.3578591514170274,
+      "error": 0.14954819648364118,
+      "reward": 0.13968095019161691,
+      "cumulative_reward": -0.46901520100984123,
+      "remaining_budget": 37,
+      "pool_mean_uncertainty": 0.5777246122192546
+    },
+    {
+      "step": 14,
+      "action": "91",
+      "smiles": "CN(C)C(=O)Nc2ccc(Oc1ccc(Cl)cc1)cc2",
+      "context": [
+        7,
+        "4",
+        "3"
+      ],
+      "prediction": -1.329621786006017,
+      "uncertainty": 0.8124743357730325,
+      "true_label": -0.878018492048748,
+      "error": 0.45160329395726906,
+      "reward": -0.02254260694130522,
+      "cumulative_reward": -0.49155780795114645,
+      "remaining_budget": 36,
+      "pool_mean_uncertainty": 0.5360312262085224
+    },
+    {
+      "step": 15,
+      "action": "384",
+      "smiles": "O=N(=O)c1cc(cc(c1)N(=O)=O)N(=O)=O",
+      "context": [
+        6,
+        "2",
+        "0"
+      ],
+      "prediction": 0.3698103613984526,
+      "uncertainty": 0.5760840228763386,
+      "true_label": 0.07640231644982184,
+      "error": 0.2934080449486307,
+      "reward": 0.006854268032189012,
+      "cumulative_reward": -0.4847035399189574,
+      "remaining_budget": 35,
+      "pool_mean_uncertainty": 0.5141626457742321
+    },
+    {
+      "step": 16,
+      "action": "105",
+      "smiles": "CCCCOC=O",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.5637391254772766,
+      "uncertainty": 0.5536365984312773,
+      "true_label": 0.8017621309087352,
+      "error": 0.2380230054314586,
+      "reward": 0.04308249369854661,
+      "cumulative_reward": -0.4416210462204108,
+      "remaining_budget": 34,
+      "pool_mean_uncertainty": 0.5219867966896807
+    },
+    {
+      "step": 17,
+      "action": "686",
+      "smiles": "Clc1cc(Cl)c(c(Cl)c1)c2c(Cl)cccc2Cl",
+      "context": [
+        4,
+        "4",
+        "4"
+      ],
+      "prediction": -1.7858253882602475,
+      "uncertainty": 0.4814706427464936,
+      "true_label": -2.037639774374511,
+      "error": 0.25181438611426366,
+      "reward": 0.035637091717166586,
+      "cumulative_reward": -0.4059839545032442,
+      "remaining_budget": 33,
+      "pool_mean_uncertainty": 0.5346330718757744
+    },
+    {
+      "step": 18,
+      "action": "139",
+      "smiles": "ClC(Cl)C(Cl)(Cl)Cl",
+      "context": [
+        7,
+        "2",
+        "2"
+      ],
+      "prediction": -0.3628698606616447,
+      "uncertainty": 0.19970599741639355,
+      "true_label": 0.21479333368211453,
+      "error": 0.5776631943437592,
+      "reward": -0.11456352962908294,
+      "cumulative_reward": -0.5205474841323271,
+      "remaining_budget": 32,
+      "pool_mean_uncertainty": 0.5320538361995354
+    },
+    {
+      "step": 19,
+      "action": "685",
+      "smiles": "Nc1nc(O)nc2nc[nH]c12 ",
+      "context": [
+        7,
+        "1",
+        "0"
+      ],
+      "prediction": 0.348841736235739,
+      "uncertainty": 0.4303633047272353,
+      "true_label": -0.16745220012156264,
+      "error": 0.5162939363573016,
+      "reward": -0.012771895742892059,
+      "cumulative_reward": -0.5333193798752192,
+      "remaining_budget": 31,
+      "pool_mean_uncertainty": 0.547689639199464
+    },
+    {
+      "step": 20,
+      "action": "320",
+      "smiles": "CC(C)OC(=O)C",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.6569192290109921,
+      "uncertainty": 0.49897439108995506,
+      "true_label": 1.193074662393149,
+      "error": 0.5361554333821569,
+      "reward": -0.09826514807079904,
+      "cumulative_reward": -0.6315845279460182,
+      "remaining_budget": 30,
+      "pool_mean_uncertainty": 0.5458722105891176
+    },
+    {
+      "step": 21,
+      "action": "799",
+      "smiles": "CCC1(CCC(C)C)C(=O)NC(=O)NC1=O",
+      "context": [
+        7,
+        "2",
+        "0"
+      ],
+      "prediction": 0.37065502381397364,
+      "uncertainty": 0.6188469302318726,
+      "true_label": 0.27778510704302023,
+      "error": 0.09286991677095341,
+      "reward": 0.169047778363414,
+      "cumulative_reward": -0.46253674958260416,
+      "remaining_budget": 29,
+      "pool_mean_uncertainty": 0.5303828479096292
+    },
+    {
+      "step": 22,
+      "action": "358",
+      "smiles": "Cc1ccccc1Cl",
+      "context": [
+        6,
+        "0",
+        "1"
+      ],
+      "prediction": -0.0779800214288644,
+      "uncertainty": 0.3910634851344763,
+      "true_label": -0.2242402382272277,
+      "error": 0.1462602167983633,
+      "reward": 0.1378556061359169,
+      "cumulative_reward": -0.32468114344668725,
+      "remaining_budget": 28,
+      "pool_mean_uncertainty": 0.5394836157714736
+    },
+    {
+      "step": 23,
+      "action": "513",
+      "smiles": "CCOC(=O)c1ccc(N)cc1",
+      "context": [
+        6,
+        "2",
+        "0"
+      ],
+      "prediction": 0.5510596450363728,
+      "uncertainty": 0.4191928830136605,
+      "true_label": 0.20715796721412597,
+      "error": 0.3439016778222469,
+      "reward": -0.01695634911322931,
+      "cumulative_reward": -0.34163749255991654,
+      "remaining_budget": 27,
+      "pool_mean_uncertainty": 0.4879728107323
+    },
+    {
+      "step": 24,
+      "action": "430",
+      "smiles": "CNC(=O)Oc1cc(C)cc(C)c1",
+      "context": [
+        6,
+        "2",
+        "0"
+      ],
+      "prediction": 0.3179089578323001,
+      "uncertainty": 0.5776733935863404,
+      "true_label": 0.2238603313628508,
+      "error": 0.09404862646944931,
+      "reward": 0.048031489371447744,
+      "cumulative_reward": -0.2936060031884688,
+      "remaining_budget": 26,
+      "pool_mean_uncertainty": 0.49745225858421027
+    },
+    {
+      "step": 25,
+      "action": "402",
+      "smiles": "Nc1ccc(O)cc1",
+      "context": [
+        6,
+        "0",
+        "0"
+      ],
+      "prediction": 0.3932700248713473,
+      "uncertainty": 0.4499671434606876,
+      "true_label": 1.0737720613308277,
+      "error": 0.6805020364594804,
+      "reward": -0.07244841048645567,
+      "cumulative_reward": -0.3660544136749245,
+      "remaining_budget": 25,
+      "pool_mean_uncertainty": 0.4980712483408691
+    },
+    {
+      "step": 26,
+      "action": "201",
+      "smiles": "C=CC=C",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.8119267125192455,
+      "uncertainty": 0.4195525995648341,
+      "true_label": 0.5631569287840926,
+      "error": 0.2487697837351529,
+      "reward": 0.016255030242661284,
+      "cumulative_reward": -0.3497993834322632,
+      "remaining_budget": 24,
+      "pool_mean_uncertainty": 0.45866388899906296
+    },
+    {
+      "step": 27,
+      "action": "289",
+      "smiles": "CCI",
+      "context": [
+        7,
+        "2",
+        "0"
+      ],
+      "prediction": 0.41604727746616565,
+      "uncertainty": 0.44066206583584966,
+      "true_label": 0.6920037379313996,
+      "error": 0.2759564604652339,
+      "reward": 0.03685021320853819,
+      "cumulative_reward": -0.312949170223725,
+      "remaining_budget": 23,
+      "pool_mean_uncertainty": 0.4441352861057573
+    },
+    {
+      "step": 28,
+      "action": "170",
+      "smiles": "CCN(CC)C(=S)SSC(=S)N(CC)CC",
+      "context": [
+        7,
+        "4",
+        "3"
+      ],
+      "prediction": -0.328692051509311,
+      "uncertainty": 0.6021669886021854,
+      "true_label": -0.8637021799212697,
+      "error": 0.5350101284119587,
+      "reward": -0.10032270180437176,
+      "cumulative_reward": -0.41327187202809673,
+      "remaining_budget": 22,
+      "pool_mean_uncertainty": 0.4486070467995409
+    },
+    {
+      "step": 29,
+      "action": "485",
+      "smiles": "CON(C)C(=O)Nc1ccc(Cl)c(Cl)c1",
+      "context": [
+        6,
+        "3",
+        "2"
+      ],
+      "prediction": -0.27356947771447626,
+      "uncertainty": 0.41255459984571513,
+      "true_label": -0.2585993873331762,
+      "error": 0.014970090381300039,
+      "reward": 0.1395609644821665,
+      "cumulative_reward": -0.2737109075459302,
+      "remaining_budget": 21,
+      "pool_mean_uncertainty": 0.4382879358060983
+    },
+    {
+      "step": 30,
+      "action": "329",
+      "smiles": "CC(=C)C",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.8504853131825878,
+      "uncertainty": 0.3427789112916044,
+      "true_label": 0.3436401428294215,
+      "error": 0.5068451703531662,
+      "reward": -0.10795817113189952,
+      "cumulative_reward": -0.38166907867782973,
+      "remaining_budget": 20,
+      "pool_mean_uncertainty": 0.42494499103265987
+    },
+    {
+      "step": 31,
+      "action": "22",
+      "smiles": "CCC(C)C1(CC(Br)=C)C(=O)NC(=O)NC1=O ",
+      "context": [
+        7,
+        "4",
+        "0"
+      ],
+      "prediction": 0.4101680452858146,
+      "uncertainty": 0.7450068805770232,
+      "true_label": 0.19236444468239827,
+      "error": 0.2178036006034163,
+      "reward": 0.059205925893901654,
+      "cumulative_reward": -0.32246315278392806,
+      "remaining_budget": 19,
+      "pool_mean_uncertainty": 0.41267996628776316
+    },
+    {
+      "step": 32,
+      "action": "266",
+      "smiles": "CC(C)(C)CCO",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.8301132010251852,
+      "uncertainty": 0.31193761135651665,
+      "true_label": 1.2169351826056132,
+      "error": 0.386821981580428,
+      "reward": -0.0776542897632125,
+      "cumulative_reward": -0.40011744254714054,
+      "remaining_budget": 18,
+      "pool_mean_uncertainty": 0.42411785434729793
+    },
+    {
+      "step": 33,
+      "action": "788",
+      "smiles": "O=Cc1ccco1",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 0.7700705879625405,
+      "uncertainty": 0.3064120410247431,
+      "true_label": 1.407819344305327,
+      "error": 0.6377487563427866,
+      "reward": -0.1804768596562838,
+      "cumulative_reward": -0.5805943022034243,
+      "remaining_budget": 17,
+      "pool_mean_uncertainty": 0.4265434836498343
+    },
+    {
+      "step": 34,
+      "action": "593",
+      "smiles": "c1ccc2c(c1)c3cccc4ccc5cccc2c5c43",
+      "context": [
+        7,
+        "3",
+        "4"
+      ],
+      "prediction": -1.781759555616042,
+      "uncertainty": 0.5577546441717635,
+      "true_label": -2.2667007684141676,
+      "error": 0.48494121279812563,
+      "reward": 0.005437600044026797,
+      "cumulative_reward": -0.5751567021593975,
+      "remaining_budget": 16,
+      "pool_mean_uncertainty": 0.4280082707416417
+    },
+    {
+      "step": 35,
+      "action": "505",
+      "smiles": "OCc1ccccc1",
+      "context": [
+        6,
+        "0",
+        "0"
+      ],
+      "prediction": 1.0472677954788214,
+      "uncertainty": 0.28155228967466556,
+      "true_label": 1.2646562230305416,
+      "error": 0.21738842755172016,
+      "reward": 0.05259669840151883,
+      "cumulative_reward": -0.5225600037578787,
+      "remaining_budget": 15,
+      "pool_mean_uncertainty": 0.43268148777939824
+    },
+    {
+      "step": 36,
+      "action": "60",
+      "smiles": "Cc2ncc1nccnc1n2",
+      "context": [
+        7,
+        "1",
+        "0"
+      ],
+      "prediction": 0.4405281712041542,
+      "uncertainty": 0.48342255988650246,
+      "true_label": 1.3982751362203414,
+      "error": 0.9577469650161872,
+      "reward": -0.24056122160011523,
+      "cumulative_reward": -0.763121225357994,
+      "remaining_budget": 14,
+      "pool_mean_uncertainty": 0.42989096735677285
+    },
+    {
+      "step": 37,
+      "action": "545",
+      "smiles": "c1ccc2c(c1)ccc3c2ccc4c5ccccc5ccc43",
+      "context": [
+        7,
+        "4",
+        "4"
+      ],
+      "prediction": -2.0736691598953296,
+      "uncertainty": 0.34339921094177855,
+      "true_label": -2.3001054967116175,
+      "error": 0.22643633681628783,
+      "reward": 0.11542741891140632,
+      "cumulative_reward": -0.6476938064465877,
+      "remaining_budget": 13,
+      "pool_mean_uncertainty": 0.41488608326196924
+    },
+    {
+      "step": 38,
+      "action": "725",
+      "smiles": "OC(Cn1cncn1)(c2ccc(F)cc2)c3ccccc3F",
+      "context": [
+        7,
+        "4",
+        "1"
+      ],
+      "prediction": -0.22415434035446263,
+      "uncertainty": 0.47438214098719944,
+      "true_label": -0.15265867758983495,
+      "error": 0.07149566276462768,
+      "reward": 0.17003356014371246,
+      "cumulative_reward": -0.47766024630287524,
+      "remaining_budget": 12,
+      "pool_mean_uncertainty": 0.41830652013806047
+    },
+    {
+      "step": 39,
+      "action": "508",
+      "smiles": "Clc1ccc(Cl)c(Cl)c1Cl",
+      "context": [
+        6,
+        "2",
+        "3"
+      ],
+      "prediction": -1.095931851045143,
+      "uncertainty": 0.5012914086056752,
+      "true_label": -0.7253111626889771,
+      "error": 0.3706206883561659,
+      "reward": -0.004479175591997064,
+      "cumulative_reward": -0.4821394218948723,
+      "remaining_budget": 11,
+      "pool_mean_uncertainty": 0.41243716135516095
+    },
+    {
+      "step": 40,
+      "action": "745",
+      "smiles": "CC1(C)C2CCC1(C)C(O)C2",
+      "context": [
+        7,
+        "1",
+        "0"
+      ],
+      "prediction": 0.029459128983819763,
+      "uncertainty": 0.3991458834655123,
+      "true_label": 0.34841224687191447,
+      "error": 0.3189531178880947,
+      "reward": -0.011446732854755823,
+      "cumulative_reward": -0.49358615474962814,
+      "remaining_budget": 10,
+      "pool_mean_uncertainty": 0.41077601019876875
+    },
+    {
+      "step": 41,
+      "action": "203",
+      "smiles": "CC(C)(C)CO",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 1.1641557118956412,
+      "uncertainty": 0.23005483578191915,
+      "true_label": 1.2646562230305416,
+      "error": 0.10050051113490044,
+      "reward": 0.02986249163137747,
+      "cumulative_reward": -0.46372366311825064,
+      "remaining_budget": 9,
+      "pool_mean_uncertainty": 0.4123959652820615
+    },
+    {
+      "step": 42,
+      "action": "733",
+      "smiles": "NS(=O)(=O)c2cc1c(NCNS1(=O)=O)cc2Cl ",
+      "context": [
+        7,
+        "4",
+        "0"
+      ],
+      "prediction": 0.4751641023445674,
+      "uncertainty": 0.7326691789916929,
+      "true_label": 0.20047702155463606,
+      "error": 0.2746870807899313,
+      "reward": 0.007743432942186337,
+      "cumulative_reward": -0.4559802301760643,
+      "remaining_budget": 8,
+      "pool_mean_uncertainty": 0.4070254367314773
+    },
+    {
+      "step": 43,
+      "action": "601",
+      "smiles": "Cc1cccc2c1ccc3ccccc32",
+      "context": [
+        7,
+        "2",
+        "3"
+      ],
+      "prediction": -1.0325773977770079,
+      "uncertainty": 0.6347442275476648,
+      "true_label": -1.3361404801280616,
+      "error": 0.3035630823510538,
+      "reward": 0.08240028324180783,
+      "cumulative_reward": -0.3735799469342565,
+      "remaining_budget": 7,
+      "pool_mean_uncertainty": 0.39746164627590397
+    },
+    {
+      "step": 44,
+      "action": "606",
+      "smiles": "c2c(C)cc1nc(C)ccc1c2 ",
+      "context": [
+        7,
+        "2",
+        "2"
+      ],
+      "prediction": -0.2304630618986383,
+      "uncertainty": 0.242689074475916,
+      "true_label": 0.5297522004866427,
+      "error": 0.760215262385281,
+      "reward": -0.21188879427503296,
+      "cumulative_reward": -0.5854687412092895,
+      "remaining_budget": 6,
+      "pool_mean_uncertainty": 0.4169683695782054
+    },
+    {
+      "step": 45,
+      "action": "259",
+      "smiles": "CCC(C)(C)CO",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 1.146374852233314,
+      "uncertainty": 0.21863371646035046,
+      "true_label": 0.9592415643109992,
+      "error": 0.18713328792231476,
+      "reward": -0.006971686464783924,
+      "cumulative_reward": -0.5924404276740735,
+      "remaining_budget": 5,
+      "pool_mean_uncertainty": 0.4139309644845171
+    },
+    {
+      "step": 46,
+      "action": "542",
+      "smiles": "N(c1ccccc1)c2ccccc2",
+      "context": [
+        7,
+        "2",
+        "2"
+      ],
+      "prediction": -0.3981023048073694,
+      "uncertainty": 0.3584372745187491,
+      "true_label": -0.2166048717592389,
+      "error": 0.1814974330481305,
+      "reward": 0.019045435569181923,
+      "cumulative_reward": -0.5733949921048915,
+      "remaining_budget": 4,
+      "pool_mean_uncertainty": 0.40842674026341075
+    },
+    {
+      "step": 47,
+      "action": "142",
+      "smiles": "ClCCC#N ",
+      "context": [
+        7,
+        "0",
+        "0"
+      ],
+      "prediction": 1.1494099104043392,
+      "uncertainty": 0.28015167089249005,
+      "true_label": 1.317149367497963,
+      "error": 0.16773945709362392,
+      "reward": -0.0013959046914658463,
+      "cumulative_reward": -0.5747908967963574,
+      "remaining_budget": 3,
+      "pool_mean_uncertainty": 0.40229092790687043
+    },
+    {
+      "step": 48,
+      "action": "522",
+      "smiles": "Oc1cc(Cl)cc(Cl)c1",
+      "context": [
+        6,
+        "2",
+        "1"
+      ],
+      "prediction": -0.09106035860933716,
+      "uncertainty": 0.3085560527805371,
+      "true_label": 0.8160784430362137,
+      "error": 0.9071388016455508,
+      "reward": -0.1717131305671621,
+      "cumulative_reward": -0.7465040273635195,
+      "remaining_budget": 2,
+      "pool_mean_uncertainty": 0.42443495267922476
+    },
+    {
+      "step": 49,
+      "action": "697",
+      "smiles": "Cc1ccc(cc1)c2ccccc2",
+      "context": [
+        4,
+        "2",
+        "3"
+      ],
+      "prediction": -0.4111206046352897,
+      "uncertainty": 0.41495846490514704,
+      "true_label": -0.7491716829014412,
+      "error": 0.3380510782661515,
+      "reward": 0.06851056061363087,
+      "cumulative_reward": -0.6779934667498886,
+      "remaining_budget": 1,
+      "pool_mean_uncertainty": 0.41510747287899613
+    },
+    {
+      "step": 50,
+      "action": "21",
+      "smiles": "O=C1NC(=O)NC(=O)C1(CC)C(C)CCC",
+      "context": [
+        7,
+        "2",
+        "0"
+      ],
+      "prediction": 0.3258783715832631,
+      "uncertainty": 0.3136616071152907,
+      "true_label": 0.31500751857446435,
+      "error": 0.010870853008798753,
+      "reward": 0.10964312896621836,
+      "cumulative_reward": -0.5683503377836703,
+      "remaining_budget": 0,
+      "pool_mean_uncertainty": 0.4188039320494644
+    }
+  ],
+  "total_reward": -0.5683503377836703,
+  "final_test_mae": 0.3912655815461663,
+  "final_test_r2": 0.7251208062125953,
+  "contexts_covered": [
+    [
+      7,
+      "4",
+      "1"
+    ],
+    [
+      6,
+      "0",
+      "0"
+    ],
+    [
+      7,
+      "4",
+      "4"
+    ],
+    [
+      6,
+      "3",
+      "2"
+    ],
+    [
+      7,
+      "0",
+      "0"
+    ],
+    [
+      4,
+      "4",
+      "4"
+    ],
+    [
+      6,
+      "2",
+      "0"
+    ],
+    [
+      6,
+      "2",
+      "3"
+    ],
+    [
+      7,
+      "2",
+      "0"
+    ],
+    [
+      7,
+      "2",
+      "3"
+    ],
+    [
+      7,
+      "4",
+      "0"
+    ],
+    [
+      7,
+      "1",
+      "1"
+    ],
+    [
+      7,
+      "3",
+      "4"
+    ],
+    [
+      7,
+      "4",
+      "3"
+    ],
+    [
+      4,
+      "2",
+      "3"
+    ],
+    [
+      7,
+      "1",
+      "0"
+    ],
+    [
+      7,
+      "3",
+      "0"
+    ],
+    [
+      7,
+      "2",
+      "2"
+    ],
+    [
+      6,
+      "0",
+      "1"
+    ],
+    [
+      7,
+      "3",
+      "3"
+    ],
+    [
+      6,
+      "2",
+      "1"
+    ]
+  ],
+  "metadata": {
+    "seed_size": 10,
+    "seed_indices": [
+      696,
+      667,
+      63,
+      533,
+      66,
+      621,
+      346,
+      490,
+      760,
+      456
+    ],
+    "query_budget": 50,
+    "reward_type": "hybrid",
+    "reward_weights": {
+      "info_gain": 0.4,
+      "accuracy": 0.4,
+      "exploration": 0.2
+    },
+    "n_candidates": 800
+  }
+}

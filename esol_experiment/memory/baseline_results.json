@@ -1,0 +1,18 @@
+{
+  "train_size": 902,
+  "test_size": 226,
+  "feature_dim": 1031,
+  "train_metrics": {
+    "mae": 0.1075880869976476,
+    "rmse": 0.15486981883455714,
+    "r2": 0.9914098270931315
+  },
+  "test_metrics": {
+    "mae": 0.23064301476311094,
+    "rmse": 0.34692591965985187,
+    "r2": 0.9596661502171369
+  },
+  "test_tanimoto_mean": 0.4371738900260971,
+  "test_tanimoto_min": 0.14,
+  "extrapolative_fraction": 0.4469026548672566
+}
