@@ -1,4 +1,12 @@
-# Python
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python artifacts
 __pycache__/
 *.py[cod]
 *$py.class
@@ -24,95 +32,69 @@ share/python-wheels/
 MANIFEST
 
 # Virtual environments
+.venv/
 venv/
 env/
 ENV/
 env.bak/
 venv.bak/
 
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Testing artifacts
+# Notebook and tooling caches
+.ipynb_checkpoints/
 .pytest_cache/
-.coverage
-htmlcov/
+.mypy_cache/
+.pyre/
+.pytype/
 .tox/
 .nox/
-
-# Temporary test scripts in root (but keep tests/ directory)
-/test_*.py
-*[Tt]est*
-
-# PyCharm
-.idea/
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Results and data
-results/
-logs/
-*.log
-*.csv
-*.json.bak
-
-# Model checkpoints and weights
-*.pt
-*.pth
-*.ckpt
-checkpoints/
-
-# Temporary files
-*.tmp
-*.temp
 .cache/
+.coverage
+htmlcov/
+dmypy.json
+.dmypy.json
 
-RUN_PILOT.md
-
-
-# API Keys and Secrets
-*.key
-*.env
+# Local env and secrets
 .env
-.env.local
+.env.*
+*.key
 *_API_KEY*
 secrets.yaml
 
-# Instruction files (contain examples with keys)
-ACE_RUN_INSTRUCTIONS.md
-IMPLEMENTATION_COMPLETE.md
+# Logs and temp files
+results/
+logs/
+*.log
+*.tmp
+*.temp
+*.json.bak
+time_violations.json
 
-# Internal cleanup and planning files
-CLEANUP_PLAN.md
-*_PREP_*.md
-*_CHECKLIST.md
+# Model artifacts and checkpoints
+checkpoints/
+**/checkpoint-*/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.pkl
 
-# Generated documentation files
+# Experiment/runtime outputs
+memory/domains/**/episodes/
+memory/domains/**/playbook.lock
+memory/domains/**/playbook_old_backup.json
+memory/*.png
+
+# Generated docs
 *.html
 *.pdf
 RESULTS_SUMMARY.html
 RESULTS_SUMMARY.pdf
 
-time_violations.json
+# Local process docs
+RUN_PILOT.md
+ACE_RUN_INSTRUCTIONS.md
+IMPLEMENTATION_COMPLETE.md
+CLEANUP_PLAN.md
+*_PREP_*.md
+*_CHECKLIST.md
