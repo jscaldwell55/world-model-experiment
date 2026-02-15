@@ -12,9 +12,9 @@ This project explores how LLM-based agents can learn persistent world models acr
 
 ## Quick Links
 
-- **[ACE Implementation Summary](ACE_IMPLEMENTATION_UPGRADE.md)** - New memory system architecture
-- **[Controlled Belief Trap Test](test_belief_trap_controlled.py)** - Validation of core functionality
-- **[Original Study Results](RESULTS_SUMMARY.md)** - Completed ACE vs Interactive Learning study
+- **[ACE Implementation](memory/ace_playbook.py)** - Core memory system implementation
+- **[Quick Validation Script](scripts/quick_validation.py)** - Fast local validation workflow
+- **[Research Preregistration](preregistration.md)** - Study design and hypotheses
 - **[Preregistration](preregistration.md)** - Original study hypotheses (commit `cd41f0c`)
 
 ---
@@ -118,7 +118,7 @@ Result: Agent sees both observations with methodology warnings
 
 **Test Scenario:**
 ```bash
-python test_belief_trap_controlled.py
+python scripts/quick_validation.py
 ```
 
 **Results:**
@@ -188,8 +188,8 @@ export ANTHROPIC_API_KEY="sk-ant-api03-..."
 ### Run Validation Test
 
 ```bash
-# Controlled belief trap test (free, local simulation)
-python test_belief_trap_controlled.py
+# Quick local validation
+python scripts/quick_validation.py
 
 # 9-episode validation (~$1.50, 16 minutes)
 python scripts/run_experiment_parallel.py \
@@ -223,8 +223,8 @@ cat memory/domains/switch_light/playbook.json | jq '.observations'
 ```
 world-model-experiment/
 ├── README.md                           # This file
-├── ACE_IMPLEMENTATION_UPGRADE.md       # ACE memory architecture
-├── test_belief_trap_controlled.py      # Validation test
+├── preregistration.md                  # Study hypotheses and design
+├── verify_rollback.py                  # Rollback validation script
 ├── analyze_ace_learning.py             # Results analysis
 │
 ├── config_ace_validation_9ep.yaml      # 9-episode test config
@@ -311,7 +311,7 @@ This project originated from a preregistered study comparing ACE vs Interactive 
 - **ACE (Playbook):** 70.3% accuracy
 - **Critical insight:** Qualitative playbooks struggle with quantitative probability questions
 
-**Full results:** [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md)
+**Study record:** See [preregistration.md](preregistration.md) and commit history.
 
 ### Current Development (2025-11-17)
 
@@ -444,8 +444,8 @@ jay.s.caldwell@gmail.com
 
 For questions:
 - **ACE Memory Implementation:** `memory/ace_playbook.py`
-- **Validation Tests:** `test_belief_trap_controlled.py`
-- **Original Study:** [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md)
+- **Validation Scripts:** `scripts/quick_validation.py`
+- **Original Study:** [preregistration.md](preregistration.md)
 
 ---
 

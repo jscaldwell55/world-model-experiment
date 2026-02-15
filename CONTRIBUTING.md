@@ -165,7 +165,7 @@ tests/           # Unit and integration tests
 
 - **Methodology:** See [preregistration.md](preregistration.md)
 - **Implementation:** Read source code docstrings
-- **Results:** See [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md)
+- **Study context:** See [preregistration.md](preregistration.md)
 - **Contact:** jay.s.caldwell@gmail.com
 
 ## License
